@@ -1,0 +1,465 @@
+openapi: 3.0.3
+info:
+  title: Materialize Cloud
+  version: 0.1.0
+servers:
+- url: https://cloud.materialize.com
+paths:
+  /api/allowed-emails/{email}:
+    get:
+      description: |-
+        Report whether the specified email address is allowed to sign up for
+        Materialize Cloud.
+      operationId: allowedEmailsRetrieve
+      parameters:
+      - explode: false
+        in: path
+        name: email
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: boolean
+      security:
+      - tokenAuth: []
+      - {}
+      tags:
+      - allowed-emails
+  /api/deployments:
+    get:
+      description: List the available deployments.
+      operationId: deploymentsList
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Deployment'
+                type: array
+      security:
+      - tokenAuth: []
+      tags:
+      - deployments
+    post:
+      description: Create a new deployment.
+      operationId: deploymentsCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeploymentRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+      security:
+      - tokenAuth: []
+      tags:
+      - deployments
+  /api/deployments/{id}:
+    delete:
+      description: Destroy a deployment.
+      operationId: deploymentsDestroy
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: No response body
+      security:
+      - tokenAuth: []
+      tags:
+      - deployments
+    get:
+      description: Fetch details about a single deployment.
+      operationId: deploymentsRetrieve
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+      security:
+      - tokenAuth: []
+      tags:
+      - deployments
+    patch:
+      description: Partially update a deployment.
+      operationId: deploymentsPartialUpdate
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDeploymentRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+      security:
+      - tokenAuth: []
+      tags:
+      - deployments
+    put:
+      description: Update a deployment.
+      operationId: deploymentsUpdate
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeploymentRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+      security:
+      - tokenAuth: []
+      tags:
+      - deployments
+  /api/deployments/{id}/certs:
+    get:
+      description: |-
+        Retrieve a TLS certificate bundle for a deployment.
+
+        The TLS certificate bundle is a ZIP file containing PEM and DER
+        formatted keys that permit authenticating to the deployment as the
+        `materialize` user.
+      operationId: deploymentsCertsRetrieve
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/zip:
+              schema:
+                format: binary
+                type: string
+      security:
+      - tokenAuth: []
+      tags:
+      - deployments
+  /api/deployments/{id}/logs:
+    get:
+      description: Retrieve the logs for a deployment.
+      operationId: deploymentsLogsRetrieve
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                type: string
+      security:
+      - tokenAuth: []
+      tags:
+      - deployments
+  /api/health:
+    get:
+      description: |-
+        Basic health check endpoint.
+
+        This endpoint always returns 200 OK. It is intended for use by load
+        balancers and such that need a basic indication as to whether the server is
+        live.
+      operationId: healthRetrieve
+      responses:
+        "200":
+          description: No response body
+      security:
+      - tokenAuth: []
+      - {}
+      tags:
+      - health
+  /api/mz-versions:
+    get:
+      description: |-
+        List the versions of Materialize known to Materialize Cloud.
+
+        Versions are listed in order from oldest to newest.
+      operationId: mzVersionsList
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: string
+                type: array
+      security:
+      - tokenAuth: []
+      - {}
+      tags:
+      - mz-versions
+  /api/schema:
+    get:
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      operationId: schemaRetrieve
+      parameters:
+      - explode: true
+        in: query
+        name: format
+        required: false
+        schema:
+          enum:
+          - json
+          - yaml
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                additionalProperties: {}
+                type: object
+            application/yaml:
+              schema:
+                additionalProperties: {}
+                type: object
+            application/vnd.oai.openapi+json:
+              schema:
+                additionalProperties: {}
+                type: object
+            application/json:
+              schema:
+                additionalProperties: {}
+                type: object
+      security:
+      - tokenAuth: []
+      - {}
+      tags:
+      - schema
+  /api/user:
+    get:
+      description: Fetch details about the currently-authenticated user.
+      operationId: userRetrieve
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      security:
+      - tokenAuth: []
+      tags:
+      - user
+components:
+  schemas:
+    Deployment:
+      example:
+        flaggedForUpdate: true
+        hostname: hostname
+        flaggedForDeletion: true
+        size: XS
+        pendingMigration: ""
+        tlsAuthority: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        statefulsetStatus: statefulsetStatus
+        organization: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        name: name
+        id: id
+        clusterId: clusterId
+        mzVersion: mzVersion
+      properties:
+        id:
+          readOnly: true
+          type: string
+        organization:
+          format: uuid
+          readOnly: true
+          type: string
+        tlsAuthority:
+          format: uuid
+          readOnly: true
+          type: string
+        name:
+          readOnly: true
+          type: string
+        hostname:
+          readOnly: true
+          type: string
+        flaggedForDeletion:
+          readOnly: true
+          type: boolean
+        flaggedForUpdate:
+          readOnly: true
+          type: boolean
+        size:
+          enum:
+          - XS
+          - S
+          - M
+          - L
+          - XL
+          type: string
+        clusterId:
+          readOnly: true
+          type: string
+        mzVersion:
+          title: Materialize version
+          type: string
+        pendingMigration:
+          allOf:
+          - $ref: '#/components/schemas/PendingMigration'
+          nullable: true
+          readOnly: true
+        statefulsetStatus:
+          readOnly: true
+          type: string
+      required:
+      - clusterId
+      - flaggedForDeletion
+      - flaggedForUpdate
+      - hostname
+      - id
+      - mzVersion
+      - name
+      - organization
+      - pendingMigration
+      - statefulsetStatus
+      - tlsAuthority
+      type: object
+    DeploymentRequest:
+      example:
+        size: XS
+        mzVersion: mzVersion
+      properties:
+        size:
+          enum:
+          - XS
+          - S
+          - M
+          - L
+          - XL
+          type: string
+        mzVersion:
+          title: Materialize version
+          type: string
+      required:
+      - mzVersion
+      type: object
+    PatchedDeploymentRequest:
+      example:
+        size: XS
+        mzVersion: mzVersion
+      properties:
+        size:
+          enum:
+          - XS
+          - S
+          - M
+          - L
+          - XL
+          type: string
+        mzVersion:
+          title: Materialize version
+          type: string
+      type: object
+    PendingMigration:
+      properties:
+        description:
+          type: string
+        deadline:
+          format: date
+          type: string
+      required:
+      - deadline
+      - description
+      type: object
+    PendingMigrationRequest:
+      properties:
+        description:
+          type: string
+        deadline:
+          format: date
+          type: string
+      required:
+      - deadline
+      - description
+      type: object
+    User:
+      example:
+        cognitoSub: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        name: name
+        email: email
+      properties:
+        cognitoSub:
+          description: The unique ID assigned to this user by AWS Cognito.
+          format: uuid
+          readOnly: true
+          title: Cognito subject
+          type: string
+        name:
+          maxLength: 64
+          type: string
+        email:
+          format: email
+          maxLength: 254
+          type: string
+      required:
+      - cognitoSub
+      - email
+      - name
+      type: object
+  securitySchemes:
+    tokenAuth:
+      scheme: bearer
+      type: http
