@@ -48,8 +48,8 @@ gen_python() {
 gen_rust() {
     rm -rf rust
     gen -g rust -o /work/rust --package-name mzcloud
-    (cd rust && rm_standard && \
-        sed -i .bak 's/Box::new(pending_migration)/pending_migration.map(Box::new)/' src/models/deployment.rs)
+    (cd rust && rm_standard)
+    patch -p1 < rust.patch
 }
 
 if (($# > 0)); then

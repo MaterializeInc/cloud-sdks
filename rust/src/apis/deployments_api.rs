@@ -73,7 +73,7 @@ pub enum DeploymentsUpdateError {
 
 
 /// Retrieve a TLS certificate bundle for a deployment.  The TLS certificate bundle is a ZIP file containing PEM and DER formatted keys that permit authenticating to the deployment as the `materialize` user.
-pub async fn deployments_certs_retrieve(configuration: &configuration::Configuration, id: &str) -> Result<std::path::PathBuf, Error<DeploymentsCertsRetrieveError>> {
+pub async fn deployments_certs_retrieve(configuration: &configuration::Configuration, id: &str) -> Result<Vec<u8>, Error<DeploymentsCertsRetrieveError>> {
 
     let local_var_client = &configuration.client;
 
@@ -91,11 +91,11 @@ pub async fn deployments_certs_retrieve(configuration: &configuration::Configura
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
 
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+        Ok(local_var_resp.bytes().await?.to_vec())
     } else {
+        let local_var_content = local_var_resp.text().await?;
         let local_var_entity: Option<DeploymentsCertsRetrieveError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
@@ -215,7 +215,7 @@ pub async fn deployments_logs_retrieve(configuration: &configuration::Configurat
     let local_var_content = local_var_resp.text().await?;
 
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+        Ok(local_var_content)
     } else {
         let local_var_entity: Option<DeploymentsLogsRetrieveError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
