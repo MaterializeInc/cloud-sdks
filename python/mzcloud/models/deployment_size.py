@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class DeploymentSize(str, Enum):
     XS = "XS"
     S = "S"

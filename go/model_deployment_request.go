@@ -16,7 +16,7 @@ import (
 
 // DeploymentRequest struct for DeploymentRequest
 type DeploymentRequest struct {
-	Size *string `json:"size,omitempty"`
+	Size *DeploymentSize `json:"size,omitempty"`
 	MzVersion string `json:"mzVersion"`
 }
 
@@ -39,9 +39,9 @@ func NewDeploymentRequestWithDefaults() *DeploymentRequest {
 }
 
 // GetSize returns the Size field value if set, zero value otherwise.
-func (o *DeploymentRequest) GetSize() string {
+func (o *DeploymentRequest) GetSize() DeploymentSize {
 	if o == nil || o.Size == nil {
-		var ret string
+		var ret DeploymentSize
 		return ret
 	}
 	return *o.Size
@@ -49,7 +49,7 @@ func (o *DeploymentRequest) GetSize() string {
 
 // GetSizeOk returns a tuple with the Size field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DeploymentRequest) GetSizeOk() (*string, bool) {
+func (o *DeploymentRequest) GetSizeOk() (*DeploymentSize, bool) {
 	if o == nil || o.Size == nil {
 		return nil, false
 	}
@@ -65,8 +65,8 @@ func (o *DeploymentRequest) HasSize() bool {
 	return false
 }
 
-// SetSize gets a reference to the given string and assigns it to the Size field.
-func (o *DeploymentRequest) SetSize(v string) {
+// SetSize gets a reference to the given DeploymentSize and assigns it to the Size field.
+func (o *DeploymentRequest) SetSize(v DeploymentSize) {
 	o.Size = &v
 }
 

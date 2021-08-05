@@ -2,6 +2,8 @@ pub mod deployment;
 pub use self::deployment::Deployment;
 pub mod deployment_request;
 pub use self::deployment_request::DeploymentRequest;
+pub mod deployment_size;
+pub use self::deployment_size::DeploymentSize;
 pub mod patched_deployment_request;
 pub use self::patched_deployment_request::PatchedDeploymentRequest;
 pub mod pending_migration;

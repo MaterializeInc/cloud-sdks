@@ -296,6 +296,14 @@ paths:
           description: ''
 components:
   schemas:
+    DeploymentSize:
+      enum:
+        - XS
+        - S
+        - M
+        - L
+        - XL
+      type: string
     Deployment:
       type: object
       properties:
@@ -316,6 +324,7 @@ components:
         hostname:
           type: string
           readOnly: true
+          nullable: true
         flaggedForDeletion:
           type: boolean
           readOnly: true
@@ -323,16 +332,11 @@ components:
           type: boolean
           readOnly: true
         size:
-          enum:
-            - XS
-            - S
-            - M
-            - L
-            - XL
-          type: string
+          $ref: '#/components/schemas/DeploymentSize'
         clusterId:
           type: string
           readOnly: true
+          nullable: true
         mzVersion:
           type: string
           title: Materialize version
@@ -360,13 +364,7 @@ components:
       type: object
       properties:
         size:
-          enum:
-            - XS
-            - S
-            - M
-            - L
-            - XL
-          type: string
+          $ref: '#/components/schemas/DeploymentSize'
         mzVersion:
           type: string
           title: Materialize version
@@ -376,13 +374,7 @@ components:
       type: object
       properties:
         size:
-          enum:
-            - XS
-            - S
-            - M
-            - L
-            - XL
-          type: string
+          $ref: '#/components/schemas/DeploymentSize'
         mzVersion:
           type: string
           title: Materialize version

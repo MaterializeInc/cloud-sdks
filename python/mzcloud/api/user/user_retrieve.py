@@ -10,27 +10,14 @@ from typing import cast
 from ...models.user import User
 
 
-
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
-
 ) -> Dict[str, Any]:
-    url = "{}/api/user".format(
-        client.base_url)
+    url = "{}/api/user".format(client.base_url)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
-
-    
-
-    
-
-    
-
-    
-
-    
 
     return {
         "url": url,
@@ -43,8 +30,6 @@ def _get_kwargs(
 def _parse_response(*, response: httpx.Response) -> Optional[User]:
     if response.status_code == 200:
         response_200 = User.from_dict(response.json())
-
-
 
         return response_200
     return None
@@ -62,11 +47,9 @@ def _build_response(*, response: httpx.Response) -> Response[User]:
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-
 ) -> Response[User]:
     kwargs = _get_kwargs(
         client=client,
-
     )
 
     response = httpx.get(
@@ -75,43 +58,40 @@ def sync_detailed(
 
     return _build_response(response=response)
 
+
 def sync(
     *,
     client: AuthenticatedClient,
-
 ) -> Optional[User]:
     """ Fetch details about the currently-authenticated user. """
 
     return sync_detailed(
         client=client,
-
     ).parsed
+
 
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-
 ) -> Response[User]:
     kwargs = _get_kwargs(
         client=client,
-
     )
 
     async with httpx.AsyncClient() as _client:
-        response = await _client.get(
-            **kwargs
-        )
+        response = await _client.get(**kwargs)
 
     return _build_response(response=response)
+
 
 async def asyncio(
     *,
     client: AuthenticatedClient,
-
 ) -> Optional[User]:
     """ Fetch details about the currently-authenticated user. """
 
-    return (await asyncio_detailed(
-        client=client,
-
-    )).parsed
+    return (
+        await asyncio_detailed(
+            client=client,
+        )
+    ).parsed

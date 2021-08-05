@@ -22,15 +22,15 @@ pub struct Deployment {
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "hostname")]
-    pub hostname: String,
+    pub hostname: Option<String>,
     #[serde(rename = "flaggedForDeletion")]
     pub flagged_for_deletion: bool,
     #[serde(rename = "flaggedForUpdate")]
     pub flagged_for_update: bool,
     #[serde(rename = "size", skip_serializing_if = "Option::is_none")]
-    pub size: Option<Size>,
+    pub size: Option<crate::models::DeploymentSize>,
     #[serde(rename = "clusterId")]
-    pub cluster_id: String,
+    pub cluster_id: Option<String>,
     #[serde(rename = "mzVersion")]
     pub mz_version: String,
     #[serde(rename = "pendingMigration")]
@@ -40,7 +40,7 @@ pub struct Deployment {
 }
 
 impl Deployment {
-    pub fn new(id: String, organization: String, tls_authority: String, name: String, hostname: String, flagged_for_deletion: bool, flagged_for_update: bool, cluster_id: String, mz_version: String, pending_migration: Option<crate::models::PendingMigration>, statefulset_status: String) -> Deployment {
+    pub fn new(id: String, organization: String, tls_authority: String, name: String, hostname: Option<String>, flagged_for_deletion: bool, flagged_for_update: bool, cluster_id: Option<String>, mz_version: String, pending_migration: Option<crate::models::PendingMigration>, statefulset_status: String) -> Deployment {
         Deployment {
             id,
             organization,
@@ -58,18 +58,4 @@ impl Deployment {
     }
 }
 
-/// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum Size {
-    #[serde(rename = "XS")]
-    XS,
-    #[serde(rename = "S")]
-    S,
-    #[serde(rename = "M")]
-    M,
-    #[serde(rename = "L")]
-    L,
-    #[serde(rename = "XL")]
-    XL,
-}
 

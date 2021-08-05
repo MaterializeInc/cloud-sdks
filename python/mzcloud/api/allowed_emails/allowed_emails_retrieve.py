@@ -6,29 +6,15 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 
 
-
-
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
     email: str,
-
 ) -> Dict[str, Any]:
-    url = "{}/api/allowed-emails/{email}".format(
-        client.base_url,email=email)
+    url = "{}/api/allowed-emails/{email}".format(client.base_url, email=email)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
-
-    
-
-    
-
-    
-
-    
-
-    
 
     return {
         "url": url,
@@ -58,12 +44,10 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     email: str,
-
 ) -> Response[bool]:
     kwargs = _get_kwargs(
         client=client,
-email=email,
-
+        email=email,
     )
 
     response = httpx.get(
@@ -72,51 +56,48 @@ email=email,
 
     return _build_response(response=response)
 
+
 def sync(
     *,
     client: AuthenticatedClient,
     email: str,
-
 ) -> Optional[bool]:
-    """ Report whether the specified email address is allowed to sign up for
-Materialize Cloud. """
+    """Report whether the specified email address is allowed to sign up for
+    Materialize Cloud."""
 
     return sync_detailed(
         client=client,
-email=email,
-
+        email=email,
     ).parsed
+
 
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     email: str,
-
 ) -> Response[bool]:
     kwargs = _get_kwargs(
         client=client,
-email=email,
-
+        email=email,
     )
 
     async with httpx.AsyncClient() as _client:
-        response = await _client.get(
-            **kwargs
-        )
+        response = await _client.get(**kwargs)
 
     return _build_response(response=response)
+
 
 async def asyncio(
     *,
     client: AuthenticatedClient,
     email: str,
-
 ) -> Optional[bool]:
-    """ Report whether the specified email address is allowed to sign up for
-Materialize Cloud. """
+    """Report whether the specified email address is allowed to sign up for
+    Materialize Cloud."""
 
-    return (await asyncio_detailed(
-        client=client,
-email=email,
-
-    )).parsed
+    return (
+        await asyncio_detailed(
+            client=client,
+            email=email,
+        )
+    ).parsed

@@ -2,10 +2,8 @@
 
 from .deployment import Deployment
 from .deployment_request import DeploymentRequest
-from .deployment_request_size import DeploymentRequestSize
 from .deployment_size import DeploymentSize
 from .patched_deployment_request import PatchedDeploymentRequest
-from .patched_deployment_request_size import PatchedDeploymentRequestSize
 from .pending_migration import PendingMigration
 from .pending_migration_request import PendingMigrationRequest
 from .schema_retrieve_format import SchemaRetrieveFormat
