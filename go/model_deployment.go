@@ -20,11 +20,11 @@ type Deployment struct {
 	Organization string `json:"organization"`
 	TlsAuthority string `json:"tlsAuthority"`
 	Name string `json:"name"`
-	Hostname string `json:"hostname"`
+	Hostname NullableString `json:"hostname"`
 	FlaggedForDeletion bool `json:"flaggedForDeletion"`
 	FlaggedForUpdate bool `json:"flaggedForUpdate"`
-	Size *string `json:"size,omitempty"`
-	ClusterId string `json:"clusterId"`
+	Size *DeploymentSize `json:"size,omitempty"`
+	ClusterId NullableString `json:"clusterId"`
 	MzVersion string `json:"mzVersion"`
 	PendingMigration NullablePendingMigration `json:"pendingMigration"`
 	StatefulsetStatus string `json:"statefulsetStatus"`
@@ -34,7 +34,7 @@ type Deployment struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDeployment(id string, organization string, tlsAuthority string, name string, hostname string, flaggedForDeletion bool, flaggedForUpdate bool, clusterId string, mzVersion string, pendingMigration NullablePendingMigration, statefulsetStatus string) *Deployment {
+func NewDeployment(id string, organization string, tlsAuthority string, name string, hostname NullableString, flaggedForDeletion bool, flaggedForUpdate bool, clusterId NullableString, mzVersion string, pendingMigration NullablePendingMigration, statefulsetStatus string) *Deployment {
 	this := Deployment{}
 	this.Id = id
 	this.Organization = organization
@@ -155,27 +155,29 @@ func (o *Deployment) SetName(v string) {
 }
 
 // GetHostname returns the Hostname field value
+// If the value is explicit nil, the zero value for string will be returned
 func (o *Deployment) GetHostname() string {
-	if o == nil {
+	if o == nil || o.Hostname.Get() == nil {
 		var ret string
 		return ret
 	}
 
-	return o.Hostname
+	return *o.Hostname.Get()
 }
 
 // GetHostnameOk returns a tuple with the Hostname field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Deployment) GetHostnameOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
-	return &o.Hostname, true
+	return o.Hostname.Get(), o.Hostname.IsSet()
 }
 
 // SetHostname sets field value
 func (o *Deployment) SetHostname(v string) {
-	o.Hostname = v
+	o.Hostname.Set(&v)
 }
 
 // GetFlaggedForDeletion returns the FlaggedForDeletion field value
@@ -227,9 +229,9 @@ func (o *Deployment) SetFlaggedForUpdate(v bool) {
 }
 
 // GetSize returns the Size field value if set, zero value otherwise.
-func (o *Deployment) GetSize() string {
+func (o *Deployment) GetSize() DeploymentSize {
 	if o == nil || o.Size == nil {
-		var ret string
+		var ret DeploymentSize
 		return ret
 	}
 	return *o.Size
@@ -237,7 +239,7 @@ func (o *Deployment) GetSize() string {
 
 // GetSizeOk returns a tuple with the Size field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Deployment) GetSizeOk() (*string, bool) {
+func (o *Deployment) GetSizeOk() (*DeploymentSize, bool) {
 	if o == nil || o.Size == nil {
 		return nil, false
 	}
@@ -253,33 +255,35 @@ func (o *Deployment) HasSize() bool {
 	return false
 }
 
-// SetSize gets a reference to the given string and assigns it to the Size field.
-func (o *Deployment) SetSize(v string) {
+// SetSize gets a reference to the given DeploymentSize and assigns it to the Size field.
+func (o *Deployment) SetSize(v DeploymentSize) {
 	o.Size = &v
 }
 
 // GetClusterId returns the ClusterId field value
+// If the value is explicit nil, the zero value for string will be returned
 func (o *Deployment) GetClusterId() string {
-	if o == nil {
+	if o == nil || o.ClusterId.Get() == nil {
 		var ret string
 		return ret
 	}
 
-	return o.ClusterId
+	return *o.ClusterId.Get()
 }
 
 // GetClusterIdOk returns a tuple with the ClusterId field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Deployment) GetClusterIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
-	return &o.ClusterId, true
+	return o.ClusterId.Get(), o.ClusterId.IsSet()
 }
 
 // SetClusterId sets field value
 func (o *Deployment) SetClusterId(v string) {
-	o.ClusterId = v
+	o.ClusterId.Set(&v)
 }
 
 // GetMzVersion returns the MzVersion field value
@@ -371,7 +375,7 @@ func (o Deployment) MarshalJSON() ([]byte, error) {
 		toSerialize["name"] = o.Name
 	}
 	if true {
-		toSerialize["hostname"] = o.Hostname
+		toSerialize["hostname"] = o.Hostname.Get()
 	}
 	if true {
 		toSerialize["flaggedForDeletion"] = o.FlaggedForDeletion
@@ -383,7 +387,7 @@ func (o Deployment) MarshalJSON() ([]byte, error) {
 		toSerialize["size"] = o.Size
 	}
 	if true {
-		toSerialize["clusterId"] = o.ClusterId
+		toSerialize["clusterId"] = o.ClusterId.Get()
 	}
 	if true {
 		toSerialize["mzVersion"] = o.MzVersion

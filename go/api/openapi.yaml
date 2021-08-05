@@ -304,12 +304,19 @@ paths:
       - user
 components:
   schemas:
+    DeploymentSize:
+      enum:
+      - XS
+      - S
+      - M
+      - L
+      - XL
+      type: string
     Deployment:
       example:
         flaggedForUpdate: true
         hostname: hostname
         flaggedForDeletion: true
-        size: XS
         pendingMigration: ""
         tlsAuthority: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         statefulsetStatus: statefulsetStatus
@@ -334,6 +341,7 @@ components:
           readOnly: true
           type: string
         hostname:
+          nullable: true
           readOnly: true
           type: string
         flaggedForDeletion:
@@ -343,14 +351,9 @@ components:
           readOnly: true
           type: boolean
         size:
-          enum:
-          - XS
-          - S
-          - M
-          - L
-          - XL
-          type: string
+          $ref: '#/components/schemas/DeploymentSize'
         clusterId:
+          nullable: true
           readOnly: true
           type: string
         mzVersion:
@@ -379,17 +382,10 @@ components:
       type: object
     DeploymentRequest:
       example:
-        size: XS
         mzVersion: mzVersion
       properties:
         size:
-          enum:
-          - XS
-          - S
-          - M
-          - L
-          - XL
-          type: string
+          $ref: '#/components/schemas/DeploymentSize'
         mzVersion:
           title: Materialize version
           type: string
@@ -398,17 +394,10 @@ components:
       type: object
     PatchedDeploymentRequest:
       example:
-        size: XS
         mzVersion: mzVersion
       properties:
         size:
-          enum:
-          - XS
-          - S
-          - M
-          - L
-          - XL
-          type: string
+          $ref: '#/components/schemas/DeploymentSize'
         mzVersion:
           title: Materialize version
           type: string

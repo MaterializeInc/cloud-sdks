@@ -43,6 +43,7 @@ Class | Method | HTTP request | Description
 
  - [Deployment](docs/Deployment.md)
  - [DeploymentRequest](docs/DeploymentRequest.md)
+ - [DeploymentSize](docs/DeploymentSize.md)
  - [PatchedDeploymentRequest](docs/PatchedDeploymentRequest.md)
  - [PendingMigration](docs/PendingMigration.md)
  - [PendingMigrationRequest](docs/PendingMigrationRequest.md)

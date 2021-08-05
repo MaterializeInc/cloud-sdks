@@ -8,19 +8,17 @@ import attr
 from ..types import UNSET, Unset
 
 
-
-
-
 T = TypeVar("T", bound="User")
+
 
 @attr.s(auto_attribs=True)
 class User:
     """  """
+
     cognito_sub: str
     name: str
     email: str
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
-
 
     def to_dict(self) -> Dict[str, Any]:
         cognito_sub = self.cognito_sub
@@ -29,15 +27,15 @@ class User:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({
-            "cognitoSub": cognito_sub,
-            "name": name,
-            "email": email,
-        })
+        field_dict.update(
+            {
+                "cognitoSub": cognito_sub,
+                "name": name,
+                "email": email,
+            }
+        )
 
         return field_dict
-
-
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:

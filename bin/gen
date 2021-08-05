@@ -20,6 +20,7 @@ set -euo pipefail
 gen() {
     docker run \
         --rm \
+        --user $(id -u):$(id -g) \
         -v $PWD:/work \
         openapitools/openapi-generator:cli-v5.2.0 generate \
         -i /work/schema.yml \
@@ -34,7 +35,7 @@ gen_go() {
     rm -rf go
     gen -g go -o /work/go --package-name mzcloud --git-user-id MaterializeInc --git-repo-id cloud-sdks
     (cd go && rm_standard && rm -rf go/api && go mod tidy \
-        && sed -i .bak 's,cloud-sdks,cloud-sdks/go,' go.mod)
+        && sed -i.bak 's,cloud-sdks,cloud-sdks/go,' go.mod)
 }
 
 gen_python() {

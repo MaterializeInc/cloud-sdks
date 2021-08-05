@@ -8,36 +8,35 @@ import attr
 from ..types import UNSET, Unset
 
 from dateutil.parser import isoparse
-from typing import cast
 import datetime
-
-
+from typing import cast
 
 
 T = TypeVar("T", bound="PendingMigration")
 
+
 @attr.s(auto_attribs=True)
 class PendingMigration:
     """  """
+
     description: str
     deadline: datetime.date
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-
     def to_dict(self) -> Dict[str, Any]:
         description = self.description
-        deadline = self.deadline.isoformat() 
+        deadline = self.deadline.isoformat()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({
-            "description": description,
-            "deadline": deadline,
-        })
+        field_dict.update(
+            {
+                "description": description,
+                "deadline": deadline,
+            }
+        )
 
         return field_dict
-
-
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
@@ -45,9 +44,6 @@ class PendingMigration:
         description = d.pop("description")
 
         deadline = isoparse(d.pop("deadline")).date()
-
-
-
 
         pending_migration = cls(
             description=description,

@@ -6,28 +6,14 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 
 
-
-
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
-
 ) -> Dict[str, Any]:
-    url = "{}/api/health".format(
-        client.base_url)
+    url = "{}/api/health".format(client.base_url)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
-
-    
-
-    
-
-    
-
-    
-
-    
 
     return {
         "url": url,
@@ -35,8 +21,6 @@ def _get_kwargs(
         "cookies": cookies,
         "timeout": client.get_timeout(),
     }
-
-
 
 
 def _build_response(*, response: httpx.Response) -> Response[Any]:
@@ -51,11 +35,9 @@ def _build_response(*, response: httpx.Response) -> Response[Any]:
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-
 ) -> Response[Any]:
     kwargs = _get_kwargs(
         client=client,
-
     )
 
     response = httpx.get(
@@ -68,17 +50,12 @@ def sync_detailed(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-
 ) -> Response[Any]:
     kwargs = _get_kwargs(
         client=client,
-
     )
 
     async with httpx.AsyncClient() as _client:
-        response = await _client.get(
-            **kwargs
-        )
+        response = await _client.get(**kwargs)
 
     return _build_response(response=response)
-

@@ -14,7 +14,7 @@
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct DeploymentRequest {
     #[serde(rename = "size", skip_serializing_if = "Option::is_none")]
-    pub size: Option<Size>,
+    pub size: Option<crate::models::DeploymentSize>,
     #[serde(rename = "mzVersion")]
     pub mz_version: String,
 }
@@ -28,18 +28,4 @@ impl DeploymentRequest {
     }
 }
 
-/// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum Size {
-    #[serde(rename = "XS")]
-    XS,
-    #[serde(rename = "S")]
-    S,
-    #[serde(rename = "M")]
-    M,
-    #[serde(rename = "L")]
-    L,
-    #[serde(rename = "XL")]
-    XL,
-}
 
