@@ -16,7 +16,9 @@ import (
 
 // PatchedDeploymentRequest struct for PatchedDeploymentRequest
 type PatchedDeploymentRequest struct {
-	Size *DeploymentSize `json:"size,omitempty"`
+	Size *SizeEnum `json:"size,omitempty"`
+	StorageMb *int32 `json:"storageMb,omitempty"`
+	MaterializedExtraArgs *[]string `json:"materializedExtraArgs,omitempty"`
 	MzVersion *string `json:"mzVersion,omitempty"`
 }
 
@@ -26,6 +28,8 @@ type PatchedDeploymentRequest struct {
 // will change when the set of required properties is changed
 func NewPatchedDeploymentRequest() *PatchedDeploymentRequest {
 	this := PatchedDeploymentRequest{}
+	var storageMb int32 = 100
+	this.StorageMb = &storageMb
 	return &this
 }
 
@@ -34,13 +38,15 @@ func NewPatchedDeploymentRequest() *PatchedDeploymentRequest {
 // but it doesn't guarantee that properties required by API are set
 func NewPatchedDeploymentRequestWithDefaults() *PatchedDeploymentRequest {
 	this := PatchedDeploymentRequest{}
+	var storageMb int32 = 100
+	this.StorageMb = &storageMb
 	return &this
 }
 
 // GetSize returns the Size field value if set, zero value otherwise.
-func (o *PatchedDeploymentRequest) GetSize() DeploymentSize {
+func (o *PatchedDeploymentRequest) GetSize() SizeEnum {
 	if o == nil || o.Size == nil {
-		var ret DeploymentSize
+		var ret SizeEnum
 		return ret
 	}
 	return *o.Size
@@ -48,7 +54,7 @@ func (o *PatchedDeploymentRequest) GetSize() DeploymentSize {
 
 // GetSizeOk returns a tuple with the Size field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PatchedDeploymentRequest) GetSizeOk() (*DeploymentSize, bool) {
+func (o *PatchedDeploymentRequest) GetSizeOk() (*SizeEnum, bool) {
 	if o == nil || o.Size == nil {
 		return nil, false
 	}
@@ -64,9 +70,73 @@ func (o *PatchedDeploymentRequest) HasSize() bool {
 	return false
 }
 
-// SetSize gets a reference to the given DeploymentSize and assigns it to the Size field.
-func (o *PatchedDeploymentRequest) SetSize(v DeploymentSize) {
+// SetSize gets a reference to the given SizeEnum and assigns it to the Size field.
+func (o *PatchedDeploymentRequest) SetSize(v SizeEnum) {
 	o.Size = &v
+}
+
+// GetStorageMb returns the StorageMb field value if set, zero value otherwise.
+func (o *PatchedDeploymentRequest) GetStorageMb() int32 {
+	if o == nil || o.StorageMb == nil {
+		var ret int32
+		return ret
+	}
+	return *o.StorageMb
+}
+
+// GetStorageMbOk returns a tuple with the StorageMb field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PatchedDeploymentRequest) GetStorageMbOk() (*int32, bool) {
+	if o == nil || o.StorageMb == nil {
+		return nil, false
+	}
+	return o.StorageMb, true
+}
+
+// HasStorageMb returns a boolean if a field has been set.
+func (o *PatchedDeploymentRequest) HasStorageMb() bool {
+	if o != nil && o.StorageMb != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetStorageMb gets a reference to the given int32 and assigns it to the StorageMb field.
+func (o *PatchedDeploymentRequest) SetStorageMb(v int32) {
+	o.StorageMb = &v
+}
+
+// GetMaterializedExtraArgs returns the MaterializedExtraArgs field value if set, zero value otherwise.
+func (o *PatchedDeploymentRequest) GetMaterializedExtraArgs() []string {
+	if o == nil || o.MaterializedExtraArgs == nil {
+		var ret []string
+		return ret
+	}
+	return *o.MaterializedExtraArgs
+}
+
+// GetMaterializedExtraArgsOk returns a tuple with the MaterializedExtraArgs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PatchedDeploymentRequest) GetMaterializedExtraArgsOk() (*[]string, bool) {
+	if o == nil || o.MaterializedExtraArgs == nil {
+		return nil, false
+	}
+	return o.MaterializedExtraArgs, true
+}
+
+// HasMaterializedExtraArgs returns a boolean if a field has been set.
+func (o *PatchedDeploymentRequest) HasMaterializedExtraArgs() bool {
+	if o != nil && o.MaterializedExtraArgs != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetMaterializedExtraArgs gets a reference to the given []string and assigns it to the MaterializedExtraArgs field.
+func (o *PatchedDeploymentRequest) SetMaterializedExtraArgs(v []string) {
+	o.MaterializedExtraArgs = &v
 }
 
 // GetMzVersion returns the MzVersion field value if set, zero value otherwise.
@@ -105,6 +175,12 @@ func (o PatchedDeploymentRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Size != nil {
 		toSerialize["size"] = o.Size
+	}
+	if o.StorageMb != nil {
+		toSerialize["storageMb"] = o.StorageMb
+	}
+	if o.MaterializedExtraArgs != nil {
+		toSerialize["materializedExtraArgs"] = o.MaterializedExtraArgs
 	}
 	if o.MzVersion != nil {
 		toSerialize["mzVersion"] = o.MzVersion

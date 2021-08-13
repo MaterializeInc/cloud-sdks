@@ -14,16 +14,22 @@
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct DeploymentRequest {
     #[serde(rename = "size", skip_serializing_if = "Option::is_none")]
-    pub size: Option<crate::models::DeploymentSize>,
-    #[serde(rename = "mzVersion")]
-    pub mz_version: String,
+    pub size: Option<Box<crate::models::SizeEnum>>,
+    #[serde(rename = "storageMb", skip_serializing_if = "Option::is_none")]
+    pub storage_mb: Option<i32>,
+    #[serde(rename = "materializedExtraArgs", skip_serializing_if = "Option::is_none")]
+    pub materialized_extra_args: Option<Vec<String>>,
+    #[serde(rename = "mzVersion", skip_serializing_if = "Option::is_none")]
+    pub mz_version: Option<String>,
 }
 
 impl DeploymentRequest {
-    pub fn new(mz_version: String) -> DeploymentRequest {
+    pub fn new() -> DeploymentRequest {
         DeploymentRequest {
             size: None,
-            mz_version,
+            storage_mb: None,
+            materialized_extra_args: None,
+            mz_version: None,
         }
     }
 }

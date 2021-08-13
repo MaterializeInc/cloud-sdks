@@ -103,7 +103,7 @@ pub async fn deployments_certs_retrieve(configuration: &configuration::Configura
 }
 
 /// Create a new deployment.
-pub async fn deployments_create(configuration: &configuration::Configuration, deployment_request: crate::models::DeploymentRequest) -> Result<crate::models::Deployment, Error<DeploymentsCreateError>> {
+pub async fn deployments_create(configuration: &configuration::Configuration, deployment_request: Option<crate::models::DeploymentRequest>) -> Result<crate::models::Deployment, Error<DeploymentsCreateError>> {
 
     let local_var_client = &configuration.client;
 
@@ -285,7 +285,7 @@ pub async fn deployments_retrieve(configuration: &configuration::Configuration, 
 }
 
 /// Update a deployment.
-pub async fn deployments_update(configuration: &configuration::Configuration, id: &str, deployment_request: crate::models::DeploymentRequest) -> Result<crate::models::Deployment, Error<DeploymentsUpdateError>> {
+pub async fn deployments_update(configuration: &configuration::Configuration, id: &str, deployment_request: Option<crate::models::DeploymentRequest>) -> Result<crate::models::Deployment, Error<DeploymentsUpdateError>> {
 
     let local_var_client = &configuration.client;
 

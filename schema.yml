@@ -3,30 +3,6 @@ info:
   title: Materialize Cloud
   version: 0.1.0
 paths:
-  /api/allowed-emails/{email}:
-    get:
-      operationId: allowedEmailsRetrieve
-      description: |-
-        Report whether the specified email address is allowed to sign up for
-        Materialize Cloud.
-      parameters:
-        - in: path
-          name: email
-          schema:
-            type: string
-          required: true
-      tags:
-        - allowed-emails
-      security:
-        - tokenAuth: []
-        - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: boolean
-          description: ''
   /api/deployments:
     get:
       operationId: deploymentsList
@@ -54,7 +30,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/DeploymentRequest'
-        required: true
       security:
         - tokenAuth: []
       responses:
@@ -101,7 +76,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/DeploymentRequest'
-        required: true
       security:
         - tokenAuth: []
       responses:
@@ -238,6 +212,29 @@ paths:
                 items:
                   type: string
           description: ''
+  /api/organizations/{id}:
+    get:
+      operationId: organizationsRetrieve
+      description: Fetch details about a single organization.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          description: A UUID string identifying this organization.
+          required: true
+      tags:
+        - organizations
+      security:
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+          description: ''
   /api/schema:
     get:
       operationId: schemaRetrieve
@@ -279,31 +276,8 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
-  /api/user:
-    get:
-      operationId: userRetrieve
-      description: Fetch details about the currently-authenticated user.
-      tags:
-        - user
-      security:
-        - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-          description: ''
 components:
   schemas:
-    DeploymentSize:
-      enum:
-        - XS
-        - S
-        - M
-        - L
-        - XL
-      type: string
     Deployment:
       type: object
       properties:
@@ -332,14 +306,25 @@ components:
           type: boolean
           readOnly: true
         size:
-          $ref: '#/components/schemas/DeploymentSize'
+          allOf:
+            - $ref: '#/components/schemas/SizeEnum'
+          default: XS
+        storageMb:
+          type: integer
+          maximum: 1000000
+          minimum: 100
+          default: 100
+        materializedExtraArgs:
+          type: array
+          items:
+            type: string
+          title: Extra materialized arguments
         clusterId:
           type: string
           readOnly: true
           nullable: true
         mzVersion:
           type: string
-          title: Materialize version
         pendingMigration:
           allOf:
             - $ref: '#/components/schemas/PendingMigration'
@@ -354,30 +339,66 @@ components:
         - flaggedForUpdate
         - hostname
         - id
+        - materializedExtraArgs
         - mzVersion
         - name
         - organization
         - pendingMigration
+        - size
         - statefulsetStatus
+        - storageMb
         - tlsAuthority
     DeploymentRequest:
       type: object
       properties:
         size:
-          $ref: '#/components/schemas/DeploymentSize'
+          allOf:
+            - $ref: '#/components/schemas/SizeEnum'
+          default: XS
+        storageMb:
+          type: integer
+          maximum: 1000000
+          minimum: 100
+          default: 100
+        materializedExtraArgs:
+          type: array
+          items:
+            type: string
+          title: Extra materialized arguments
         mzVersion:
           type: string
-          title: Materialize version
+    Organization:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        deploymentLimit:
+          type: integer
+          readOnly: true
       required:
-        - mzVersion
+        - deploymentLimit
+        - id
     PatchedDeploymentRequest:
       type: object
       properties:
         size:
-          $ref: '#/components/schemas/DeploymentSize'
+          allOf:
+            - $ref: '#/components/schemas/SizeEnum'
+          default: XS
+        storageMb:
+          type: integer
+          maximum: 1000000
+          minimum: 100
+          default: 100
+        materializedExtraArgs:
+          type: array
+          items:
+            type: string
+          title: Extra materialized arguments
         mzVersion:
           type: string
-          title: Materialize version
     PendingMigration:
       type: object
       properties:
@@ -400,26 +421,14 @@ components:
       required:
         - deadline
         - description
-    User:
-      type: object
-      properties:
-        cognitoSub:
-          type: string
-          format: uuid
-          readOnly: true
-          title: Cognito subject
-          description: The unique ID assigned to this user by AWS Cognito.
-        name:
-          type: string
-          maxLength: 64
-        email:
-          type: string
-          format: email
-          maxLength: 254
-      required:
-        - cognitoSub
-        - email
-        - name
+    SizeEnum:
+      enum:
+        - XS
+        - S
+        - M
+        - L
+        - XL
+      type: string
   securitySchemes:
     tokenAuth:
       type: http

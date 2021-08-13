@@ -6,19 +6,32 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 
 from typing import Dict
+from typing import cast
 from ...models.deployment import Deployment
 from typing import cast, List
-from typing import cast
+
 
 
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
+
 ) -> Dict[str, Any]:
-    url = "{}/api/deployments".format(client.base_url)
+    url = "{}/api/deployments".format(
+        client.base_url)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
+
+    
+
+    
+
+    
+
+    
+
+    
 
     return {
         "url": url,
@@ -32,8 +45,10 @@ def _parse_response(*, response: httpx.Response) -> Optional[List[Deployment]]:
     if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
-        for response_200_item_data in _response_200:
+        for response_200_item_data in (_response_200):
             response_200_item = Deployment.from_dict(response_200_item_data)
+
+
 
             response_200.append(response_200_item)
 
@@ -53,9 +68,11 @@ def _build_response(*, response: httpx.Response) -> Response[List[Deployment]]:
 def sync_detailed(
     *,
     client: AuthenticatedClient,
+
 ) -> Response[List[Deployment]]:
     kwargs = _get_kwargs(
         client=client,
+
     )
 
     response = httpx.get(
@@ -64,40 +81,43 @@ def sync_detailed(
 
     return _build_response(response=response)
 
-
 def sync(
     *,
     client: AuthenticatedClient,
+
 ) -> Optional[List[Deployment]]:
     """ List the available deployments. """
 
     return sync_detailed(
         client=client,
-    ).parsed
 
+    ).parsed
 
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
+
 ) -> Response[List[Deployment]]:
     kwargs = _get_kwargs(
         client=client,
+
     )
 
     async with httpx.AsyncClient() as _client:
-        response = await _client.get(**kwargs)
+        response = await _client.get(
+            **kwargs
+        )
 
     return _build_response(response=response)
-
 
 async def asyncio(
     *,
     client: AuthenticatedClient,
+
 ) -> Optional[List[Deployment]]:
     """ List the available deployments. """
 
-    return (
-        await asyncio_detailed(
-            client=client,
-        )
-    ).parsed
+    return (await asyncio_detailed(
+        client=client,
+
+    )).parsed

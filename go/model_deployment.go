@@ -23,7 +23,9 @@ type Deployment struct {
 	Hostname NullableString `json:"hostname"`
 	FlaggedForDeletion bool `json:"flaggedForDeletion"`
 	FlaggedForUpdate bool `json:"flaggedForUpdate"`
-	Size *DeploymentSize `json:"size,omitempty"`
+	Size SizeEnum `json:"size"`
+	StorageMb int32 `json:"storageMb"`
+	MaterializedExtraArgs []string `json:"materializedExtraArgs"`
 	ClusterId NullableString `json:"clusterId"`
 	MzVersion string `json:"mzVersion"`
 	PendingMigration NullablePendingMigration `json:"pendingMigration"`
@@ -34,7 +36,7 @@ type Deployment struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDeployment(id string, organization string, tlsAuthority string, name string, hostname NullableString, flaggedForDeletion bool, flaggedForUpdate bool, clusterId NullableString, mzVersion string, pendingMigration NullablePendingMigration, statefulsetStatus string) *Deployment {
+func NewDeployment(id string, organization string, tlsAuthority string, name string, hostname NullableString, flaggedForDeletion bool, flaggedForUpdate bool, size SizeEnum, storageMb int32, materializedExtraArgs []string, clusterId NullableString, mzVersion string, pendingMigration NullablePendingMigration, statefulsetStatus string) *Deployment {
 	this := Deployment{}
 	this.Id = id
 	this.Organization = organization
@@ -43,6 +45,9 @@ func NewDeployment(id string, organization string, tlsAuthority string, name str
 	this.Hostname = hostname
 	this.FlaggedForDeletion = flaggedForDeletion
 	this.FlaggedForUpdate = flaggedForUpdate
+	this.Size = size
+	this.StorageMb = storageMb
+	this.MaterializedExtraArgs = materializedExtraArgs
 	this.ClusterId = clusterId
 	this.MzVersion = mzVersion
 	this.PendingMigration = pendingMigration
@@ -55,6 +60,8 @@ func NewDeployment(id string, organization string, tlsAuthority string, name str
 // but it doesn't guarantee that properties required by API are set
 func NewDeploymentWithDefaults() *Deployment {
 	this := Deployment{}
+	var storageMb int32 = 100
+	this.StorageMb = storageMb
 	return &this
 }
 
@@ -228,36 +235,76 @@ func (o *Deployment) SetFlaggedForUpdate(v bool) {
 	o.FlaggedForUpdate = v
 }
 
-// GetSize returns the Size field value if set, zero value otherwise.
-func (o *Deployment) GetSize() DeploymentSize {
-	if o == nil || o.Size == nil {
-		var ret DeploymentSize
+// GetSize returns the Size field value
+func (o *Deployment) GetSize() SizeEnum {
+	if o == nil {
+		var ret SizeEnum
 		return ret
 	}
-	return *o.Size
+
+	return o.Size
 }
 
-// GetSizeOk returns a tuple with the Size field value if set, nil otherwise
+// GetSizeOk returns a tuple with the Size field value
 // and a boolean to check if the value has been set.
-func (o *Deployment) GetSizeOk() (*DeploymentSize, bool) {
-	if o == nil || o.Size == nil {
+func (o *Deployment) GetSizeOk() (*SizeEnum, bool) {
+	if o == nil  {
 		return nil, false
 	}
-	return o.Size, true
+	return &o.Size, true
 }
 
-// HasSize returns a boolean if a field has been set.
-func (o *Deployment) HasSize() bool {
-	if o != nil && o.Size != nil {
-		return true
+// SetSize sets field value
+func (o *Deployment) SetSize(v SizeEnum) {
+	o.Size = v
+}
+
+// GetStorageMb returns the StorageMb field value
+func (o *Deployment) GetStorageMb() int32 {
+	if o == nil {
+		var ret int32
+		return ret
 	}
 
-	return false
+	return o.StorageMb
 }
 
-// SetSize gets a reference to the given DeploymentSize and assigns it to the Size field.
-func (o *Deployment) SetSize(v DeploymentSize) {
-	o.Size = &v
+// GetStorageMbOk returns a tuple with the StorageMb field value
+// and a boolean to check if the value has been set.
+func (o *Deployment) GetStorageMbOk() (*int32, bool) {
+	if o == nil  {
+		return nil, false
+	}
+	return &o.StorageMb, true
+}
+
+// SetStorageMb sets field value
+func (o *Deployment) SetStorageMb(v int32) {
+	o.StorageMb = v
+}
+
+// GetMaterializedExtraArgs returns the MaterializedExtraArgs field value
+func (o *Deployment) GetMaterializedExtraArgs() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+
+	return o.MaterializedExtraArgs
+}
+
+// GetMaterializedExtraArgsOk returns a tuple with the MaterializedExtraArgs field value
+// and a boolean to check if the value has been set.
+func (o *Deployment) GetMaterializedExtraArgsOk() (*[]string, bool) {
+	if o == nil  {
+		return nil, false
+	}
+	return &o.MaterializedExtraArgs, true
+}
+
+// SetMaterializedExtraArgs sets field value
+func (o *Deployment) SetMaterializedExtraArgs(v []string) {
+	o.MaterializedExtraArgs = v
 }
 
 // GetClusterId returns the ClusterId field value
@@ -383,8 +430,14 @@ func (o Deployment) MarshalJSON() ([]byte, error) {
 	if true {
 		toSerialize["flaggedForUpdate"] = o.FlaggedForUpdate
 	}
-	if o.Size != nil {
+	if true {
 		toSerialize["size"] = o.Size
+	}
+	if true {
+		toSerialize["storageMb"] = o.StorageMb
+	}
+	if true {
+		toSerialize["materializedExtraArgs"] = o.MaterializedExtraArgs
 	}
 	if true {
 		toSerialize["clusterId"] = o.ClusterId.Get()

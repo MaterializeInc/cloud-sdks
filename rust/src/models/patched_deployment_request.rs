@@ -14,7 +14,11 @@
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct PatchedDeploymentRequest {
     #[serde(rename = "size", skip_serializing_if = "Option::is_none")]
-    pub size: Option<crate::models::DeploymentSize>,
+    pub size: Option<Box<crate::models::SizeEnum>>,
+    #[serde(rename = "storageMb", skip_serializing_if = "Option::is_none")]
+    pub storage_mb: Option<i32>,
+    #[serde(rename = "materializedExtraArgs", skip_serializing_if = "Option::is_none")]
+    pub materialized_extra_args: Option<Vec<String>>,
     #[serde(rename = "mzVersion", skip_serializing_if = "Option::is_none")]
     pub mz_version: Option<String>,
 }
@@ -23,6 +27,8 @@ impl PatchedDeploymentRequest {
     pub fn new() -> PatchedDeploymentRequest {
         PatchedDeploymentRequest {
             size: None,
+            storage_mb: None,
+            materialized_extra_args: None,
             mz_version: None,
         }
     }

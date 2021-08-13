@@ -16,6 +16,7 @@ import (
 	_ioutil "io/ioutil"
 	_nethttp "net/http"
 	_neturl "net/url"
+	"strings"
 )
 
 // Linger please
@@ -23,52 +24,56 @@ var (
 	_ _context.Context
 )
 
-// UserApiService UserApi service
-type UserApiService service
+// OrganizationsApiService OrganizationsApi service
+type OrganizationsApiService service
 
-type ApiUserRetrieveRequest struct {
+type ApiOrganizationsRetrieveRequest struct {
 	ctx _context.Context
-	ApiService *UserApiService
+	ApiService *OrganizationsApiService
+	id string
 }
 
 
-func (r ApiUserRetrieveRequest) Execute() (User, *_nethttp.Response, error) {
-	return r.ApiService.UserRetrieveExecute(r)
+func (r ApiOrganizationsRetrieveRequest) Execute() (Organization, *_nethttp.Response, error) {
+	return r.ApiService.OrganizationsRetrieveExecute(r)
 }
 
 /*
- * UserRetrieve Method for UserRetrieve
- * Fetch details about the currently-authenticated user.
+ * OrganizationsRetrieve Method for OrganizationsRetrieve
+ * Fetch details about a single organization.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @return ApiUserRetrieveRequest
+ * @param id A UUID string identifying this organization.
+ * @return ApiOrganizationsRetrieveRequest
  */
-func (a *UserApiService) UserRetrieve(ctx _context.Context) ApiUserRetrieveRequest {
-	return ApiUserRetrieveRequest{
+func (a *OrganizationsApiService) OrganizationsRetrieve(ctx _context.Context, id string) ApiOrganizationsRetrieveRequest {
+	return ApiOrganizationsRetrieveRequest{
 		ApiService: a,
 		ctx: ctx,
+		id: id,
 	}
 }
 
 /*
  * Execute executes the request
- * @return User
+ * @return Organization
  */
-func (a *UserApiService) UserRetrieveExecute(r ApiUserRetrieveRequest) (User, *_nethttp.Response, error) {
+func (a *OrganizationsApiService) OrganizationsRetrieveExecute(r ApiOrganizationsRetrieveRequest) (Organization, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  User
+		localVarReturnValue  Organization
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UserApiService.UserRetrieve")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationsApiService.OrganizationsRetrieve")
 	if err != nil {
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/user"
+	localVarPath := localBasePath + "/api/organizations/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}

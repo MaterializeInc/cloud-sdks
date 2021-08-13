@@ -24,7 +24,6 @@ All URIs are relative to *https://cloud.materialize.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AllowedEmailsApi* | [**allowed_emails_retrieve**](docs/AllowedEmailsApi.md#allowed_emails_retrieve) | **GET** /api/allowed-emails/{email} | 
 *DeploymentsApi* | [**deployments_certs_retrieve**](docs/DeploymentsApi.md#deployments_certs_retrieve) | **GET** /api/deployments/{id}/certs | 
 *DeploymentsApi* | [**deployments_create**](docs/DeploymentsApi.md#deployments_create) | **POST** /api/deployments | 
 *DeploymentsApi* | [**deployments_destroy**](docs/DeploymentsApi.md#deployments_destroy) | **DELETE** /api/deployments/{id} | 
@@ -35,19 +34,19 @@ Class | Method | HTTP request | Description
 *DeploymentsApi* | [**deployments_update**](docs/DeploymentsApi.md#deployments_update) | **PUT** /api/deployments/{id} | 
 *HealthApi* | [**health_retrieve**](docs/HealthApi.md#health_retrieve) | **GET** /api/health | 
 *MzVersionsApi* | [**mz_versions_list**](docs/MzVersionsApi.md#mz_versions_list) | **GET** /api/mz-versions | 
+*OrganizationsApi* | [**organizations_retrieve**](docs/OrganizationsApi.md#organizations_retrieve) | **GET** /api/organizations/{id} | 
 *SchemaApi* | [**schema_retrieve**](docs/SchemaApi.md#schema_retrieve) | **GET** /api/schema | 
-*UserApi* | [**user_retrieve**](docs/UserApi.md#user_retrieve) | **GET** /api/user | 
 
 
 ## Documentation For Models
 
  - [Deployment](docs/Deployment.md)
  - [DeploymentRequest](docs/DeploymentRequest.md)
- - [DeploymentSize](docs/DeploymentSize.md)
+ - [Organization](docs/Organization.md)
  - [PatchedDeploymentRequest](docs/PatchedDeploymentRequest.md)
  - [PendingMigration](docs/PendingMigration.md)
  - [PendingMigrationRequest](docs/PendingMigrationRequest.md)
- - [User](docs/User.md)
+ - [SizeEnum](docs/SizeEnum.md)
 
 
 To get access to the crate's generated documentation, use:

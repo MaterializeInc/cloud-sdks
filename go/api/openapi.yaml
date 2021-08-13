@@ -5,31 +5,6 @@ info:
 servers:
 - url: https://cloud.materialize.com
 paths:
-  /api/allowed-emails/{email}:
-    get:
-      description: |-
-        Report whether the specified email address is allowed to sign up for
-        Materialize Cloud.
-      operationId: allowedEmailsRetrieve
-      parameters:
-      - explode: false
-        in: path
-        name: email
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                type: boolean
-      security:
-      - tokenAuth: []
-      - {}
-      tags:
-      - allowed-emails
   /api/deployments:
     get:
       description: List the available deployments.
@@ -54,7 +29,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/DeploymentRequest'
-        required: true
       responses:
         "201":
           content:
@@ -147,7 +121,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/DeploymentRequest'
-        required: true
       responses:
         "200":
           content:
@@ -245,6 +218,30 @@ paths:
       - {}
       tags:
       - mz-versions
+  /api/organizations/{id}:
+    get:
+      description: Fetch details about a single organization.
+      operationId: organizationsRetrieve
+      parameters:
+      - description: A UUID string identifying this organization.
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+      security:
+      - tokenAuth: []
+      tags:
+      - organizations
   /api/schema:
     get:
       description: |-
@@ -288,43 +285,26 @@ paths:
       - {}
       tags:
       - schema
-  /api/user:
-    get:
-      description: Fetch details about the currently-authenticated user.
-      operationId: userRetrieve
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-      security:
-      - tokenAuth: []
-      tags:
-      - user
 components:
   schemas:
-    DeploymentSize:
-      enum:
-      - XS
-      - S
-      - M
-      - L
-      - XL
-      type: string
     Deployment:
       example:
         flaggedForUpdate: true
-        hostname: hostname
         flaggedForDeletion: true
         pendingMigration: ""
+        clusterId: clusterId
+        mzVersion: mzVersion
+        hostname: hostname
+        materializedExtraArgs:
+        - materializedExtraArgs
+        - materializedExtraArgs
+        size: ""
         tlsAuthority: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         statefulsetStatus: statefulsetStatus
         organization: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         name: name
+        storageMb: 80174
         id: id
-        clusterId: clusterId
-        mzVersion: mzVersion
       properties:
         id:
           readOnly: true
@@ -351,13 +331,23 @@ components:
           readOnly: true
           type: boolean
         size:
-          $ref: '#/components/schemas/DeploymentSize'
+          allOf:
+          - $ref: '#/components/schemas/SizeEnum'
+        storageMb:
+          default: 100
+          maximum: 1000000
+          minimum: 100
+          type: integer
+        materializedExtraArgs:
+          items:
+            type: string
+          title: Extra materialized arguments
+          type: array
         clusterId:
           nullable: true
           readOnly: true
           type: string
         mzVersion:
-          title: Materialize version
           type: string
         pendingMigration:
           allOf:
@@ -373,33 +363,80 @@ components:
       - flaggedForUpdate
       - hostname
       - id
+      - materializedExtraArgs
       - mzVersion
       - name
       - organization
       - pendingMigration
+      - size
       - statefulsetStatus
+      - storageMb
       - tlsAuthority
       type: object
     DeploymentRequest:
       example:
+        materializedExtraArgs:
+        - materializedExtraArgs
+        - materializedExtraArgs
+        size: ""
+        storageMb: 80174
         mzVersion: mzVersion
       properties:
         size:
-          $ref: '#/components/schemas/DeploymentSize'
+          allOf:
+          - $ref: '#/components/schemas/SizeEnum'
+        storageMb:
+          default: 100
+          maximum: 1000000
+          minimum: 100
+          type: integer
+        materializedExtraArgs:
+          items:
+            type: string
+          title: Extra materialized arguments
+          type: array
         mzVersion:
-          title: Materialize version
           type: string
+      type: object
+    Organization:
+      example:
+        deploymentLimit: 0
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        id:
+          format: uuid
+          readOnly: true
+          type: string
+        deploymentLimit:
+          readOnly: true
+          type: integer
       required:
-      - mzVersion
+      - deploymentLimit
+      - id
       type: object
     PatchedDeploymentRequest:
       example:
+        materializedExtraArgs:
+        - materializedExtraArgs
+        - materializedExtraArgs
+        size: ""
+        storageMb: 80174
         mzVersion: mzVersion
       properties:
         size:
-          $ref: '#/components/schemas/DeploymentSize'
+          allOf:
+          - $ref: '#/components/schemas/SizeEnum'
+        storageMb:
+          default: 100
+          maximum: 1000000
+          minimum: 100
+          type: integer
+        materializedExtraArgs:
+          items:
+            type: string
+          title: Extra materialized arguments
+          type: array
         mzVersion:
-          title: Materialize version
           type: string
       type: object
     PendingMigration:
@@ -424,30 +461,14 @@ components:
       - deadline
       - description
       type: object
-    User:
-      example:
-        cognitoSub: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        name: name
-        email: email
-      properties:
-        cognitoSub:
-          description: The unique ID assigned to this user by AWS Cognito.
-          format: uuid
-          readOnly: true
-          title: Cognito subject
-          type: string
-        name:
-          maxLength: 64
-          type: string
-        email:
-          format: email
-          maxLength: 254
-          type: string
-      required:
-      - cognitoSub
-      - email
-      - name
-      type: object
+    SizeEnum:
+      enum:
+      - XS
+      - S
+      - M
+      - L
+      - XL
+      type: string
   securitySchemes:
     tokenAuth:
       scheme: bearer

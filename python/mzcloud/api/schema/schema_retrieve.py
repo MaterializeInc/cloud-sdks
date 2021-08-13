@@ -5,23 +5,30 @@ import httpx
 from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 
+from typing import Dict
 from typing import cast
 from ...models.schema_retrieve_response_200 import SchemaRetrieveResponse200
-from typing import Dict
-from ...models.schema_retrieve_format import SchemaRetrieveFormat
 from ...types import UNSET, Unset
+from ...models.schema_retrieve_format import SchemaRetrieveFormat
 from typing import Union
+
 
 
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
     format_: Union[Unset, SchemaRetrieveFormat] = UNSET,
+
 ) -> Dict[str, Any]:
-    url = "{}/api/schema".format(client.base_url)
+    url = "{}/api/schema".format(
+        client.base_url)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
+
+    
+
+    
 
     json_format_: Union[Unset, str] = UNSET
     if not isinstance(format_, Unset):
@@ -31,6 +38,11 @@ def _get_kwargs(
         "format": json_format_,
     }
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+
+
+    
+
+    
 
     return {
         "url": url,
@@ -44,6 +56,8 @@ def _get_kwargs(
 def _parse_response(*, response: httpx.Response) -> Optional[SchemaRetrieveResponse200]:
     if response.status_code == 200:
         response_200 = SchemaRetrieveResponse200.from_dict(response.json())
+
+
 
         return response_200
     return None
@@ -62,10 +76,12 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     format_: Union[Unset, SchemaRetrieveFormat] = UNSET,
+
 ) -> Response[SchemaRetrieveResponse200]:
     kwargs = _get_kwargs(
         client=client,
-        format_=format_,
+format_=format_,
+
     )
 
     response = httpx.get(
@@ -74,52 +90,55 @@ def sync_detailed(
 
     return _build_response(response=response)
 
-
 def sync(
     *,
     client: AuthenticatedClient,
     format_: Union[Unset, SchemaRetrieveFormat] = UNSET,
-) -> Optional[SchemaRetrieveResponse200]:
-    """OpenApi3 schema for this API. Format can be selected via content negotiation.
 
-    - YAML: application/vnd.oai.openapi
-    - JSON: application/vnd.oai.openapi+json"""
+) -> Optional[SchemaRetrieveResponse200]:
+    """ OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+- YAML: application/vnd.oai.openapi
+- JSON: application/vnd.oai.openapi+json """
 
     return sync_detailed(
         client=client,
-        format_=format_,
-    ).parsed
+format_=format_,
 
+    ).parsed
 
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     format_: Union[Unset, SchemaRetrieveFormat] = UNSET,
+
 ) -> Response[SchemaRetrieveResponse200]:
     kwargs = _get_kwargs(
         client=client,
-        format_=format_,
+format_=format_,
+
     )
 
     async with httpx.AsyncClient() as _client:
-        response = await _client.get(**kwargs)
+        response = await _client.get(
+            **kwargs
+        )
 
     return _build_response(response=response)
-
 
 async def asyncio(
     *,
     client: AuthenticatedClient,
     format_: Union[Unset, SchemaRetrieveFormat] = UNSET,
+
 ) -> Optional[SchemaRetrieveResponse200]:
-    """OpenApi3 schema for this API. Format can be selected via content negotiation.
+    """ OpenApi3 schema for this API. Format can be selected via content negotiation.
 
-    - YAML: application/vnd.oai.openapi
-    - JSON: application/vnd.oai.openapi+json"""
+- YAML: application/vnd.oai.openapi
+- JSON: application/vnd.oai.openapi+json """
 
-    return (
-        await asyncio_detailed(
-            client=client,
-            format_=format_,
-        )
-    ).parsed
+    return (await asyncio_detailed(
+        client=client,
+format_=format_,
+
+    )).parsed

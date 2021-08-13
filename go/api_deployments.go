@@ -190,9 +190,6 @@ func (a *DeploymentsApiService) DeploymentsCreateExecute(r ApiDeploymentsCreateR
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.deploymentRequest == nil {
-		return localVarReturnValue, nil, reportError("deploymentRequest is required and must be specified")
-	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -828,9 +825,6 @@ func (a *DeploymentsApiService) DeploymentsUpdateExecute(r ApiDeploymentsUpdateR
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.deploymentRequest == nil {
-		return localVarReturnValue, nil, reportError("deploymentRequest is required and must be specified")
-	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}

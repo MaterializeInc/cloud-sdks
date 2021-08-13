@@ -78,7 +78,6 @@ All URIs are relative to *https://cloud.materialize.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AllowedEmailsApi* | [**AllowedEmailsRetrieve**](docs/AllowedEmailsApi.md#allowedemailsretrieve) | **Get** /api/allowed-emails/{email} | 
 *DeploymentsApi* | [**DeploymentsCertsRetrieve**](docs/DeploymentsApi.md#deploymentscertsretrieve) | **Get** /api/deployments/{id}/certs | 
 *DeploymentsApi* | [**DeploymentsCreate**](docs/DeploymentsApi.md#deploymentscreate) | **Post** /api/deployments | 
 *DeploymentsApi* | [**DeploymentsDestroy**](docs/DeploymentsApi.md#deploymentsdestroy) | **Delete** /api/deployments/{id} | 
@@ -89,19 +88,19 @@ Class | Method | HTTP request | Description
 *DeploymentsApi* | [**DeploymentsUpdate**](docs/DeploymentsApi.md#deploymentsupdate) | **Put** /api/deployments/{id} | 
 *HealthApi* | [**HealthRetrieve**](docs/HealthApi.md#healthretrieve) | **Get** /api/health | 
 *MzVersionsApi* | [**MzVersionsList**](docs/MzVersionsApi.md#mzversionslist) | **Get** /api/mz-versions | 
+*OrganizationsApi* | [**OrganizationsRetrieve**](docs/OrganizationsApi.md#organizationsretrieve) | **Get** /api/organizations/{id} | 
 *SchemaApi* | [**SchemaRetrieve**](docs/SchemaApi.md#schemaretrieve) | **Get** /api/schema | 
-*UserApi* | [**UserRetrieve**](docs/UserApi.md#userretrieve) | **Get** /api/user | 
 
 
 ## Documentation For Models
 
  - [Deployment](docs/Deployment.md)
  - [DeploymentRequest](docs/DeploymentRequest.md)
- - [DeploymentSize](docs/DeploymentSize.md)
+ - [Organization](docs/Organization.md)
  - [PatchedDeploymentRequest](docs/PatchedDeploymentRequest.md)
  - [PendingMigration](docs/PendingMigration.md)
  - [PendingMigrationRequest](docs/PendingMigrationRequest.md)
- - [User](docs/User.md)
+ - [SizeEnum](docs/SizeEnum.md)
 
 
 ## Documentation For Authorization

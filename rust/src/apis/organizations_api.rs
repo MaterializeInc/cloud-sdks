@@ -15,20 +15,20 @@ use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
 
-/// struct for typed errors of method `user_retrieve`
+/// struct for typed errors of method `organizations_retrieve`
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum UserRetrieveError {
+pub enum OrganizationsRetrieveError {
     UnknownValue(serde_json::Value),
 }
 
 
-/// Fetch details about the currently-authenticated user.
-pub async fn user_retrieve(configuration: &configuration::Configuration, ) -> Result<crate::models::User, Error<UserRetrieveError>> {
+/// Fetch details about a single organization.
+pub async fn organizations_retrieve(configuration: &configuration::Configuration, id: &str) -> Result<crate::models::Organization, Error<OrganizationsRetrieveError>> {
 
     let local_var_client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/api/user", configuration.base_path);
+    let local_var_uri_str = format!("{}/api/organizations/{id}", configuration.base_path, id=id);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = configuration.user_agent {
@@ -47,7 +47,7 @@ pub async fn user_retrieve(configuration: &configuration::Configuration, ) -> Re
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<UserRetrieveError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<OrganizationsRetrieveError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }

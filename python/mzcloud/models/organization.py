@@ -8,52 +8,48 @@ import attr
 from ..types import UNSET, Unset
 
 
-T = TypeVar("T", bound="User")
 
+
+
+T = TypeVar("T", bound="Organization")
 
 @attr.s(auto_attribs=True)
-class User:
+class Organization:
     """  """
-
-    cognito_sub: str
-    name: str
-    email: str
+    id: str
+    deployment_limit: int
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
+
     def to_dict(self) -> Dict[str, Any]:
-        cognito_sub = self.cognito_sub
-        name = self.name
-        email = self.email
+        id = self.id
+        deployment_limit = self.deployment_limit
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "cognitoSub": cognito_sub,
-                "name": name,
-                "email": email,
-            }
-        )
+        field_dict.update({
+            "id": id,
+            "deploymentLimit": deployment_limit,
+        })
 
         return field_dict
+
+
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        cognito_sub = d.pop("cognitoSub")
+        id = d.pop("id")
 
-        name = d.pop("name")
+        deployment_limit = d.pop("deploymentLimit")
 
-        email = d.pop("email")
-
-        user = cls(
-            cognito_sub=cognito_sub,
-            name=name,
-            email=email,
+        organization = cls(
+            id=id,
+            deployment_limit=deployment_limit,
         )
 
-        user.additional_properties = d
-        return user
+        organization.additional_properties = d
+        return organization
 
     @property
     def additional_keys(self) -> List[str]:
