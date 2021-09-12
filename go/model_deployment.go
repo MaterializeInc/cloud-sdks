@@ -23,20 +23,20 @@ type Deployment struct {
 	Hostname NullableString `json:"hostname"`
 	FlaggedForDeletion bool `json:"flaggedForDeletion"`
 	FlaggedForUpdate bool `json:"flaggedForUpdate"`
-	Size SizeEnum `json:"size"`
+	Size DeploymentSizeEnum `json:"size"`
 	StorageMb int32 `json:"storageMb"`
 	MaterializedExtraArgs []string `json:"materializedExtraArgs"`
 	ClusterId NullableString `json:"clusterId"`
 	MzVersion string `json:"mzVersion"`
 	PendingMigration NullablePendingMigration `json:"pendingMigration"`
-	StatefulsetStatus string `json:"statefulsetStatus"`
+	Status string `json:"status"`
 }
 
 // NewDeployment instantiates a new Deployment object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDeployment(id string, organization string, tlsAuthority string, name string, hostname NullableString, flaggedForDeletion bool, flaggedForUpdate bool, size SizeEnum, storageMb int32, materializedExtraArgs []string, clusterId NullableString, mzVersion string, pendingMigration NullablePendingMigration, statefulsetStatus string) *Deployment {
+func NewDeployment(id string, organization string, tlsAuthority string, name string, hostname NullableString, flaggedForDeletion bool, flaggedForUpdate bool, size DeploymentSizeEnum, storageMb int32, materializedExtraArgs []string, clusterId NullableString, mzVersion string, pendingMigration NullablePendingMigration, status string) *Deployment {
 	this := Deployment{}
 	this.Id = id
 	this.Organization = organization
@@ -51,7 +51,7 @@ func NewDeployment(id string, organization string, tlsAuthority string, name str
 	this.ClusterId = clusterId
 	this.MzVersion = mzVersion
 	this.PendingMigration = pendingMigration
-	this.StatefulsetStatus = statefulsetStatus
+	this.Status = status
 	return &this
 }
 
@@ -236,9 +236,9 @@ func (o *Deployment) SetFlaggedForUpdate(v bool) {
 }
 
 // GetSize returns the Size field value
-func (o *Deployment) GetSize() SizeEnum {
+func (o *Deployment) GetSize() DeploymentSizeEnum {
 	if o == nil {
-		var ret SizeEnum
+		var ret DeploymentSizeEnum
 		return ret
 	}
 
@@ -247,7 +247,7 @@ func (o *Deployment) GetSize() SizeEnum {
 
 // GetSizeOk returns a tuple with the Size field value
 // and a boolean to check if the value has been set.
-func (o *Deployment) GetSizeOk() (*SizeEnum, bool) {
+func (o *Deployment) GetSizeOk() (*DeploymentSizeEnum, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -255,7 +255,7 @@ func (o *Deployment) GetSizeOk() (*SizeEnum, bool) {
 }
 
 // SetSize sets field value
-func (o *Deployment) SetSize(v SizeEnum) {
+func (o *Deployment) SetSize(v DeploymentSizeEnum) {
 	o.Size = v
 }
 
@@ -383,28 +383,28 @@ func (o *Deployment) SetPendingMigration(v PendingMigration) {
 	o.PendingMigration.Set(&v)
 }
 
-// GetStatefulsetStatus returns the StatefulsetStatus field value
-func (o *Deployment) GetStatefulsetStatus() string {
+// GetStatus returns the Status field value
+func (o *Deployment) GetStatus() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.StatefulsetStatus
+	return o.Status
 }
 
-// GetStatefulsetStatusOk returns a tuple with the StatefulsetStatus field value
+// GetStatusOk returns a tuple with the Status field value
 // and a boolean to check if the value has been set.
-func (o *Deployment) GetStatefulsetStatusOk() (*string, bool) {
+func (o *Deployment) GetStatusOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
-	return &o.StatefulsetStatus, true
+	return &o.Status, true
 }
 
-// SetStatefulsetStatus sets field value
-func (o *Deployment) SetStatefulsetStatus(v string) {
-	o.StatefulsetStatus = v
+// SetStatus sets field value
+func (o *Deployment) SetStatus(v string) {
+	o.Status = v
 }
 
 func (o Deployment) MarshalJSON() ([]byte, error) {
@@ -449,7 +449,7 @@ func (o Deployment) MarshalJSON() ([]byte, error) {
 		toSerialize["pendingMigration"] = o.PendingMigration.Get()
 	}
 	if true {
-		toSerialize["statefulsetStatus"] = o.StatefulsetStatus
+		toSerialize["status"] = o.Status
 	}
 	return json.Marshal(toSerialize)
 }

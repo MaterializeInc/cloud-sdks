@@ -5,9 +5,9 @@ import httpx
 from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 
-from typing import Dict
 from typing import cast
 from ...models.deployment import Deployment
+from typing import Dict
 from ...models.deployment_request import DeploymentRequest
 
 

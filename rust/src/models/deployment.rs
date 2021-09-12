@@ -28,7 +28,7 @@ pub struct Deployment {
     #[serde(rename = "flaggedForUpdate")]
     pub flagged_for_update: bool,
     #[serde(rename = "size")]
-    pub size: Box<crate::models::SizeEnum>,
+    pub size: Box<crate::models::DeploymentSizeEnum>,
     #[serde(rename = "storageMb")]
     pub storage_mb: i32,
     #[serde(rename = "materializedExtraArgs")]
@@ -39,12 +39,12 @@ pub struct Deployment {
     pub mz_version: String,
     #[serde(rename = "pendingMigration")]
     pub pending_migration: Option<Box<crate::models::PendingMigration>>,
-    #[serde(rename = "statefulsetStatus")]
-    pub statefulset_status: String,
+    #[serde(rename = "status")]
+    pub status: String,
 }
 
 impl Deployment {
-    pub fn new(id: String, organization: String, tls_authority: String, name: String, hostname: Option<String>, flagged_for_deletion: bool, flagged_for_update: bool, size: crate::models::SizeEnum, storage_mb: i32, materialized_extra_args: Vec<String>, cluster_id: Option<String>, mz_version: String, pending_migration: Option<crate::models::PendingMigration>, statefulset_status: String) -> Deployment {
+    pub fn new(id: String, organization: String, tls_authority: String, name: String, hostname: Option<String>, flagged_for_deletion: bool, flagged_for_update: bool, size: crate::models::DeploymentSizeEnum, storage_mb: i32, materialized_extra_args: Vec<String>, cluster_id: Option<String>, mz_version: String, pending_migration: Option<crate::models::PendingMigration>, status: String) -> Deployment {
         Deployment {
             id,
             organization,
@@ -59,7 +59,7 @@ impl Deployment {
             cluster_id,
             mz_version,
             pending_migration: pending_migration.map(Box::new),
-            statefulset_status,
+            status,
         }
     }
 }

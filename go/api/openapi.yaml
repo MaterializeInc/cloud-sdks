@@ -218,6 +218,30 @@ paths:
       - {}
       tags:
       - mz-versions
+  /api/mz-versions/latest:
+    get:
+      description: Returns the latest version of Materialize.
+      operationId: mzVersionsLatestRetrieve
+      parameters:
+      - explode: true
+        in: query
+        name: track
+        required: false
+        schema:
+          default: stable
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+      security:
+      - tokenAuth: []
+      - {}
+      tags:
+      - mz-versions
   /api/organizations/{id}:
     get:
       description: Fetch details about a single organization.
@@ -300,11 +324,11 @@ components:
         - materializedExtraArgs
         size: ""
         tlsAuthority: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        statefulsetStatus: statefulsetStatus
         organization: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         name: name
         storageMb: 80174
         id: id
+        status: status
       properties:
         id:
           readOnly: true
@@ -318,7 +342,6 @@ components:
           readOnly: true
           type: string
         name:
-          readOnly: true
           type: string
         hostname:
           nullable: true
@@ -332,7 +355,7 @@ components:
           type: boolean
         size:
           allOf:
-          - $ref: '#/components/schemas/SizeEnum'
+          - $ref: '#/components/schemas/DeploymentSizeEnum'
         storageMb:
           default: 100
           maximum: 1000000
@@ -354,7 +377,7 @@ components:
           - $ref: '#/components/schemas/PendingMigration'
           nullable: true
           readOnly: true
-        statefulsetStatus:
+        status:
           readOnly: true
           type: string
       required:
@@ -369,7 +392,7 @@ components:
       - organization
       - pendingMigration
       - size
-      - statefulsetStatus
+      - status
       - storageMb
       - tlsAuthority
       type: object
@@ -379,12 +402,15 @@ components:
         - materializedExtraArgs
         - materializedExtraArgs
         size: ""
+        name: name
         storageMb: 80174
         mzVersion: mzVersion
       properties:
+        name:
+          type: string
         size:
           allOf:
-          - $ref: '#/components/schemas/SizeEnum'
+          - $ref: '#/components/schemas/DeploymentSizeEnum'
         storageMb:
           default: 100
           maximum: 1000000
@@ -398,6 +424,14 @@ components:
         mzVersion:
           type: string
       type: object
+    DeploymentSizeEnum:
+      enum:
+      - XS
+      - S
+      - M
+      - L
+      - XL
+      type: string
     Organization:
       example:
         deploymentLimit: 0
@@ -420,12 +454,15 @@ components:
         - materializedExtraArgs
         - materializedExtraArgs
         size: ""
+        name: name
         storageMb: 80174
         mzVersion: mzVersion
       properties:
+        name:
+          type: string
         size:
           allOf:
-          - $ref: '#/components/schemas/SizeEnum'
+          - $ref: '#/components/schemas/DeploymentSizeEnum'
         storageMb:
           default: 100
           maximum: 1000000
@@ -461,14 +498,6 @@ components:
       - deadline
       - description
       type: object
-    SizeEnum:
-      enum:
-      - XS
-      - S
-      - M
-      - L
-      - XL
-      type: string
   securitySchemes:
     tokenAuth:
       scheme: bearer

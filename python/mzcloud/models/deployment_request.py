@@ -7,10 +7,10 @@ import attr
 
 from ..types import UNSET, Unset
 
+from ..models.deployment_size_enum import DeploymentSizeEnum
+from typing import Union
 from typing import cast, List
 from ..types import UNSET, Unset
-from typing import Union
-from ..models.size_enum import SizeEnum
 
 
 
@@ -20,7 +20,8 @@ T = TypeVar("T", bound="DeploymentRequest")
 @attr.s(auto_attribs=True)
 class DeploymentRequest:
     """  """
-    size: Union[Unset, SizeEnum] = SizeEnum.XS
+    name: Union[Unset, str] = UNSET
+    size: Union[Unset, DeploymentSizeEnum] = DeploymentSizeEnum.XS
     storage_mb: Union[Unset, int] = 100
     materialized_extra_args: Union[Unset, List[str]] = UNSET
     mz_version: Union[Unset, str] = UNSET
@@ -28,6 +29,7 @@ class DeploymentRequest:
 
 
     def to_dict(self) -> Dict[str, Any]:
+        name = self.name
         size: Union[Unset, str] = UNSET
         if not isinstance(self.size, Unset):
             size = self.size.value
@@ -46,6 +48,8 @@ class DeploymentRequest:
         field_dict.update(self.additional_properties)
         field_dict.update({
         })
+        if name is not UNSET:
+            field_dict["name"] = name
         if size is not UNSET:
             field_dict["size"] = size
         if storage_mb is not UNSET:
@@ -62,12 +66,14 @@ class DeploymentRequest:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        name = d.pop("name", UNSET)
+
         _size = d.pop("size", UNSET)
-        size: Union[Unset, SizeEnum]
+        size: Union[Unset, DeploymentSizeEnum]
         if isinstance(_size,  Unset):
             size = UNSET
         else:
-            size = SizeEnum(_size)
+            size = DeploymentSizeEnum(_size)
 
 
 
@@ -80,6 +86,7 @@ class DeploymentRequest:
         mz_version = d.pop("mzVersion", UNSET)
 
         deployment_request = cls(
+            name=name,
             size=size,
             storage_mb=storage_mb,
             materialized_extra_args=materialized_extra_args,

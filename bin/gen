@@ -50,7 +50,7 @@ gen_rust() {
     rm -rf rust
     gen -g rust -o /work/rust --package-name mzcloud
     (cd rust && rm_standard)
-    patch -p1 < rust.patch
+    patch -F10 -p1 < rust.patch
     find . -name '*.orig' -delete
     awk '/^authors/ && !x {print "license = \"Apache-2.0\""; x=1} 1' rust/Cargo.toml > rust/Cargo.toml.tmp && mv rust/Cargo.toml.tmp rust/Cargo.toml
 }

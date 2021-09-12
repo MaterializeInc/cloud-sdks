@@ -7,12 +7,12 @@ import attr
 
 from ..types import UNSET, Unset
 
-from typing import Dict
 from typing import cast
-from typing import cast, List
-from typing import Optional
+from ..models.deployment_size_enum import DeploymentSizeEnum
 from ..models.pending_migration import PendingMigration
-from ..models.size_enum import SizeEnum
+from typing import cast, List
+from typing import Dict
+from typing import Optional
 
 
 
@@ -30,11 +30,11 @@ class Deployment:
     flagged_for_update: bool
     materialized_extra_args: List[str]
     mz_version: str
-    statefulset_status: str
+    status: str
     hostname: Optional[str]
     cluster_id: Optional[str]
     pending_migration: Optional[PendingMigration]
-    size: SizeEnum = SizeEnum.XS
+    size: DeploymentSizeEnum = DeploymentSizeEnum.XS
     storage_mb: int = 100
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -55,7 +55,7 @@ class Deployment:
 
 
         mz_version = self.mz_version
-        statefulset_status = self.statefulset_status
+        status = self.status
         hostname = self.hostname
         cluster_id = self.cluster_id
         pending_migration = self.pending_migration.to_dict() if self.pending_migration else None
@@ -74,7 +74,7 @@ class Deployment:
             "storageMb": storage_mb,
             "materializedExtraArgs": materialized_extra_args,
             "mzVersion": mz_version,
-            "statefulsetStatus": statefulset_status,
+            "status": status,
             "hostname": hostname,
             "clusterId": cluster_id,
             "pendingMigration": pending_migration,
@@ -99,7 +99,7 @@ class Deployment:
 
         flagged_for_update = d.pop("flaggedForUpdate")
 
-        size = SizeEnum(d.pop("size"))
+        size = DeploymentSizeEnum(d.pop("size"))
 
 
 
@@ -111,7 +111,7 @@ class Deployment:
 
         mz_version = d.pop("mzVersion")
 
-        statefulset_status = d.pop("statefulsetStatus")
+        status = d.pop("status")
 
         hostname = d.pop("hostname")
 
@@ -138,7 +138,7 @@ class Deployment:
             storage_mb=storage_mb,
             materialized_extra_args=materialized_extra_args,
             mz_version=mz_version,
-            statefulset_status=statefulset_status,
+            status=status,
             hostname=hostname,
             cluster_id=cluster_id,
             pending_migration=pending_migration,

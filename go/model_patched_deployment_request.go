@@ -16,7 +16,8 @@ import (
 
 // PatchedDeploymentRequest struct for PatchedDeploymentRequest
 type PatchedDeploymentRequest struct {
-	Size *SizeEnum `json:"size,omitempty"`
+	Name *string `json:"name,omitempty"`
+	Size *DeploymentSizeEnum `json:"size,omitempty"`
 	StorageMb *int32 `json:"storageMb,omitempty"`
 	MaterializedExtraArgs *[]string `json:"materializedExtraArgs,omitempty"`
 	MzVersion *string `json:"mzVersion,omitempty"`
@@ -43,10 +44,42 @@ func NewPatchedDeploymentRequestWithDefaults() *PatchedDeploymentRequest {
 	return &this
 }
 
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *PatchedDeploymentRequest) GetName() string {
+	if o == nil || o.Name == nil {
+		var ret string
+		return ret
+	}
+	return *o.Name
+}
+
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PatchedDeploymentRequest) GetNameOk() (*string, bool) {
+	if o == nil || o.Name == nil {
+		return nil, false
+	}
+	return o.Name, true
+}
+
+// HasName returns a boolean if a field has been set.
+func (o *PatchedDeploymentRequest) HasName() bool {
+	if o != nil && o.Name != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *PatchedDeploymentRequest) SetName(v string) {
+	o.Name = &v
+}
+
 // GetSize returns the Size field value if set, zero value otherwise.
-func (o *PatchedDeploymentRequest) GetSize() SizeEnum {
+func (o *PatchedDeploymentRequest) GetSize() DeploymentSizeEnum {
 	if o == nil || o.Size == nil {
-		var ret SizeEnum
+		var ret DeploymentSizeEnum
 		return ret
 	}
 	return *o.Size
@@ -54,7 +87,7 @@ func (o *PatchedDeploymentRequest) GetSize() SizeEnum {
 
 // GetSizeOk returns a tuple with the Size field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PatchedDeploymentRequest) GetSizeOk() (*SizeEnum, bool) {
+func (o *PatchedDeploymentRequest) GetSizeOk() (*DeploymentSizeEnum, bool) {
 	if o == nil || o.Size == nil {
 		return nil, false
 	}
@@ -70,8 +103,8 @@ func (o *PatchedDeploymentRequest) HasSize() bool {
 	return false
 }
 
-// SetSize gets a reference to the given SizeEnum and assigns it to the Size field.
-func (o *PatchedDeploymentRequest) SetSize(v SizeEnum) {
+// SetSize gets a reference to the given DeploymentSizeEnum and assigns it to the Size field.
+func (o *PatchedDeploymentRequest) SetSize(v DeploymentSizeEnum) {
 	o.Size = &v
 }
 
@@ -173,6 +206,9 @@ func (o *PatchedDeploymentRequest) SetMzVersion(v string) {
 
 func (o PatchedDeploymentRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
+	if o.Name != nil {
+		toSerialize["name"] = o.Name
+	}
 	if o.Size != nil {
 		toSerialize["size"] = o.Size
 	}

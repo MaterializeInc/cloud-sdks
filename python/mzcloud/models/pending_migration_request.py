@@ -7,8 +7,8 @@ import attr
 
 from ..types import UNSET, Unset
 
-from dateutil.parser import isoparse
 from typing import cast
+from dateutil.parser import isoparse
 import datetime
 
 
