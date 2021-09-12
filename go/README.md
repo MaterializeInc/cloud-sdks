@@ -87,6 +87,7 @@ Class | Method | HTTP request | Description
 *DeploymentsApi* | [**DeploymentsRetrieve**](docs/DeploymentsApi.md#deploymentsretrieve) | **Get** /api/deployments/{id} | 
 *DeploymentsApi* | [**DeploymentsUpdate**](docs/DeploymentsApi.md#deploymentsupdate) | **Put** /api/deployments/{id} | 
 *HealthApi* | [**HealthRetrieve**](docs/HealthApi.md#healthretrieve) | **Get** /api/health | 
+*MzVersionsApi* | [**MzVersionsLatestRetrieve**](docs/MzVersionsApi.md#mzversionslatestretrieve) | **Get** /api/mz-versions/latest | 
 *MzVersionsApi* | [**MzVersionsList**](docs/MzVersionsApi.md#mzversionslist) | **Get** /api/mz-versions | 
 *OrganizationsApi* | [**OrganizationsRetrieve**](docs/OrganizationsApi.md#organizationsretrieve) | **Get** /api/organizations/{id} | 
 *SchemaApi* | [**SchemaRetrieve**](docs/SchemaApi.md#schemaretrieve) | **Get** /api/schema | 
@@ -96,11 +97,11 @@ Class | Method | HTTP request | Description
 
  - [Deployment](docs/Deployment.md)
  - [DeploymentRequest](docs/DeploymentRequest.md)
+ - [DeploymentSizeEnum](docs/DeploymentSizeEnum.md)
  - [Organization](docs/Organization.md)
  - [PatchedDeploymentRequest](docs/PatchedDeploymentRequest.md)
  - [PendingMigration](docs/PendingMigration.md)
  - [PendingMigrationRequest](docs/PendingMigrationRequest.md)
- - [SizeEnum](docs/SizeEnum.md)
 
 
 ## Documentation For Authorization

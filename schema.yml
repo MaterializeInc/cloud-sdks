@@ -212,6 +212,28 @@ paths:
                 items:
                   type: string
           description: ''
+  /api/mz-versions/latest:
+    get:
+      operationId: mzVersionsLatestRetrieve
+      description: Returns the latest version of Materialize.
+      parameters:
+        - in: query
+          name: track
+          schema:
+            type: string
+            default: stable
+      tags:
+        - mz-versions
+      security:
+        - tokenAuth: []
+        - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: ''
   /api/organizations/{id}:
     get:
       operationId: organizationsRetrieve
@@ -294,7 +316,6 @@ components:
           readOnly: true
         name:
           type: string
-          readOnly: true
         hostname:
           type: string
           readOnly: true
@@ -307,7 +328,7 @@ components:
           readOnly: true
         size:
           allOf:
-            - $ref: '#/components/schemas/SizeEnum'
+            - $ref: '#/components/schemas/DeploymentSizeEnum'
           default: XS
         storageMb:
           type: integer
@@ -330,7 +351,7 @@ components:
             - $ref: '#/components/schemas/PendingMigration'
           readOnly: true
           nullable: true
-        statefulsetStatus:
+        status:
           type: string
           readOnly: true
       required:
@@ -345,15 +366,17 @@ components:
         - organization
         - pendingMigration
         - size
-        - statefulsetStatus
+        - status
         - storageMb
         - tlsAuthority
     DeploymentRequest:
       type: object
       properties:
+        name:
+          type: string
         size:
           allOf:
-            - $ref: '#/components/schemas/SizeEnum'
+            - $ref: '#/components/schemas/DeploymentSizeEnum'
           default: XS
         storageMb:
           type: integer
@@ -367,6 +390,14 @@ components:
           title: Extra materialized arguments
         mzVersion:
           type: string
+    DeploymentSizeEnum:
+      enum:
+        - XS
+        - S
+        - M
+        - L
+        - XL
+      type: string
     Organization:
       type: object
       properties:
@@ -383,9 +414,11 @@ components:
     PatchedDeploymentRequest:
       type: object
       properties:
+        name:
+          type: string
         size:
           allOf:
-            - $ref: '#/components/schemas/SizeEnum'
+            - $ref: '#/components/schemas/DeploymentSizeEnum'
           default: XS
         storageMb:
           type: integer
@@ -421,14 +454,6 @@ components:
       required:
         - deadline
         - description
-    SizeEnum:
-      enum:
-        - XS
-        - S
-        - M
-        - L
-        - XL
-      type: string
   securitySchemes:
     tokenAuth:
       type: http
