@@ -16,8 +16,10 @@ import (
 
 // PatchedDeploymentRequest struct for PatchedDeploymentRequest
 type PatchedDeploymentRequest struct {
-	Size *SizeEnum `json:"size,omitempty"`
+	Name *string `json:"name,omitempty"`
+	Size *DeploymentSizeEnum `json:"size,omitempty"`
 	StorageMb *int32 `json:"storageMb,omitempty"`
+	DisableUserIndexes *bool `json:"disableUserIndexes,omitempty"`
 	MaterializedExtraArgs *[]string `json:"materializedExtraArgs,omitempty"`
 	MzVersion *string `json:"mzVersion,omitempty"`
 }
@@ -30,6 +32,8 @@ func NewPatchedDeploymentRequest() *PatchedDeploymentRequest {
 	this := PatchedDeploymentRequest{}
 	var storageMb int32 = 100
 	this.StorageMb = &storageMb
+	var disableUserIndexes bool = false
+	this.DisableUserIndexes = &disableUserIndexes
 	return &this
 }
 
@@ -40,13 +44,47 @@ func NewPatchedDeploymentRequestWithDefaults() *PatchedDeploymentRequest {
 	this := PatchedDeploymentRequest{}
 	var storageMb int32 = 100
 	this.StorageMb = &storageMb
+	var disableUserIndexes bool = false
+	this.DisableUserIndexes = &disableUserIndexes
 	return &this
 }
 
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *PatchedDeploymentRequest) GetName() string {
+	if o == nil || o.Name == nil {
+		var ret string
+		return ret
+	}
+	return *o.Name
+}
+
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PatchedDeploymentRequest) GetNameOk() (*string, bool) {
+	if o == nil || o.Name == nil {
+		return nil, false
+	}
+	return o.Name, true
+}
+
+// HasName returns a boolean if a field has been set.
+func (o *PatchedDeploymentRequest) HasName() bool {
+	if o != nil && o.Name != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *PatchedDeploymentRequest) SetName(v string) {
+	o.Name = &v
+}
+
 // GetSize returns the Size field value if set, zero value otherwise.
-func (o *PatchedDeploymentRequest) GetSize() SizeEnum {
+func (o *PatchedDeploymentRequest) GetSize() DeploymentSizeEnum {
 	if o == nil || o.Size == nil {
-		var ret SizeEnum
+		var ret DeploymentSizeEnum
 		return ret
 	}
 	return *o.Size
@@ -54,7 +92,7 @@ func (o *PatchedDeploymentRequest) GetSize() SizeEnum {
 
 // GetSizeOk returns a tuple with the Size field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PatchedDeploymentRequest) GetSizeOk() (*SizeEnum, bool) {
+func (o *PatchedDeploymentRequest) GetSizeOk() (*DeploymentSizeEnum, bool) {
 	if o == nil || o.Size == nil {
 		return nil, false
 	}
@@ -70,8 +108,8 @@ func (o *PatchedDeploymentRequest) HasSize() bool {
 	return false
 }
 
-// SetSize gets a reference to the given SizeEnum and assigns it to the Size field.
-func (o *PatchedDeploymentRequest) SetSize(v SizeEnum) {
+// SetSize gets a reference to the given DeploymentSizeEnum and assigns it to the Size field.
+func (o *PatchedDeploymentRequest) SetSize(v DeploymentSizeEnum) {
 	o.Size = &v
 }
 
@@ -105,6 +143,38 @@ func (o *PatchedDeploymentRequest) HasStorageMb() bool {
 // SetStorageMb gets a reference to the given int32 and assigns it to the StorageMb field.
 func (o *PatchedDeploymentRequest) SetStorageMb(v int32) {
 	o.StorageMb = &v
+}
+
+// GetDisableUserIndexes returns the DisableUserIndexes field value if set, zero value otherwise.
+func (o *PatchedDeploymentRequest) GetDisableUserIndexes() bool {
+	if o == nil || o.DisableUserIndexes == nil {
+		var ret bool
+		return ret
+	}
+	return *o.DisableUserIndexes
+}
+
+// GetDisableUserIndexesOk returns a tuple with the DisableUserIndexes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PatchedDeploymentRequest) GetDisableUserIndexesOk() (*bool, bool) {
+	if o == nil || o.DisableUserIndexes == nil {
+		return nil, false
+	}
+	return o.DisableUserIndexes, true
+}
+
+// HasDisableUserIndexes returns a boolean if a field has been set.
+func (o *PatchedDeploymentRequest) HasDisableUserIndexes() bool {
+	if o != nil && o.DisableUserIndexes != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetDisableUserIndexes gets a reference to the given bool and assigns it to the DisableUserIndexes field.
+func (o *PatchedDeploymentRequest) SetDisableUserIndexes(v bool) {
+	o.DisableUserIndexes = &v
 }
 
 // GetMaterializedExtraArgs returns the MaterializedExtraArgs field value if set, zero value otherwise.
@@ -173,11 +243,17 @@ func (o *PatchedDeploymentRequest) SetMzVersion(v string) {
 
 func (o PatchedDeploymentRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
+	if o.Name != nil {
+		toSerialize["name"] = o.Name
+	}
 	if o.Size != nil {
 		toSerialize["size"] = o.Size
 	}
 	if o.StorageMb != nil {
 		toSerialize["storageMb"] = o.StorageMb
+	}
+	if o.DisableUserIndexes != nil {
+		toSerialize["disableUserIndexes"] = o.DisableUserIndexes
 	}
 	if o.MaterializedExtraArgs != nil {
 		toSerialize["materializedExtraArgs"] = o.MaterializedExtraArgs

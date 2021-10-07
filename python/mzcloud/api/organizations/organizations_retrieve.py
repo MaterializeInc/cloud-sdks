@@ -6,8 +6,8 @@ from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 
 from typing import Dict
-from ...models.organization import Organization
 from typing import cast
+from ...models.organization import Organization
 
 
 

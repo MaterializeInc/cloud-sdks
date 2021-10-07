@@ -7,8 +7,8 @@ from ...types import Response, UNSET
 
 from typing import Dict
 from typing import cast
-from ...models.deployment import Deployment
 from ...models.deployment_request import DeploymentRequest
+from ...models.deployment import Deployment
 
 
 

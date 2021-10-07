@@ -11,7 +11,7 @@
 
 /// 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum SizeEnum {
+pub enum DeploymentSizeEnum {
     #[serde(rename = "XS")]
     XS,
     #[serde(rename = "S")]
@@ -25,7 +25,7 @@ pub enum SizeEnum {
 
 }
 
-impl ToString for SizeEnum {
+impl ToString for DeploymentSizeEnum {
     fn to_string(&self) -> String {
         match self {
             Self::XS => String::from("XS"),

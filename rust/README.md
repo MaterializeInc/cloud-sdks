@@ -33,7 +33,9 @@ Class | Method | HTTP request | Description
 *DeploymentsApi* | [**deployments_retrieve**](docs/DeploymentsApi.md#deployments_retrieve) | **GET** /api/deployments/{id} | 
 *DeploymentsApi* | [**deployments_update**](docs/DeploymentsApi.md#deployments_update) | **PUT** /api/deployments/{id} | 
 *HealthApi* | [**health_retrieve**](docs/HealthApi.md#health_retrieve) | **GET** /api/health | 
+*MzVersionsApi* | [**mz_versions_latest_retrieve**](docs/MzVersionsApi.md#mz_versions_latest_retrieve) | **GET** /api/mz-versions/latest | 
 *MzVersionsApi* | [**mz_versions_list**](docs/MzVersionsApi.md#mz_versions_list) | **GET** /api/mz-versions | 
+*OnboardingCallApi* | [**onboarding_call_retrieve**](docs/OnboardingCallApi.md#onboarding_call_retrieve) | **GET** /api/onboarding-call | 
 *OrganizationsApi* | [**organizations_retrieve**](docs/OrganizationsApi.md#organizations_retrieve) | **GET** /api/organizations/{id} | 
 *SchemaApi* | [**schema_retrieve**](docs/SchemaApi.md#schema_retrieve) | **GET** /api/schema | 
 
@@ -42,11 +44,12 @@ Class | Method | HTTP request | Description
 
  - [Deployment](docs/Deployment.md)
  - [DeploymentRequest](docs/DeploymentRequest.md)
+ - [DeploymentSizeEnum](docs/DeploymentSizeEnum.md)
+ - [OnboardingCall](docs/OnboardingCall.md)
  - [Organization](docs/Organization.md)
  - [PatchedDeploymentRequest](docs/PatchedDeploymentRequest.md)
  - [PendingMigration](docs/PendingMigration.md)
  - [PendingMigrationRequest](docs/PendingMigrationRequest.md)
- - [SizeEnum](docs/SizeEnum.md)
 
 
 To get access to the crate's generated documentation, use:

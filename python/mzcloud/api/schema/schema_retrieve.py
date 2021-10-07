@@ -5,12 +5,12 @@ import httpx
 from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 
+from ...models.schema_retrieve_response_200 import SchemaRetrieveResponse200
 from typing import Dict
 from typing import cast
-from ...models.schema_retrieve_response_200 import SchemaRetrieveResponse200
 from ...types import UNSET, Unset
-from ...models.schema_retrieve_format import SchemaRetrieveFormat
 from typing import Union
+from ...models.schema_retrieve_format import SchemaRetrieveFormat
 
 
 

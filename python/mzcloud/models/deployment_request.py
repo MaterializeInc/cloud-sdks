@@ -7,10 +7,10 @@ import attr
 
 from ..types import UNSET, Unset
 
-from typing import cast, List
 from ..types import UNSET, Unset
 from typing import Union
-from ..models.size_enum import SizeEnum
+from ..models.deployment_size_enum import DeploymentSizeEnum
+from typing import cast, List
 
 
 
@@ -20,19 +20,23 @@ T = TypeVar("T", bound="DeploymentRequest")
 @attr.s(auto_attribs=True)
 class DeploymentRequest:
     """  """
-    size: Union[Unset, SizeEnum] = SizeEnum.XS
+    name: Union[Unset, str] = UNSET
+    size: Union[Unset, DeploymentSizeEnum] = DeploymentSizeEnum.XS
     storage_mb: Union[Unset, int] = 100
+    disable_user_indexes: Union[Unset, bool] = False
     materialized_extra_args: Union[Unset, List[str]] = UNSET
     mz_version: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
 
     def to_dict(self) -> Dict[str, Any]:
+        name = self.name
         size: Union[Unset, str] = UNSET
         if not isinstance(self.size, Unset):
             size = self.size.value
 
         storage_mb = self.storage_mb
+        disable_user_indexes = self.disable_user_indexes
         materialized_extra_args: Union[Unset, List[str]] = UNSET
         if not isinstance(self.materialized_extra_args, Unset):
             materialized_extra_args = self.materialized_extra_args
@@ -46,10 +50,14 @@ class DeploymentRequest:
         field_dict.update(self.additional_properties)
         field_dict.update({
         })
+        if name is not UNSET:
+            field_dict["name"] = name
         if size is not UNSET:
             field_dict["size"] = size
         if storage_mb is not UNSET:
             field_dict["storageMb"] = storage_mb
+        if disable_user_indexes is not UNSET:
+            field_dict["disableUserIndexes"] = disable_user_indexes
         if materialized_extra_args is not UNSET:
             field_dict["materializedExtraArgs"] = materialized_extra_args
         if mz_version is not UNSET:
@@ -62,17 +70,21 @@ class DeploymentRequest:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        name = d.pop("name", UNSET)
+
         _size = d.pop("size", UNSET)
-        size: Union[Unset, SizeEnum]
+        size: Union[Unset, DeploymentSizeEnum]
         if isinstance(_size,  Unset):
             size = UNSET
         else:
-            size = SizeEnum(_size)
+            size = DeploymentSizeEnum(_size)
 
 
 
 
         storage_mb = d.pop("storageMb", UNSET)
+
+        disable_user_indexes = d.pop("disableUserIndexes", UNSET)
 
         materialized_extra_args = cast(List[str], d.pop("materializedExtraArgs", UNSET))
 
@@ -80,8 +92,10 @@ class DeploymentRequest:
         mz_version = d.pop("mzVersion", UNSET)
 
         deployment_request = cls(
+            name=name,
             size=size,
             storage_mb=storage_mb,
+            disable_user_indexes=disable_user_indexes,
             materialized_extra_args=materialized_extra_args,
             mz_version=mz_version,
         )

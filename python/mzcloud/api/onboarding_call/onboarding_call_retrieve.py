@@ -7,8 +7,7 @@ from ...types import Response, UNSET
 
 from typing import Dict
 from typing import cast
-from typing import cast, List
-from ...models.deployment import Deployment
+from ...models.onboarding_call import OnboardingCall
 
 
 
@@ -17,7 +16,7 @@ def _get_kwargs(
     client: AuthenticatedClient,
 
 ) -> Dict[str, Any]:
-    url = "{}/api/deployments".format(
+    url = "{}/api/onboarding-call".format(
         client.base_url)
 
     headers: Dict[str, Any] = client.get_headers()
@@ -41,22 +40,17 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[List[Deployment]]:
+def _parse_response(*, response: httpx.Response) -> Optional[OnboardingCall]:
     if response.status_code == 200:
-        response_200 = []
-        _response_200 = response.json()
-        for response_200_item_data in (_response_200):
-            response_200_item = Deployment.from_dict(response_200_item_data)
+        response_200 = OnboardingCall.from_dict(response.json())
 
 
-
-            response_200.append(response_200_item)
 
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[List[Deployment]]:
+def _build_response(*, response: httpx.Response) -> Response[OnboardingCall]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -69,7 +63,7 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
 
-) -> Response[List[Deployment]]:
+) -> Response[OnboardingCall]:
     kwargs = _get_kwargs(
         client=client,
 
@@ -85,8 +79,8 @@ def sync(
     *,
     client: AuthenticatedClient,
 
-) -> Optional[List[Deployment]]:
-    """ List the available deployments. """
+) -> Optional[OnboardingCall]:
+    """ Retrieve the first scheduled onboarding call for a user. """
 
     return sync_detailed(
         client=client,
@@ -97,7 +91,7 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
 
-) -> Response[List[Deployment]]:
+) -> Response[OnboardingCall]:
     kwargs = _get_kwargs(
         client=client,
 
@@ -114,8 +108,8 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
 
-) -> Optional[List[Deployment]]:
-    """ List the available deployments. """
+) -> Optional[OnboardingCall]:
+    """ Retrieve the first scheduled onboarding call for a user. """
 
     return (await asyncio_detailed(
         client=client,

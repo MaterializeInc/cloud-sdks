@@ -55,6 +55,8 @@ type APIClient struct {
 
 	MzVersionsApi *MzVersionsApiService
 
+	OnboardingCallApi *OnboardingCallApiService
+
 	OrganizationsApi *OrganizationsApiService
 
 	SchemaApi *SchemaApiService
@@ -79,6 +81,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.DeploymentsApi = (*DeploymentsApiService)(&c.common)
 	c.HealthApi = (*HealthApiService)(&c.common)
 	c.MzVersionsApi = (*MzVersionsApiService)(&c.common)
+	c.OnboardingCallApi = (*OnboardingCallApiService)(&c.common)
 	c.OrganizationsApi = (*OrganizationsApiService)(&c.common)
 	c.SchemaApi = (*SchemaApiService)(&c.common)
 

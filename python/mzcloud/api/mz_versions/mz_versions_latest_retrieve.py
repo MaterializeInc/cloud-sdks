@@ -5,19 +5,18 @@ import httpx
 from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 
-from typing import Dict
-from typing import cast
-from typing import cast, List
-from ...models.deployment import Deployment
+from ...types import UNSET, Unset
+from typing import Union
 
 
 
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
+    track: Union[Unset, str] = 'stable',
 
 ) -> Dict[str, Any]:
-    url = "{}/api/deployments".format(
+    url = "{}/api/mz-versions/latest".format(
         client.base_url)
 
     headers: Dict[str, Any] = client.get_headers()
@@ -27,7 +26,11 @@ def _get_kwargs(
 
     
 
-    
+    params: Dict[str, Any] = {
+        "track": track,
+    }
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+
 
     
 
@@ -38,25 +41,18 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "params": params,
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[List[Deployment]]:
+def _parse_response(*, response: httpx.Response) -> Optional[str]:
     if response.status_code == 200:
-        response_200 = []
-        _response_200 = response.json()
-        for response_200_item_data in (_response_200):
-            response_200_item = Deployment.from_dict(response_200_item_data)
-
-
-
-            response_200.append(response_200_item)
-
+        response_200 = response.json()
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[List[Deployment]]:
+def _build_response(*, response: httpx.Response) -> Response[str]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -68,10 +64,12 @@ def _build_response(*, response: httpx.Response) -> Response[List[Deployment]]:
 def sync_detailed(
     *,
     client: AuthenticatedClient,
+    track: Union[Unset, str] = 'stable',
 
-) -> Response[List[Deployment]]:
+) -> Response[str]:
     kwargs = _get_kwargs(
         client=client,
+track=track,
 
     )
 
@@ -84,22 +82,26 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
+    track: Union[Unset, str] = 'stable',
 
-) -> Optional[List[Deployment]]:
-    """ List the available deployments. """
+) -> Optional[str]:
+    """ Returns the latest version of Materialize. """
 
     return sync_detailed(
         client=client,
+track=track,
 
     ).parsed
 
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
+    track: Union[Unset, str] = 'stable',
 
-) -> Response[List[Deployment]]:
+) -> Response[str]:
     kwargs = _get_kwargs(
         client=client,
+track=track,
 
     )
 
@@ -113,11 +115,13 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
+    track: Union[Unset, str] = 'stable',
 
-) -> Optional[List[Deployment]]:
-    """ List the available deployments. """
+) -> Optional[str]:
+    """ Returns the latest version of Materialize. """
 
     return (await asyncio_detailed(
         client=client,
+track=track,
 
     )).parsed

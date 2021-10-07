@@ -12,22 +12,29 @@ package mzcloud
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // Organization struct for Organization
 type Organization struct {
 	Id string `json:"id"`
+	// Whether this organization has been admitted to Materialize Cloud.
+	Admitted bool `json:"admitted"`
 	DeploymentLimit int32 `json:"deploymentLimit"`
+	// When this organization's trial period expires. If empty, the organization is on an enterprise plan.
+	TrialExpiresAt NullableTime `json:"trialExpiresAt"`
 }
 
 // NewOrganization instantiates a new Organization object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewOrganization(id string, deploymentLimit int32) *Organization {
+func NewOrganization(id string, admitted bool, deploymentLimit int32, trialExpiresAt NullableTime) *Organization {
 	this := Organization{}
 	this.Id = id
+	this.Admitted = admitted
 	this.DeploymentLimit = deploymentLimit
+	this.TrialExpiresAt = trialExpiresAt
 	return &this
 }
 
@@ -63,6 +70,30 @@ func (o *Organization) SetId(v string) {
 	o.Id = v
 }
 
+// GetAdmitted returns the Admitted field value
+func (o *Organization) GetAdmitted() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.Admitted
+}
+
+// GetAdmittedOk returns a tuple with the Admitted field value
+// and a boolean to check if the value has been set.
+func (o *Organization) GetAdmittedOk() (*bool, bool) {
+	if o == nil  {
+		return nil, false
+	}
+	return &o.Admitted, true
+}
+
+// SetAdmitted sets field value
+func (o *Organization) SetAdmitted(v bool) {
+	o.Admitted = v
+}
+
 // GetDeploymentLimit returns the DeploymentLimit field value
 func (o *Organization) GetDeploymentLimit() int32 {
 	if o == nil {
@@ -87,13 +118,45 @@ func (o *Organization) SetDeploymentLimit(v int32) {
 	o.DeploymentLimit = v
 }
 
+// GetTrialExpiresAt returns the TrialExpiresAt field value
+// If the value is explicit nil, the zero value for time.Time will be returned
+func (o *Organization) GetTrialExpiresAt() time.Time {
+	if o == nil || o.TrialExpiresAt.Get() == nil {
+		var ret time.Time
+		return ret
+	}
+
+	return *o.TrialExpiresAt.Get()
+}
+
+// GetTrialExpiresAtOk returns a tuple with the TrialExpiresAt field value
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Organization) GetTrialExpiresAtOk() (*time.Time, bool) {
+	if o == nil  {
+		return nil, false
+	}
+	return o.TrialExpiresAt.Get(), o.TrialExpiresAt.IsSet()
+}
+
+// SetTrialExpiresAt sets field value
+func (o *Organization) SetTrialExpiresAt(v time.Time) {
+	o.TrialExpiresAt.Set(&v)
+}
+
 func (o Organization) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
 		toSerialize["id"] = o.Id
 	}
 	if true {
+		toSerialize["admitted"] = o.Admitted
+	}
+	if true {
 		toSerialize["deploymentLimit"] = o.DeploymentLimit
+	}
+	if true {
+		toSerialize["trialExpiresAt"] = o.TrialExpiresAt.Get()
 	}
 	return json.Marshal(toSerialize)
 }

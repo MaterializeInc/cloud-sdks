@@ -212,6 +212,43 @@ paths:
                 items:
                   type: string
           description: ''
+  /api/mz-versions/latest:
+    get:
+      operationId: mzVersionsLatestRetrieve
+      description: Returns the latest version of Materialize.
+      parameters:
+        - in: query
+          name: track
+          schema:
+            type: string
+            default: stable
+      tags:
+        - mz-versions
+      security:
+        - tokenAuth: []
+        - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: ''
+  /api/onboarding-call:
+    get:
+      operationId: onboardingCallRetrieve
+      description: Retrieve the first scheduled onboarding call for a user.
+      tags:
+        - onboarding-call
+      security:
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingCall'
+          description: ''
   /api/organizations/{id}:
     get:
       operationId: organizationsRetrieve
@@ -294,7 +331,6 @@ components:
           readOnly: true
         name:
           type: string
-          readOnly: true
         hostname:
           type: string
           readOnly: true
@@ -307,13 +343,16 @@ components:
           readOnly: true
         size:
           allOf:
-            - $ref: '#/components/schemas/SizeEnum'
+            - $ref: '#/components/schemas/DeploymentSizeEnum'
           default: XS
         storageMb:
           type: integer
           maximum: 1000000
           minimum: 100
           default: 100
+        disableUserIndexes:
+          type: boolean
+          default: false
         materializedExtraArgs:
           type: array
           items:
@@ -330,11 +369,12 @@ components:
             - $ref: '#/components/schemas/PendingMigration'
           readOnly: true
           nullable: true
-        statefulsetStatus:
+        status:
           type: string
           readOnly: true
       required:
         - clusterId
+        - disableUserIndexes
         - flaggedForDeletion
         - flaggedForUpdate
         - hostname
@@ -345,21 +385,26 @@ components:
         - organization
         - pendingMigration
         - size
-        - statefulsetStatus
+        - status
         - storageMb
         - tlsAuthority
     DeploymentRequest:
       type: object
       properties:
+        name:
+          type: string
         size:
           allOf:
-            - $ref: '#/components/schemas/SizeEnum'
+            - $ref: '#/components/schemas/DeploymentSizeEnum'
           default: XS
         storageMb:
           type: integer
           maximum: 1000000
           minimum: 100
           default: 100
+        disableUserIndexes:
+          type: boolean
+          default: false
         materializedExtraArgs:
           type: array
           items:
@@ -367,6 +412,26 @@ components:
           title: Extra materialized arguments
         mzVersion:
           type: string
+    DeploymentSizeEnum:
+      enum:
+        - XS
+        - S
+        - M
+        - L
+        - XL
+      type: string
+    OnboardingCall:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+      required:
+        - end
+        - start
     Organization:
       type: object
       properties:
@@ -374,24 +439,41 @@ components:
           type: string
           format: uuid
           readOnly: true
+        admitted:
+          type: boolean
+          readOnly: true
+          description: Whether this organization has been admitted to Materialize Cloud.
         deploymentLimit:
           type: integer
           readOnly: true
+        trialExpiresAt:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: When this organization's trial period expires. If empty, the organization is on an enterprise plan.
       required:
+        - admitted
         - deploymentLimit
         - id
+        - trialExpiresAt
     PatchedDeploymentRequest:
       type: object
       properties:
+        name:
+          type: string
         size:
           allOf:
-            - $ref: '#/components/schemas/SizeEnum'
+            - $ref: '#/components/schemas/DeploymentSizeEnum'
           default: XS
         storageMb:
           type: integer
           maximum: 1000000
           minimum: 100
           default: 100
+        disableUserIndexes:
+          type: boolean
+          default: false
         materializedExtraArgs:
           type: array
           items:
@@ -421,14 +503,6 @@ components:
       required:
         - deadline
         - description
-    SizeEnum:
-      enum:
-        - XS
-        - S
-        - M
-        - L
-        - XL
-      type: string
   securitySchemes:
     tokenAuth:
       type: http
