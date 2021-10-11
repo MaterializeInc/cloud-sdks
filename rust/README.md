@@ -31,6 +31,7 @@ Class | Method | HTTP request | Description
 *DeploymentsApi* | [**deployments_logs_retrieve**](docs/DeploymentsApi.md#deployments_logs_retrieve) | **GET** /api/deployments/{id}/logs | 
 *DeploymentsApi* | [**deployments_partial_update**](docs/DeploymentsApi.md#deployments_partial_update) | **PATCH** /api/deployments/{id} | 
 *DeploymentsApi* | [**deployments_retrieve**](docs/DeploymentsApi.md#deployments_retrieve) | **GET** /api/deployments/{id} | 
+*DeploymentsApi* | [**deployments_tailscale_logs_retrieve**](docs/DeploymentsApi.md#deployments_tailscale_logs_retrieve) | **GET** /api/deployments/{id}/tailscale_logs | 
 *DeploymentsApi* | [**deployments_update**](docs/DeploymentsApi.md#deployments_update) | **PUT** /api/deployments/{id} | 
 *HealthApi* | [**health_retrieve**](docs/HealthApi.md#health_retrieve) | **GET** /api/health | 
 *MzVersionsApi* | [**mz_versions_latest_retrieve**](docs/MzVersionsApi.md#mz_versions_latest_retrieve) | **GET** /api/mz-versions/latest | 

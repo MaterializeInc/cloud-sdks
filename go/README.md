@@ -85,6 +85,7 @@ Class | Method | HTTP request | Description
 *DeploymentsApi* | [**DeploymentsLogsRetrieve**](docs/DeploymentsApi.md#deploymentslogsretrieve) | **Get** /api/deployments/{id}/logs | 
 *DeploymentsApi* | [**DeploymentsPartialUpdate**](docs/DeploymentsApi.md#deploymentspartialupdate) | **Patch** /api/deployments/{id} | 
 *DeploymentsApi* | [**DeploymentsRetrieve**](docs/DeploymentsApi.md#deploymentsretrieve) | **Get** /api/deployments/{id} | 
+*DeploymentsApi* | [**DeploymentsTailscaleLogsRetrieve**](docs/DeploymentsApi.md#deploymentstailscalelogsretrieve) | **Get** /api/deployments/{id}/tailscale_logs | 
 *DeploymentsApi* | [**DeploymentsUpdate**](docs/DeploymentsApi.md#deploymentsupdate) | **Put** /api/deployments/{id} | 
 *HealthApi* | [**HealthRetrieve**](docs/HealthApi.md#healthretrieve) | **Get** /api/health | 
 *MzVersionsApi* | [**MzVersionsLatestRetrieve**](docs/MzVersionsApi.md#mzversionslatestretrieve) | **Get** /api/mz-versions/latest | 

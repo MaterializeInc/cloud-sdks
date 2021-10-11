@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class SchemaRetrieveFormat(str, Enum):
     JSON = "json"
     YAML = "yaml"

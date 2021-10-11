@@ -181,6 +181,28 @@ paths:
       - tokenAuth: []
       tags:
       - deployments
+  /api/deployments/{id}/tailscale_logs:
+    get:
+      description: Retrieve the logs for a Tailscale container.
+      operationId: deploymentsTailscaleLogsRetrieve
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                type: string
+      security:
+      - tokenAuth: []
+      tags:
+      - deployments
   /api/health:
     get:
       description: |-
@@ -425,6 +447,8 @@ components:
         storageMb: 80174
         disableUserIndexes: false
         mzVersion: mzVersion
+        enableTailscale: true
+        tailscaleAuthKey: tailscaleAuthKey
       properties:
         name:
           type: string
@@ -446,6 +470,12 @@ components:
           type: array
         mzVersion:
           type: string
+        enableTailscale:
+          type: boolean
+          writeOnly: true
+        tailscaleAuthKey:
+          type: string
+          writeOnly: true
       type: object
     DeploymentSizeEnum:
       enum:
@@ -512,6 +542,8 @@ components:
         storageMb: 80174
         disableUserIndexes: false
         mzVersion: mzVersion
+        enableTailscale: true
+        tailscaleAuthKey: tailscaleAuthKey
       properties:
         name:
           type: string
@@ -533,6 +565,12 @@ components:
           type: array
         mzVersion:
           type: string
+        enableTailscale:
+          type: boolean
+          writeOnly: true
+        tailscaleAuthKey:
+          type: string
+          writeOnly: true
       type: object
     PendingMigration:
       properties:

@@ -7,27 +7,28 @@ import attr
 
 from ..types import UNSET, Unset
 
-from ..types import UNSET, Unset
-from typing import Union
 from ..models.deployment_size_enum import DeploymentSizeEnum
+from typing import Union
+from ..types import UNSET, Unset
 from typing import cast, List
-
-
 
 
 T = TypeVar("T", bound="PatchedDeploymentRequest")
 
+
 @attr.s(auto_attribs=True)
 class PatchedDeploymentRequest:
     """  """
+
     name: Union[Unset, str] = UNSET
     size: Union[Unset, DeploymentSizeEnum] = DeploymentSizeEnum.XS
     storage_mb: Union[Unset, int] = 100
     disable_user_indexes: Union[Unset, bool] = False
     materialized_extra_args: Union[Unset, List[str]] = UNSET
     mz_version: Union[Unset, str] = UNSET
+    enable_tailscale: Union[Unset, bool] = UNSET
+    tailscale_auth_key: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
-
 
     def to_dict(self) -> Dict[str, Any]:
         name = self.name
@@ -41,15 +42,13 @@ class PatchedDeploymentRequest:
         if not isinstance(self.materialized_extra_args, Unset):
             materialized_extra_args = self.materialized_extra_args
 
-
-
-
         mz_version = self.mz_version
+        enable_tailscale = self.enable_tailscale
+        tailscale_auth_key = self.tailscale_auth_key
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({
-        })
+        field_dict.update({})
         if name is not UNSET:
             field_dict["name"] = name
         if size is not UNSET:
@@ -62,10 +61,12 @@ class PatchedDeploymentRequest:
             field_dict["materializedExtraArgs"] = materialized_extra_args
         if mz_version is not UNSET:
             field_dict["mzVersion"] = mz_version
+        if enable_tailscale is not UNSET:
+            field_dict["enableTailscale"] = enable_tailscale
+        if tailscale_auth_key is not UNSET:
+            field_dict["tailscaleAuthKey"] = tailscale_auth_key
 
         return field_dict
-
-
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
@@ -74,13 +75,10 @@ class PatchedDeploymentRequest:
 
         _size = d.pop("size", UNSET)
         size: Union[Unset, DeploymentSizeEnum]
-        if isinstance(_size,  Unset):
+        if isinstance(_size, Unset):
             size = UNSET
         else:
             size = DeploymentSizeEnum(_size)
-
-
-
 
         storage_mb = d.pop("storageMb", UNSET)
 
@@ -88,8 +86,11 @@ class PatchedDeploymentRequest:
 
         materialized_extra_args = cast(List[str], d.pop("materializedExtraArgs", UNSET))
 
-
         mz_version = d.pop("mzVersion", UNSET)
+
+        enable_tailscale = d.pop("enableTailscale", UNSET)
+
+        tailscale_auth_key = d.pop("tailscaleAuthKey", UNSET)
 
         patched_deployment_request = cls(
             name=name,
@@ -98,6 +99,8 @@ class PatchedDeploymentRequest:
             disable_user_indexes=disable_user_indexes,
             materialized_extra_args=materialized_extra_args,
             mz_version=mz_version,
+            enable_tailscale=enable_tailscale,
+            tailscale_auth_key=tailscale_auth_key,
         )
 
         patched_deployment_request.additional_properties = d
