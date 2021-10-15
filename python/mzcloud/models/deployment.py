@@ -7,21 +7,21 @@ import attr
 
 from ..types import UNSET, Unset
 
-from typing import Dict
-from typing import cast
-from ..models.pending_migration import PendingMigration
 from ..models.deployment_size_enum import DeploymentSizeEnum
-from typing import cast, List
 from typing import Optional
-
-
+from typing import cast
+from typing import cast, List
+from typing import Dict
+from ..models.pending_migration import PendingMigration
 
 
 T = TypeVar("T", bound="Deployment")
 
+
 @attr.s(auto_attribs=True)
 class Deployment:
     """  """
+
     id: str
     organization: str
     tls_authority: str
@@ -39,7 +39,6 @@ class Deployment:
     disable_user_indexes: bool = False
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-
     def to_dict(self) -> Dict[str, Any]:
         id = self.id
         organization = self.organization
@@ -53,39 +52,35 @@ class Deployment:
         disable_user_indexes = self.disable_user_indexes
         materialized_extra_args = self.materialized_extra_args
 
-
-
-
         mz_version = self.mz_version
         status = self.status
         hostname = self.hostname
         cluster_id = self.cluster_id
         pending_migration = self.pending_migration.to_dict() if self.pending_migration else None
 
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({
-            "id": id,
-            "organization": organization,
-            "tlsAuthority": tls_authority,
-            "name": name,
-            "flaggedForDeletion": flagged_for_deletion,
-            "flaggedForUpdate": flagged_for_update,
-            "size": size,
-            "storageMb": storage_mb,
-            "disableUserIndexes": disable_user_indexes,
-            "materializedExtraArgs": materialized_extra_args,
-            "mzVersion": mz_version,
-            "status": status,
-            "hostname": hostname,
-            "clusterId": cluster_id,
-            "pendingMigration": pending_migration,
-        })
+        field_dict.update(
+            {
+                "id": id,
+                "organization": organization,
+                "tlsAuthority": tls_authority,
+                "name": name,
+                "flaggedForDeletion": flagged_for_deletion,
+                "flaggedForUpdate": flagged_for_update,
+                "size": size,
+                "storageMb": storage_mb,
+                "disableUserIndexes": disable_user_indexes,
+                "materializedExtraArgs": materialized_extra_args,
+                "mzVersion": mz_version,
+                "status": status,
+                "hostname": hostname,
+                "clusterId": cluster_id,
+                "pendingMigration": pending_migration,
+            }
+        )
 
         return field_dict
-
-
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
@@ -104,15 +99,11 @@ class Deployment:
 
         size = DeploymentSizeEnum(d.pop("size"))
 
-
-
-
         storage_mb = d.pop("storageMb")
 
         disable_user_indexes = d.pop("disableUserIndexes")
 
         materialized_extra_args = cast(List[str], d.pop("materializedExtraArgs"))
-
 
         mz_version = d.pop("mzVersion")
 
@@ -128,9 +119,6 @@ class Deployment:
             pending_migration = None
         else:
             pending_migration = PendingMigration.from_dict(_pending_migration)
-
-
-
 
         deployment = cls(
             id=id,

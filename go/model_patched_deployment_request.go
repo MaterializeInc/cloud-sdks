@@ -22,6 +22,8 @@ type PatchedDeploymentRequest struct {
 	DisableUserIndexes *bool `json:"disableUserIndexes,omitempty"`
 	MaterializedExtraArgs *[]string `json:"materializedExtraArgs,omitempty"`
 	MzVersion *string `json:"mzVersion,omitempty"`
+	EnableTailscale *bool `json:"enableTailscale,omitempty"`
+	TailscaleAuthKey *string `json:"tailscaleAuthKey,omitempty"`
 }
 
 // NewPatchedDeploymentRequest instantiates a new PatchedDeploymentRequest object
@@ -241,6 +243,70 @@ func (o *PatchedDeploymentRequest) SetMzVersion(v string) {
 	o.MzVersion = &v
 }
 
+// GetEnableTailscale returns the EnableTailscale field value if set, zero value otherwise.
+func (o *PatchedDeploymentRequest) GetEnableTailscale() bool {
+	if o == nil || o.EnableTailscale == nil {
+		var ret bool
+		return ret
+	}
+	return *o.EnableTailscale
+}
+
+// GetEnableTailscaleOk returns a tuple with the EnableTailscale field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PatchedDeploymentRequest) GetEnableTailscaleOk() (*bool, bool) {
+	if o == nil || o.EnableTailscale == nil {
+		return nil, false
+	}
+	return o.EnableTailscale, true
+}
+
+// HasEnableTailscale returns a boolean if a field has been set.
+func (o *PatchedDeploymentRequest) HasEnableTailscale() bool {
+	if o != nil && o.EnableTailscale != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetEnableTailscale gets a reference to the given bool and assigns it to the EnableTailscale field.
+func (o *PatchedDeploymentRequest) SetEnableTailscale(v bool) {
+	o.EnableTailscale = &v
+}
+
+// GetTailscaleAuthKey returns the TailscaleAuthKey field value if set, zero value otherwise.
+func (o *PatchedDeploymentRequest) GetTailscaleAuthKey() string {
+	if o == nil || o.TailscaleAuthKey == nil {
+		var ret string
+		return ret
+	}
+	return *o.TailscaleAuthKey
+}
+
+// GetTailscaleAuthKeyOk returns a tuple with the TailscaleAuthKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PatchedDeploymentRequest) GetTailscaleAuthKeyOk() (*string, bool) {
+	if o == nil || o.TailscaleAuthKey == nil {
+		return nil, false
+	}
+	return o.TailscaleAuthKey, true
+}
+
+// HasTailscaleAuthKey returns a boolean if a field has been set.
+func (o *PatchedDeploymentRequest) HasTailscaleAuthKey() bool {
+	if o != nil && o.TailscaleAuthKey != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTailscaleAuthKey gets a reference to the given string and assigns it to the TailscaleAuthKey field.
+func (o *PatchedDeploymentRequest) SetTailscaleAuthKey(v string) {
+	o.TailscaleAuthKey = &v
+}
+
 func (o PatchedDeploymentRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Name != nil {
@@ -260,6 +326,12 @@ func (o PatchedDeploymentRequest) MarshalJSON() ([]byte, error) {
 	}
 	if o.MzVersion != nil {
 		toSerialize["mzVersion"] = o.MzVersion
+	}
+	if o.EnableTailscale != nil {
+		toSerialize["enableTailscale"] = o.EnableTailscale
+	}
+	if o.TailscaleAuthKey != nil {
+		toSerialize["tailscaleAuthKey"] = o.TailscaleAuthKey
 	}
 	return json.Marshal(toSerialize)
 }

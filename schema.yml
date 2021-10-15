@@ -8,9 +8,9 @@ paths:
       operationId: deploymentsList
       description: List the available deployments.
       tags:
-        - deployments
+      - deployments
       security:
-        - tokenAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -24,14 +24,14 @@ paths:
       operationId: deploymentsCreate
       description: Create a new deployment.
       tags:
-        - deployments
+      - deployments
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/DeploymentRequest'
       security:
-        - tokenAuth: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -44,15 +44,15 @@ paths:
       operationId: deploymentsRetrieve
       description: Fetch details about a single deployment.
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
       tags:
-        - deployments
+      - deployments
       security:
-        - tokenAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -64,20 +64,20 @@ paths:
       operationId: deploymentsUpdate
       description: Update a deployment.
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
       tags:
-        - deployments
+      - deployments
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/DeploymentRequest'
       security:
-        - tokenAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -89,20 +89,20 @@ paths:
       operationId: deploymentsPartialUpdate
       description: Partially update a deployment.
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
       tags:
-        - deployments
+      - deployments
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/PatchedDeploymentRequest'
       security:
-        - tokenAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -114,15 +114,15 @@ paths:
       operationId: deploymentsDestroy
       description: Destroy a deployment.
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
       tags:
-        - deployments
+      - deployments
       security:
-        - tokenAuth: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -136,15 +136,15 @@ paths:
         formatted keys that permit authenticating to the deployment as the
         `materialize` user.
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
       tags:
-        - deployments
+      - deployments
       security:
-        - tokenAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -158,15 +158,36 @@ paths:
       operationId: deploymentsLogsRetrieve
       description: Retrieve the logs for a deployment.
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
       tags:
-        - deployments
+      - deployments
       security:
-        - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: ''
+  /api/deployments/{id}/tailscale_logs:
+    get:
+      operationId: deploymentsTailscaleLogsRetrieve
+      description: Retrieve the logs for a Tailscale container.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - deployments
+      security:
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -184,10 +205,10 @@ paths:
         balancers and such that need a basic indication as to whether the server is
         live.
       tags:
-        - health
+      - health
       security:
-        - tokenAuth: []
-        - {}
+      - tokenAuth: []
+      - {}
       responses:
         '200':
           description: No response body
@@ -199,10 +220,10 @@ paths:
 
         Versions are listed in order from oldest to newest.
       tags:
-        - mz-versions
+      - mz-versions
       security:
-        - tokenAuth: []
-        - {}
+      - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -217,16 +238,16 @@ paths:
       operationId: mzVersionsLatestRetrieve
       description: Returns the latest version of Materialize.
       parameters:
-        - in: query
-          name: track
-          schema:
-            type: string
-            default: stable
+      - in: query
+        name: track
+        schema:
+          type: string
+          default: stable
       tags:
-        - mz-versions
+      - mz-versions
       security:
-        - tokenAuth: []
-        - {}
+      - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -239,9 +260,9 @@ paths:
       operationId: onboardingCallRetrieve
       description: Retrieve the first scheduled onboarding call for a user.
       tags:
-        - onboarding-call
+      - onboarding-call
       security:
-        - tokenAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -254,17 +275,17 @@ paths:
       operationId: organizationsRetrieve
       description: Fetch details about a single organization.
       parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-            format: uuid
-          description: A UUID string identifying this organization.
-          required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this organization.
+        required: true
       tags:
-        - organizations
+      - organizations
       security:
-        - tokenAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -281,18 +302,18 @@ paths:
         - YAML: application/vnd.oai.openapi
         - JSON: application/vnd.oai.openapi+json
       parameters:
-        - in: query
-          name: format
-          schema:
-            type: string
-            enum:
-              - json
-              - yaml
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
       tags:
-        - schema
+      - schema
       security:
-        - tokenAuth: []
-        - {}
+      - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -343,7 +364,7 @@ components:
           readOnly: true
         size:
           allOf:
-            - $ref: '#/components/schemas/DeploymentSizeEnum'
+          - $ref: '#/components/schemas/DeploymentSizeEnum'
           default: XS
         storageMb:
           type: integer
@@ -366,28 +387,28 @@ components:
           type: string
         pendingMigration:
           allOf:
-            - $ref: '#/components/schemas/PendingMigration'
+          - $ref: '#/components/schemas/PendingMigration'
           readOnly: true
           nullable: true
         status:
           type: string
           readOnly: true
       required:
-        - clusterId
-        - disableUserIndexes
-        - flaggedForDeletion
-        - flaggedForUpdate
-        - hostname
-        - id
-        - materializedExtraArgs
-        - mzVersion
-        - name
-        - organization
-        - pendingMigration
-        - size
-        - status
-        - storageMb
-        - tlsAuthority
+      - clusterId
+      - disableUserIndexes
+      - flaggedForDeletion
+      - flaggedForUpdate
+      - hostname
+      - id
+      - materializedExtraArgs
+      - mzVersion
+      - name
+      - organization
+      - pendingMigration
+      - size
+      - status
+      - storageMb
+      - tlsAuthority
     DeploymentRequest:
       type: object
       properties:
@@ -395,7 +416,7 @@ components:
           type: string
         size:
           allOf:
-            - $ref: '#/components/schemas/DeploymentSizeEnum'
+          - $ref: '#/components/schemas/DeploymentSizeEnum'
           default: XS
         storageMb:
           type: integer
@@ -412,13 +433,19 @@ components:
           title: Extra materialized arguments
         mzVersion:
           type: string
+        enableTailscale:
+          type: boolean
+          writeOnly: true
+        tailscaleAuthKey:
+          type: string
+          writeOnly: true
     DeploymentSizeEnum:
       enum:
-        - XS
-        - S
-        - M
-        - L
-        - XL
+      - XS
+      - S
+      - M
+      - L
+      - XL
       type: string
     OnboardingCall:
       type: object
@@ -430,8 +457,8 @@ components:
           type: string
           format: date-time
       required:
-        - end
-        - start
+      - end
+      - start
     Organization:
       type: object
       properties:
@@ -442,7 +469,8 @@ components:
         admitted:
           type: boolean
           readOnly: true
-          description: Whether this organization has been admitted to Materialize Cloud.
+          description: Whether this organization has been admitted to Materialize
+            Cloud.
         deploymentLimit:
           type: integer
           readOnly: true
@@ -451,12 +479,13 @@ components:
           format: date-time
           readOnly: true
           nullable: true
-          description: When this organization's trial period expires. If empty, the organization is on an enterprise plan.
+          description: When this organization's trial period expires. If empty, the
+            organization is on an enterprise plan.
       required:
-        - admitted
-        - deploymentLimit
-        - id
-        - trialExpiresAt
+      - admitted
+      - deploymentLimit
+      - id
+      - trialExpiresAt
     PatchedDeploymentRequest:
       type: object
       properties:
@@ -464,7 +493,7 @@ components:
           type: string
         size:
           allOf:
-            - $ref: '#/components/schemas/DeploymentSizeEnum'
+          - $ref: '#/components/schemas/DeploymentSizeEnum'
           default: XS
         storageMb:
           type: integer
@@ -481,6 +510,12 @@ components:
           title: Extra materialized arguments
         mzVersion:
           type: string
+        enableTailscale:
+          type: boolean
+          writeOnly: true
+        tailscaleAuthKey:
+          type: string
+          writeOnly: true
     PendingMigration:
       type: object
       properties:
@@ -490,8 +525,8 @@ components:
           type: string
           format: date
       required:
-        - deadline
-        - description
+      - deadline
+      - description
     PendingMigrationRequest:
       type: object
       properties:
@@ -501,8 +536,8 @@ components:
           type: string
           format: date
       required:
-        - deadline
-        - description
+      - deadline
+      - description
   securitySchemes:
     tokenAuth:
       type: http

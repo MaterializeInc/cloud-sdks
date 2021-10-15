@@ -7,52 +7,44 @@ import attr
 
 from ..types import UNSET, Unset
 
-from typing import cast
 import datetime
+from typing import cast
 from dateutil.parser import isoparse
-
-
 
 
 T = TypeVar("T", bound="OnboardingCall")
 
+
 @attr.s(auto_attribs=True)
 class OnboardingCall:
     """  """
+
     start: datetime.datetime
     end: datetime.datetime
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
-
 
     def to_dict(self) -> Dict[str, Any]:
         start = self.start.isoformat()
 
         end = self.end.isoformat()
 
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({
-            "start": start,
-            "end": end,
-        })
+        field_dict.update(
+            {
+                "start": start,
+                "end": end,
+            }
+        )
 
         return field_dict
-
-
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         start = isoparse(d.pop("start"))
 
-
-
-
         end = isoparse(d.pop("end"))
-
-
-
 
         onboarding_call = cls(
             start=start,

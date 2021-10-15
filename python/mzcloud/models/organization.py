@@ -8,24 +8,23 @@ import attr
 from ..types import UNSET, Unset
 
 from typing import cast
+from typing import Optional
 from dateutil.parser import isoparse
 import datetime
-from typing import Optional
-
-
 
 
 T = TypeVar("T", bound="Organization")
 
+
 @attr.s(auto_attribs=True)
 class Organization:
     """  """
+
     id: str
     admitted: bool
     deployment_limit: int
     trial_expires_at: Optional[datetime.datetime]
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
-
 
     def to_dict(self) -> Dict[str, Any]:
         id = self.id
@@ -33,19 +32,18 @@ class Organization:
         deployment_limit = self.deployment_limit
         trial_expires_at = self.trial_expires_at.isoformat() if self.trial_expires_at else None
 
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({
-            "id": id,
-            "admitted": admitted,
-            "deploymentLimit": deployment_limit,
-            "trialExpiresAt": trial_expires_at,
-        })
+        field_dict.update(
+            {
+                "id": id,
+                "admitted": admitted,
+                "deploymentLimit": deployment_limit,
+                "trialExpiresAt": trial_expires_at,
+            }
+        )
 
         return field_dict
-
-
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
@@ -62,9 +60,6 @@ class Organization:
             trial_expires_at = None
         else:
             trial_expires_at = isoparse(_trial_expires_at)
-
-
-
 
         organization = cls(
             id=id,

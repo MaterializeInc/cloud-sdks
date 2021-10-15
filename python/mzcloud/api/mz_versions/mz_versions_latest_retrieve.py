@@ -5,36 +5,24 @@ import httpx
 from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET
 
-from ...types import UNSET, Unset
 from typing import Union
-
+from ...types import UNSET, Unset
 
 
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
-    track: Union[Unset, str] = 'stable',
-
+    track: Union[Unset, str] = "stable",
 ) -> Dict[str, Any]:
-    url = "{}/api/mz-versions/latest".format(
-        client.base_url)
+    url = "{}/api/mz-versions/latest".format(client.base_url)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
-
-    
-
-    
 
     params: Dict[str, Any] = {
         "track": track,
     }
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
-
-
-    
-
-    
 
     return {
         "url": url,
@@ -64,13 +52,11 @@ def _build_response(*, response: httpx.Response) -> Response[str]:
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    track: Union[Unset, str] = 'stable',
-
+    track: Union[Unset, str] = "stable",
 ) -> Response[str]:
     kwargs = _get_kwargs(
         client=client,
-track=track,
-
+        track=track,
     )
 
     response = httpx.get(
@@ -79,49 +65,46 @@ track=track,
 
     return _build_response(response=response)
 
+
 def sync(
     *,
     client: AuthenticatedClient,
-    track: Union[Unset, str] = 'stable',
-
+    track: Union[Unset, str] = "stable",
 ) -> Optional[str]:
     """ Returns the latest version of Materialize. """
 
     return sync_detailed(
         client=client,
-track=track,
-
+        track=track,
     ).parsed
+
 
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-    track: Union[Unset, str] = 'stable',
-
+    track: Union[Unset, str] = "stable",
 ) -> Response[str]:
     kwargs = _get_kwargs(
         client=client,
-track=track,
-
+        track=track,
     )
 
     async with httpx.AsyncClient() as _client:
-        response = await _client.get(
-            **kwargs
-        )
+        response = await _client.get(**kwargs)
 
     return _build_response(response=response)
+
 
 async def asyncio(
     *,
     client: AuthenticatedClient,
-    track: Union[Unset, str] = 'stable',
-
+    track: Union[Unset, str] = "stable",
 ) -> Optional[str]:
     """ Returns the latest version of Materialize. """
 
-    return (await asyncio_detailed(
-        client=client,
-track=track,
-
-    )).parsed
+    return (
+        await asyncio_detailed(
+            client=client,
+            track=track,
+        )
+    ).parsed
