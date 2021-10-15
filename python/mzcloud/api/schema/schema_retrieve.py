@@ -3,14 +3,9 @@ from typing import Any, Dict, List, Optional, Union, cast
 import httpx
 
 from ...client import AuthenticatedClient, Client
-from ...types import Response, UNSET
-
-from ...models.schema_retrieve_response_200 import SchemaRetrieveResponse200
-from typing import cast
-from typing import Dict
 from ...models.schema_retrieve_format import SchemaRetrieveFormat
-from typing import Union
-from ...types import UNSET, Unset
+from ...models.schema_retrieve_response_200 import SchemaRetrieveResponse200
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(

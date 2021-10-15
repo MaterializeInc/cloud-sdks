@@ -3,11 +3,8 @@ from typing import Any, Dict, List, Optional, Union, cast
 import httpx
 
 from ...client import AuthenticatedClient, Client
-from ...types import Response, UNSET
-
-from typing import Dict
 from ...models.onboarding_call import OnboardingCall
-from typing import cast
+from ...types import UNSET, Response
 
 
 def _get_kwargs(
@@ -63,7 +60,7 @@ def sync(
     *,
     client: AuthenticatedClient,
 ) -> Optional[OnboardingCall]:
-    """ Retrieve the first scheduled onboarding call for a user. """
+    """Retrieve the first scheduled onboarding call for a user."""
 
     return sync_detailed(
         client=client,
@@ -88,7 +85,7 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
 ) -> Optional[OnboardingCall]:
-    """ Retrieve the first scheduled onboarding call for a user. """
+    """Retrieve the first scheduled onboarding call for a user."""
 
     return (
         await asyncio_detailed(

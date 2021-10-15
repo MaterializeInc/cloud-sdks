@@ -3,12 +3,9 @@ from typing import Any, Dict, List, Optional, Union, cast
 import httpx
 
 from ...client import AuthenticatedClient, Client
-from ...types import Response, UNSET
-
-from ...models.patched_deployment_request import PatchedDeploymentRequest
-from typing import cast
 from ...models.deployment import Deployment
-from typing import Dict
+from ...models.patched_deployment_request import PatchedDeploymentRequest
+from ...types import UNSET, Response
 
 
 def _get_kwargs(
@@ -75,7 +72,7 @@ def sync(
     id: str,
     json_body: PatchedDeploymentRequest,
 ) -> Optional[Deployment]:
-    """ Partially update a deployment. """
+    """Partially update a deployment."""
 
     return sync_detailed(
         client=client,
@@ -108,7 +105,7 @@ async def asyncio(
     id: str,
     json_body: PatchedDeploymentRequest,
 ) -> Optional[Deployment]:
-    """ Partially update a deployment. """
+    """Partially update a deployment."""
 
     return (
         await asyncio_detailed(

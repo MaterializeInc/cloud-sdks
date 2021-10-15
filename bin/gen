@@ -44,6 +44,8 @@ gen_python() {
         generate --path schema.yml --config <(echo '{"project_name_override": "mzcloud"}')
     mv mzcloud python
     (cd python && rm_standard)
+    pipx run --spec isort==5.9.3 isort python/
+    pipx run --spec black==21.9b0 black python/
 }
 
 gen_rust() {

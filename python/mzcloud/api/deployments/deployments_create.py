@@ -3,12 +3,9 @@ from typing import Any, Dict, List, Optional, Union, cast
 import httpx
 
 from ...client import AuthenticatedClient, Client
-from ...types import Response, UNSET
-
-from typing import cast
 from ...models.deployment import Deployment
-from typing import Dict
 from ...models.deployment_request import DeploymentRequest
+from ...types import UNSET, Response
 
 
 def _get_kwargs(
@@ -71,7 +68,7 @@ def sync(
     client: AuthenticatedClient,
     json_body: DeploymentRequest,
 ) -> Optional[Deployment]:
-    """ Create a new deployment. """
+    """Create a new deployment."""
 
     return sync_detailed(
         client=client,
@@ -100,7 +97,7 @@ async def asyncio(
     client: AuthenticatedClient,
     json_body: DeploymentRequest,
 ) -> Optional[Deployment]:
-    """ Create a new deployment. """
+    """Create a new deployment."""
 
     return (
         await asyncio_detailed(

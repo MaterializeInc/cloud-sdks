@@ -1,19 +1,15 @@
-from typing import Any, Dict, Type, TypeVar, Tuple, Optional, BinaryIO, TextIO
-
-from typing import List
-
+from typing import Any, BinaryIO, Dict, List, Optional, TextIO, Tuple, Type, TypeVar
 
 import attr
 
 from ..types import UNSET, Unset
-
 
 T = TypeVar("T", bound="SchemaRetrieveResponse200")
 
 
 @attr.s(auto_attribs=True)
 class SchemaRetrieveResponse200:
-    """  """
+    """ """
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
