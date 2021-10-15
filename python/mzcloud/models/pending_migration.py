@@ -1,23 +1,17 @@
-from typing import Any, Dict, Type, TypeVar, Tuple, Optional, BinaryIO, TextIO
-
-from typing import List
-
+import datetime
+from typing import Any, BinaryIO, Dict, List, Optional, TextIO, Tuple, Type, TypeVar, cast
 
 import attr
+from dateutil.parser import isoparse
 
 from ..types import UNSET, Unset
-
-from typing import cast
-from dateutil.parser import isoparse
-import datetime
-
 
 T = TypeVar("T", bound="PendingMigration")
 
 
 @attr.s(auto_attribs=True)
 class PendingMigration:
-    """  """
+    """ """
 
     description: str
     deadline: datetime.date

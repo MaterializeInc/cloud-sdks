@@ -3,10 +3,7 @@ from typing import Any, Dict, List, Optional, Union, cast
 import httpx
 
 from ...client import AuthenticatedClient, Client
-from ...types import Response, UNSET
-
-from typing import Union
-from ...types import UNSET, Unset
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
@@ -71,7 +68,7 @@ def sync(
     client: AuthenticatedClient,
     track: Union[Unset, str] = "stable",
 ) -> Optional[str]:
-    """ Returns the latest version of Materialize. """
+    """Returns the latest version of Materialize."""
 
     return sync_detailed(
         client=client,
@@ -100,7 +97,7 @@ async def asyncio(
     client: AuthenticatedClient,
     track: Union[Unset, str] = "stable",
 ) -> Optional[str]:
-    """ Returns the latest version of Materialize. """
+    """Returns the latest version of Materialize."""
 
     return (
         await asyncio_detailed(

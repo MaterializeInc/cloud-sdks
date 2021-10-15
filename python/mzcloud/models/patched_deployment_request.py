@@ -1,24 +1,16 @@
-from typing import Any, Dict, Type, TypeVar, Tuple, Optional, BinaryIO, TextIO
-
-from typing import List
-
+from typing import Any, BinaryIO, Dict, List, Optional, TextIO, Tuple, Type, TypeVar, Union, cast
 
 import attr
 
-from ..types import UNSET, Unset
-
 from ..models.deployment_size_enum import DeploymentSizeEnum
-from typing import Union
 from ..types import UNSET, Unset
-from typing import cast, List
-
 
 T = TypeVar("T", bound="PatchedDeploymentRequest")
 
 
 @attr.s(auto_attribs=True)
 class PatchedDeploymentRequest:
-    """  """
+    """ """
 
     name: Union[Unset, str] = UNSET
     size: Union[Unset, DeploymentSizeEnum] = DeploymentSizeEnum.XS

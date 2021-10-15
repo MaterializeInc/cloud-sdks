@@ -3,11 +3,8 @@ from typing import Any, Dict, List, Optional, Union, cast
 import httpx
 
 from ...client import AuthenticatedClient, Client
-from ...types import Response, UNSET
-
-from typing import Dict
 from ...models.organization import Organization
-from typing import cast
+from ...types import UNSET, Response
 
 
 def _get_kwargs(
@@ -67,7 +64,7 @@ def sync(
     client: AuthenticatedClient,
     id: str,
 ) -> Optional[Organization]:
-    """ Fetch details about a single organization. """
+    """Fetch details about a single organization."""
 
     return sync_detailed(
         client=client,
@@ -96,7 +93,7 @@ async def asyncio(
     client: AuthenticatedClient,
     id: str,
 ) -> Optional[Organization]:
-    """ Fetch details about a single organization. """
+    """Fetch details about a single organization."""
 
     return (
         await asyncio_detailed(

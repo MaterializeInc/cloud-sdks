@@ -1,23 +1,17 @@
-from typing import Any, Dict, Type, TypeVar, Tuple, Optional, BinaryIO, TextIO
-
-from typing import List
-
+import datetime
+from typing import Any, BinaryIO, Dict, List, Optional, TextIO, Tuple, Type, TypeVar, cast
 
 import attr
-
-from ..types import UNSET, Unset
-
-import datetime
-from typing import cast
 from dateutil.parser import isoparse
 
+from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="OnboardingCall")
 
 
 @attr.s(auto_attribs=True)
 class OnboardingCall:
-    """  """
+    """ """
 
     start: datetime.datetime
     end: datetime.datetime

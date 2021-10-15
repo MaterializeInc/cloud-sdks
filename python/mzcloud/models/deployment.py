@@ -1,26 +1,17 @@
-from typing import Any, Dict, Type, TypeVar, Tuple, Optional, BinaryIO, TextIO
-
-from typing import List
-
+from typing import Any, BinaryIO, Dict, List, Optional, TextIO, Tuple, Type, TypeVar, cast
 
 import attr
 
-from ..types import UNSET, Unset
-
 from ..models.deployment_size_enum import DeploymentSizeEnum
-from typing import Optional
-from typing import cast
-from typing import cast, List
-from typing import Dict
 from ..models.pending_migration import PendingMigration
-
+from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Deployment")
 
 
 @attr.s(auto_attribs=True)
 class Deployment:
-    """  """
+    """ """
 
     id: str
     organization: str
