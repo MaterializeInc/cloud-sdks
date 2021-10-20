@@ -171,6 +171,14 @@ paths:
         schema:
           type: string
         style: simple
+      - explode: true
+        in: query
+        name: previous
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
       responses:
         "200":
           content:
@@ -193,6 +201,14 @@ paths:
         schema:
           type: string
         style: simple
+      - explode: true
+        in: query
+        name: previous
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
       responses:
         "200":
           content:
@@ -403,6 +419,7 @@ components:
           type: boolean
         materializedExtraArgs:
           items:
+            maxLength: 255
             type: string
           title: Extra materialized arguments
           type: array
@@ -465,6 +482,7 @@ components:
           type: boolean
         materializedExtraArgs:
           items:
+            maxLength: 255
             type: string
           title: Extra materialized arguments
           type: array
@@ -560,6 +578,7 @@ components:
           type: boolean
         materializedExtraArgs:
           items:
+            maxLength: 255
             type: string
           title: Extra materialized arguments
           type: array

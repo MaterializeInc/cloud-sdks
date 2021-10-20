@@ -163,6 +163,11 @@ paths:
         schema:
           type: string
         required: true
+      - in: query
+        name: previous
+        schema:
+          type: boolean
+          default: false
       tags:
       - deployments
       security:
@@ -184,6 +189,11 @@ paths:
         schema:
           type: string
         required: true
+      - in: query
+        name: previous
+        schema:
+          type: boolean
+          default: false
       tags:
       - deployments
       security:
@@ -378,6 +388,7 @@ components:
           type: array
           items:
             type: string
+            maxLength: 255
           title: Extra materialized arguments
         clusterId:
           type: string
@@ -430,6 +441,7 @@ components:
           type: array
           items:
             type: string
+            maxLength: 255
           title: Extra materialized arguments
         mzVersion:
           type: string
@@ -507,6 +519,7 @@ components:
           type: array
           items:
             type: string
+            maxLength: 255
           title: Extra materialized arguments
         mzVersion:
           type: string

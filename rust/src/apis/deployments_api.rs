@@ -244,6 +244,7 @@ pub async fn deployments_list(
 pub async fn deployments_logs_retrieve(
     configuration: &configuration::Configuration,
     id: &str,
+    previous: Option<bool>,
 ) -> Result<String, Error<DeploymentsLogsRetrieveError>> {
     let local_var_client = &configuration.client;
 
@@ -255,6 +256,10 @@ pub async fn deployments_logs_retrieve(
     let mut local_var_req_builder =
         local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
+    if let Some(ref local_var_str) = previous {
+        local_var_req_builder =
+            local_var_req_builder.query(&[("previous", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_user_agent) = configuration.user_agent {
         local_var_req_builder =
             local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
@@ -375,6 +380,7 @@ pub async fn deployments_retrieve(
 pub async fn deployments_tailscale_logs_retrieve(
     configuration: &configuration::Configuration,
     id: &str,
+    previous: Option<bool>,
 ) -> Result<String, Error<DeploymentsTailscaleLogsRetrieveError>> {
     let local_var_client = &configuration.client;
 
@@ -386,6 +392,10 @@ pub async fn deployments_tailscale_logs_retrieve(
     let mut local_var_req_builder =
         local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
+    if let Some(ref local_var_str) = previous {
+        local_var_req_builder =
+            local_var_req_builder.query(&[("previous", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_user_agent) = configuration.user_agent {
         local_var_req_builder =
             local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());

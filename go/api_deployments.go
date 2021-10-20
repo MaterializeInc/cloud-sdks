@@ -448,8 +448,13 @@ type ApiDeploymentsLogsRetrieveRequest struct {
 	ctx _context.Context
 	ApiService *DeploymentsApiService
 	id string
+	previous *bool
 }
 
+func (r ApiDeploymentsLogsRetrieveRequest) Previous(previous bool) ApiDeploymentsLogsRetrieveRequest {
+	r.previous = &previous
+	return r
+}
 
 func (r ApiDeploymentsLogsRetrieveRequest) Execute() (string, *_nethttp.Response, error) {
 	return r.ApiService.DeploymentsLogsRetrieveExecute(r)
@@ -496,6 +501,9 @@ func (a *DeploymentsApiService) DeploymentsLogsRetrieveExecute(r ApiDeploymentsL
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
 
+	if r.previous != nil {
+		localVarQueryParams.Add("previous", parameterToString(*r.previous, ""))
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -773,8 +781,13 @@ type ApiDeploymentsTailscaleLogsRetrieveRequest struct {
 	ctx _context.Context
 	ApiService *DeploymentsApiService
 	id string
+	previous *bool
 }
 
+func (r ApiDeploymentsTailscaleLogsRetrieveRequest) Previous(previous bool) ApiDeploymentsTailscaleLogsRetrieveRequest {
+	r.previous = &previous
+	return r
+}
 
 func (r ApiDeploymentsTailscaleLogsRetrieveRequest) Execute() (string, *_nethttp.Response, error) {
 	return r.ApiService.DeploymentsTailscaleLogsRetrieveExecute(r)
@@ -821,6 +834,9 @@ func (a *DeploymentsApiService) DeploymentsTailscaleLogsRetrieveExecute(r ApiDep
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
 
+	if r.previous != nil {
+		localVarQueryParams.Add("previous", parameterToString(*r.previous, ""))
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
