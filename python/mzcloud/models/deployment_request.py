@@ -18,7 +18,7 @@ class DeploymentRequest:
     disable_user_indexes: Union[Unset, bool] = False
     materialized_extra_args: Union[Unset, List[str]] = UNSET
     mz_version: Union[Unset, str] = UNSET
-    enable_tailscale: Union[Unset, bool] = UNSET
+    enable_tailscale: Union[Unset, bool] = False
     tailscale_auth_key: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 

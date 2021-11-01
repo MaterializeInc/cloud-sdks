@@ -36,6 +36,8 @@ func NewPatchedDeploymentRequest() *PatchedDeploymentRequest {
 	this.StorageMb = &storageMb
 	var disableUserIndexes bool = false
 	this.DisableUserIndexes = &disableUserIndexes
+	var enableTailscale bool = false
+	this.EnableTailscale = &enableTailscale
 	return &this
 }
 
@@ -48,6 +50,8 @@ func NewPatchedDeploymentRequestWithDefaults() *PatchedDeploymentRequest {
 	this.StorageMb = &storageMb
 	var disableUserIndexes bool = false
 	this.DisableUserIndexes = &disableUserIndexes
+	var enableTailscale bool = false
+	this.EnableTailscale = &enableTailscale
 	return &this
 }
 

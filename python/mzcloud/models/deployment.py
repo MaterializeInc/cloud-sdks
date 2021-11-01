@@ -28,6 +28,7 @@ class Deployment:
     size: DeploymentSizeEnum = DeploymentSizeEnum.XS
     storage_mb: int = 100
     disable_user_indexes: bool = False
+    enable_tailscale: bool = False
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -45,6 +46,7 @@ class Deployment:
 
         mz_version = self.mz_version
         status = self.status
+        enable_tailscale = self.enable_tailscale
         hostname = self.hostname
         cluster_id = self.cluster_id
         pending_migration = self.pending_migration.to_dict() if self.pending_migration else None
@@ -65,6 +67,7 @@ class Deployment:
                 "materializedExtraArgs": materialized_extra_args,
                 "mzVersion": mz_version,
                 "status": status,
+                "enableTailscale": enable_tailscale,
                 "hostname": hostname,
                 "clusterId": cluster_id,
                 "pendingMigration": pending_migration,
@@ -100,6 +103,8 @@ class Deployment:
 
         status = d.pop("status")
 
+        enable_tailscale = d.pop("enableTailscale")
+
         hostname = d.pop("hostname")
 
         cluster_id = d.pop("clusterId")
@@ -124,6 +129,7 @@ class Deployment:
             materialized_extra_args=materialized_extra_args,
             mz_version=mz_version,
             status=status,
+            enable_tailscale=enable_tailscale,
             hostname=hostname,
             cluster_id=cluster_id,
             pending_migration=pending_migration,

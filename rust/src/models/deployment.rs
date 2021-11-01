@@ -40,6 +40,8 @@ pub struct Deployment {
     pub pending_migration: Option<Box<crate::models::PendingMigration>>,
     #[serde(rename = "status")]
     pub status: String,
+    #[serde(rename = "enableTailscale")]
+    pub enable_tailscale: bool,
 }
 
 impl Deployment {
@@ -59,6 +61,7 @@ impl Deployment {
         mz_version: String,
         pending_migration: Option<crate::models::PendingMigration>,
         status: String,
+        enable_tailscale: bool,
     ) -> Deployment {
         Deployment {
             id,
@@ -76,6 +79,7 @@ impl Deployment {
             mz_version,
             pending_migration: pending_migration.map(Box::new),
             status,
+            enable_tailscale,
         }
     }
 }
