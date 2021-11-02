@@ -368,8 +368,9 @@ components:
         flaggedForUpdate: true
         flaggedForDeletion: true
         pendingMigration: ""
-        clusterId: clusterId
+        clusterId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         mzVersion: mzVersion
+        enableTailscale: false
         hostname: hostname
         materializedExtraArgs:
         - materializedExtraArgs
@@ -424,6 +425,7 @@ components:
           title: Extra materialized arguments
           type: array
         clusterId:
+          format: uuid
           nullable: true
           readOnly: true
           type: string
@@ -437,9 +439,13 @@ components:
         status:
           readOnly: true
           type: string
+        enableTailscale:
+          default: false
+          type: boolean
       required:
       - clusterId
       - disableUserIndexes
+      - enableTailscale
       - flaggedForDeletion
       - flaggedForUpdate
       - hostname
@@ -464,7 +470,7 @@ components:
         storageMb: 80174
         disableUserIndexes: false
         mzVersion: mzVersion
-        enableTailscale: true
+        enableTailscale: false
         tailscaleAuthKey: tailscaleAuthKey
       properties:
         name:
@@ -489,8 +495,8 @@ components:
         mzVersion:
           type: string
         enableTailscale:
+          default: false
           type: boolean
-          writeOnly: true
         tailscaleAuthKey:
           type: string
           writeOnly: true
@@ -560,7 +566,7 @@ components:
         storageMb: 80174
         disableUserIndexes: false
         mzVersion: mzVersion
-        enableTailscale: true
+        enableTailscale: false
         tailscaleAuthKey: tailscaleAuthKey
       properties:
         name:
@@ -585,8 +591,8 @@ components:
         mzVersion:
           type: string
         enableTailscale:
+          default: false
           type: boolean
-          writeOnly: true
         tailscaleAuthKey:
           type: string
           writeOnly: true

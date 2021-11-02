@@ -31,13 +31,14 @@ type Deployment struct {
 	MzVersion string `json:"mzVersion"`
 	PendingMigration NullablePendingMigration `json:"pendingMigration"`
 	Status string `json:"status"`
+	EnableTailscale bool `json:"enableTailscale"`
 }
 
 // NewDeployment instantiates a new Deployment object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDeployment(id string, organization string, tlsAuthority string, name string, hostname NullableString, flaggedForDeletion bool, flaggedForUpdate bool, size DeploymentSizeEnum, storageMb int32, disableUserIndexes bool, materializedExtraArgs []string, clusterId NullableString, mzVersion string, pendingMigration NullablePendingMigration, status string) *Deployment {
+func NewDeployment(id string, organization string, tlsAuthority string, name string, hostname NullableString, flaggedForDeletion bool, flaggedForUpdate bool, size DeploymentSizeEnum, storageMb int32, disableUserIndexes bool, materializedExtraArgs []string, clusterId NullableString, mzVersion string, pendingMigration NullablePendingMigration, status string, enableTailscale bool) *Deployment {
 	this := Deployment{}
 	this.Id = id
 	this.Organization = organization
@@ -54,6 +55,7 @@ func NewDeployment(id string, organization string, tlsAuthority string, name str
 	this.MzVersion = mzVersion
 	this.PendingMigration = pendingMigration
 	this.Status = status
+	this.EnableTailscale = enableTailscale
 	return &this
 }
 
@@ -66,6 +68,8 @@ func NewDeploymentWithDefaults() *Deployment {
 	this.StorageMb = storageMb
 	var disableUserIndexes bool = false
 	this.DisableUserIndexes = disableUserIndexes
+	var enableTailscale bool = false
+	this.EnableTailscale = enableTailscale
 	return &this
 }
 
@@ -435,6 +439,30 @@ func (o *Deployment) SetStatus(v string) {
 	o.Status = v
 }
 
+// GetEnableTailscale returns the EnableTailscale field value
+func (o *Deployment) GetEnableTailscale() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.EnableTailscale
+}
+
+// GetEnableTailscaleOk returns a tuple with the EnableTailscale field value
+// and a boolean to check if the value has been set.
+func (o *Deployment) GetEnableTailscaleOk() (*bool, bool) {
+	if o == nil  {
+		return nil, false
+	}
+	return &o.EnableTailscale, true
+}
+
+// SetEnableTailscale sets field value
+func (o *Deployment) SetEnableTailscale(v bool) {
+	o.EnableTailscale = v
+}
+
 func (o Deployment) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
@@ -481,6 +509,9 @@ func (o Deployment) MarshalJSON() ([]byte, error) {
 	}
 	if true {
 		toSerialize["status"] = o.Status
+	}
+	if true {
+		toSerialize["enableTailscale"] = o.EnableTailscale
 	}
 	return json.Marshal(toSerialize)
 }

@@ -392,6 +392,7 @@ components:
           title: Extra materialized arguments
         clusterId:
           type: string
+          format: uuid
           readOnly: true
           nullable: true
         mzVersion:
@@ -404,9 +405,13 @@ components:
         status:
           type: string
           readOnly: true
+        enableTailscale:
+          type: boolean
+          default: false
       required:
       - clusterId
       - disableUserIndexes
+      - enableTailscale
       - flaggedForDeletion
       - flaggedForUpdate
       - hostname
@@ -447,7 +452,7 @@ components:
           type: string
         enableTailscale:
           type: boolean
-          writeOnly: true
+          default: false
         tailscaleAuthKey:
           type: string
           writeOnly: true
@@ -525,7 +530,7 @@ components:
           type: string
         enableTailscale:
           type: boolean
-          writeOnly: true
+          default: false
         tailscaleAuthKey:
           type: string
           writeOnly: true
