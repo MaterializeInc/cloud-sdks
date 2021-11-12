@@ -24,13 +24,14 @@ type DeploymentRequest struct {
 	MzVersion *string `json:"mzVersion,omitempty"`
 	EnableTailscale *bool `json:"enableTailscale,omitempty"`
 	TailscaleAuthKey *string `json:"tailscaleAuthKey,omitempty"`
+	CloudProviderRegion SupportedCloudRegionRequest `json:"cloudProviderRegion"`
 }
 
 // NewDeploymentRequest instantiates a new DeploymentRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDeploymentRequest() *DeploymentRequest {
+func NewDeploymentRequest(cloudProviderRegion SupportedCloudRegionRequest) *DeploymentRequest {
 	this := DeploymentRequest{}
 	var storageMb int32 = 100
 	this.StorageMb = &storageMb
@@ -38,6 +39,7 @@ func NewDeploymentRequest() *DeploymentRequest {
 	this.DisableUserIndexes = &disableUserIndexes
 	var enableTailscale bool = false
 	this.EnableTailscale = &enableTailscale
+	this.CloudProviderRegion = cloudProviderRegion
 	return &this
 }
 
@@ -311,6 +313,30 @@ func (o *DeploymentRequest) SetTailscaleAuthKey(v string) {
 	o.TailscaleAuthKey = &v
 }
 
+// GetCloudProviderRegion returns the CloudProviderRegion field value
+func (o *DeploymentRequest) GetCloudProviderRegion() SupportedCloudRegionRequest {
+	if o == nil {
+		var ret SupportedCloudRegionRequest
+		return ret
+	}
+
+	return o.CloudProviderRegion
+}
+
+// GetCloudProviderRegionOk returns a tuple with the CloudProviderRegion field value
+// and a boolean to check if the value has been set.
+func (o *DeploymentRequest) GetCloudProviderRegionOk() (*SupportedCloudRegionRequest, bool) {
+	if o == nil  {
+		return nil, false
+	}
+	return &o.CloudProviderRegion, true
+}
+
+// SetCloudProviderRegion sets field value
+func (o *DeploymentRequest) SetCloudProviderRegion(v SupportedCloudRegionRequest) {
+	o.CloudProviderRegion = v
+}
+
 func (o DeploymentRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Name != nil {
@@ -336,6 +362,9 @@ func (o DeploymentRequest) MarshalJSON() ([]byte, error) {
 	}
 	if o.TailscaleAuthKey != nil {
 		toSerialize["tailscaleAuthKey"] = o.TailscaleAuthKey
+	}
+	if true {
+		toSerialize["cloudProviderRegion"] = o.CloudProviderRegion
 	}
 	return json.Marshal(toSerialize)
 }

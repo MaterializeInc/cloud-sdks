@@ -42,6 +42,8 @@ pub struct Deployment {
     pub status: String,
     #[serde(rename = "enableTailscale")]
     pub enable_tailscale: bool,
+    #[serde(rename = "cloudProviderRegion")]
+    pub cloud_provider_region: Box<crate::models::SupportedCloudRegion>,
 }
 
 impl Deployment {
@@ -62,6 +64,7 @@ impl Deployment {
         pending_migration: Option<crate::models::PendingMigration>,
         status: String,
         enable_tailscale: bool,
+        cloud_provider_region: crate::models::SupportedCloudRegion,
     ) -> Deployment {
         Deployment {
             id,
@@ -80,6 +83,7 @@ impl Deployment {
             pending_migration: pending_migration.map(Box::new),
             status,
             enable_tailscale,
+            cloud_provider_region: Box::new(cloud_provider_region),
         }
     }
 }

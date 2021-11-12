@@ -5,6 +5,21 @@ info:
 servers:
 - url: https://cloud.materialize.com
 paths:
+  /api/cloud-providers:
+    get:
+      description: List the cloud provider and regions
+      operationId: cloudProvidersRetrieve
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupportedCloudRegion'
+      security:
+      - tokenAuth: []
+      - {}
+      tags:
+      - cloud-providers
   /api/deployments:
     get:
       description: List the available deployments.
@@ -29,6 +44,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/DeploymentRequest'
+        required: true
       responses:
         "201":
           content:
@@ -94,33 +110,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedDeploymentRequest'
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Deployment'
-      security:
-      - tokenAuth: []
-      tags:
-      - deployments
-    put:
-      description: Update a deployment.
-      operationId: deploymentsUpdate
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DeploymentRequest'
+              $ref: '#/components/schemas/PatchedDeploymentUpdateRequest'
       responses:
         "200":
           content:
@@ -318,6 +308,28 @@ paths:
       - tokenAuth: []
       tags:
       - organizations
+  /api/regions/{providerName}:
+    get:
+      operationId: regionsRetrieve
+      parameters:
+      - explode: false
+        in: path
+        name: providerName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupportedCloudRegion'
+      security:
+      - tokenAuth: []
+      - {}
+      tags:
+      - regions
   /api/schema:
     get:
       description: |-
@@ -371,6 +383,8 @@ components:
         clusterId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         mzVersion: mzVersion
         enableTailscale: false
+        cloudProviderRegion:
+          region: region
         hostname: hostname
         materializedExtraArgs:
         - materializedExtraArgs
@@ -442,7 +456,10 @@ components:
         enableTailscale:
           default: false
           type: boolean
+        cloudProviderRegion:
+          $ref: '#/components/schemas/SupportedCloudRegion'
       required:
+      - cloudProviderRegion
       - clusterId
       - disableUserIndexes
       - enableTailscale
@@ -472,6 +489,8 @@ components:
         mzVersion: mzVersion
         enableTailscale: false
         tailscaleAuthKey: tailscaleAuthKey
+        cloudProviderRegion:
+          region: region
       properties:
         name:
           type: string
@@ -500,6 +519,10 @@ components:
         tailscaleAuthKey:
           type: string
           writeOnly: true
+        cloudProviderRegion:
+          $ref: '#/components/schemas/SupportedCloudRegionRequest'
+      required:
+      - cloudProviderRegion
       type: object
     DeploymentSizeEnum:
       enum:
@@ -556,7 +579,7 @@ components:
       - id
       - trialExpiresAt
       type: object
-    PatchedDeploymentRequest:
+    PatchedDeploymentUpdateRequest:
       example:
         materializedExtraArgs:
         - materializedExtraArgs
@@ -618,6 +641,34 @@ components:
       required:
       - deadline
       - description
+      type: object
+    ProviderEnum:
+      enum:
+      - AWS
+      type: string
+    SupportedCloudRegion:
+      example:
+        region: region
+      properties:
+        provider:
+          $ref: '#/components/schemas/ProviderEnum'
+        region:
+          type: string
+      required:
+      - provider
+      - region
+      type: object
+    SupportedCloudRegionRequest:
+      example:
+        region: region
+      properties:
+        provider:
+          $ref: '#/components/schemas/ProviderEnum'
+        region:
+          type: string
+      required:
+      - provider
+      - region
       type: object
   securitySchemes:
     tokenAuth:

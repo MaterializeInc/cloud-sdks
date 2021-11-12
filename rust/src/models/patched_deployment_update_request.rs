@@ -9,7 +9,7 @@
  */
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct PatchedDeploymentRequest {
+pub struct PatchedDeploymentUpdateRequest {
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
     #[serde(rename = "size", skip_serializing_if = "Option::is_none")]
@@ -31,9 +31,9 @@ pub struct PatchedDeploymentRequest {
     pub tailscale_auth_key: Option<String>,
 }
 
-impl PatchedDeploymentRequest {
-    pub fn new() -> PatchedDeploymentRequest {
-        PatchedDeploymentRequest {
+impl PatchedDeploymentUpdateRequest {
+    pub fn new() -> PatchedDeploymentUpdateRequest {
+        PatchedDeploymentUpdateRequest {
             name: None,
             size: None,
             storage_mb: None,

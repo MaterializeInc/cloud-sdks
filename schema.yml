@@ -3,6 +3,22 @@ info:
   title: Materialize Cloud
   version: 0.1.0
 paths:
+  /api/cloud-providers:
+    get:
+      operationId: cloudProvidersRetrieve
+      description: List the cloud provider and regions
+      tags:
+      - cloud-providers
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupportedCloudRegion'
+          description: ''
   /api/deployments:
     get:
       operationId: deploymentsList
@@ -30,6 +46,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/DeploymentRequest'
+        required: true
       security:
       - tokenAuth: []
       responses:
@@ -60,31 +77,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Deployment'
           description: ''
-    put:
-      operationId: deploymentsUpdate
-      description: Update a deployment.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      tags:
-      - deployments
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DeploymentRequest'
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Deployment'
-          description: ''
     patch:
       operationId: deploymentsPartialUpdate
       description: Partially update a deployment.
@@ -100,7 +92,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedDeploymentRequest'
+              $ref: '#/components/schemas/PatchedDeploymentUpdateRequest'
       security:
       - tokenAuth: []
       responses:
@@ -303,6 +295,27 @@ paths:
               schema:
                 $ref: '#/components/schemas/Organization'
           description: ''
+  /api/regions/{providerName}:
+    get:
+      operationId: regionsRetrieve
+      parameters:
+      - in: path
+        name: providerName
+        schema:
+          type: string
+        required: true
+      tags:
+      - regions
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupportedCloudRegion'
+          description: ''
   /api/schema:
     get:
       operationId: schemaRetrieve
@@ -408,7 +421,10 @@ components:
         enableTailscale:
           type: boolean
           default: false
+        cloudProviderRegion:
+          $ref: '#/components/schemas/SupportedCloudRegion'
       required:
+      - cloudProviderRegion
       - clusterId
       - disableUserIndexes
       - enableTailscale
@@ -456,6 +472,10 @@ components:
         tailscaleAuthKey:
           type: string
           writeOnly: true
+        cloudProviderRegion:
+          $ref: '#/components/schemas/SupportedCloudRegionRequest'
+      required:
+      - cloudProviderRegion
     DeploymentSizeEnum:
       enum:
       - XS
@@ -503,7 +523,7 @@ components:
       - deploymentLimit
       - id
       - trialExpiresAt
-    PatchedDeploymentRequest:
+    PatchedDeploymentUpdateRequest:
       type: object
       properties:
         name:
@@ -556,6 +576,30 @@ components:
       required:
       - deadline
       - description
+    ProviderEnum:
+      enum:
+      - AWS
+      type: string
+    SupportedCloudRegion:
+      type: object
+      properties:
+        provider:
+          $ref: '#/components/schemas/ProviderEnum'
+        region:
+          type: string
+      required:
+      - provider
+      - region
+    SupportedCloudRegionRequest:
+      type: object
+      properties:
+        provider:
+          $ref: '#/components/schemas/ProviderEnum'
+        region:
+          type: string
+      required:
+      - provider
+      - region
   securitySchemes:
     tokenAuth:
       type: http

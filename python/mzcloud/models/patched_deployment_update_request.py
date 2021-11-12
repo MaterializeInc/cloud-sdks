@@ -5,11 +5,11 @@ import attr
 from ..models.deployment_size_enum import DeploymentSizeEnum
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="PatchedDeploymentRequest")
+T = TypeVar("T", bound="PatchedDeploymentUpdateRequest")
 
 
 @attr.s(auto_attribs=True)
-class PatchedDeploymentRequest:
+class PatchedDeploymentUpdateRequest:
     """ """
 
     name: Union[Unset, str] = UNSET
@@ -84,7 +84,7 @@ class PatchedDeploymentRequest:
 
         tailscale_auth_key = d.pop("tailscaleAuthKey", UNSET)
 
-        patched_deployment_request = cls(
+        patched_deployment_update_request = cls(
             name=name,
             size=size,
             storage_mb=storage_mb,
@@ -95,8 +95,8 @@ class PatchedDeploymentRequest:
             tailscale_auth_key=tailscale_auth_key,
         )
 
-        patched_deployment_request.additional_properties = d
-        return patched_deployment_request
+        patched_deployment_update_request.additional_properties = d
+        return patched_deployment_update_request
 
     @property
     def additional_keys(self) -> List[str]:
