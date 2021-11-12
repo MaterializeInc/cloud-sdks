@@ -32,13 +32,14 @@ type Deployment struct {
 	PendingMigration NullablePendingMigration `json:"pendingMigration"`
 	Status string `json:"status"`
 	EnableTailscale bool `json:"enableTailscale"`
+	CloudProviderRegion SupportedCloudRegion `json:"cloudProviderRegion"`
 }
 
 // NewDeployment instantiates a new Deployment object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDeployment(id string, organization string, tlsAuthority string, name string, hostname NullableString, flaggedForDeletion bool, flaggedForUpdate bool, size DeploymentSizeEnum, storageMb int32, disableUserIndexes bool, materializedExtraArgs []string, clusterId NullableString, mzVersion string, pendingMigration NullablePendingMigration, status string, enableTailscale bool) *Deployment {
+func NewDeployment(id string, organization string, tlsAuthority string, name string, hostname NullableString, flaggedForDeletion bool, flaggedForUpdate bool, size DeploymentSizeEnum, storageMb int32, disableUserIndexes bool, materializedExtraArgs []string, clusterId NullableString, mzVersion string, pendingMigration NullablePendingMigration, status string, enableTailscale bool, cloudProviderRegion SupportedCloudRegion) *Deployment {
 	this := Deployment{}
 	this.Id = id
 	this.Organization = organization
@@ -56,6 +57,7 @@ func NewDeployment(id string, organization string, tlsAuthority string, name str
 	this.PendingMigration = pendingMigration
 	this.Status = status
 	this.EnableTailscale = enableTailscale
+	this.CloudProviderRegion = cloudProviderRegion
 	return &this
 }
 
@@ -463,6 +465,30 @@ func (o *Deployment) SetEnableTailscale(v bool) {
 	o.EnableTailscale = v
 }
 
+// GetCloudProviderRegion returns the CloudProviderRegion field value
+func (o *Deployment) GetCloudProviderRegion() SupportedCloudRegion {
+	if o == nil {
+		var ret SupportedCloudRegion
+		return ret
+	}
+
+	return o.CloudProviderRegion
+}
+
+// GetCloudProviderRegionOk returns a tuple with the CloudProviderRegion field value
+// and a boolean to check if the value has been set.
+func (o *Deployment) GetCloudProviderRegionOk() (*SupportedCloudRegion, bool) {
+	if o == nil  {
+		return nil, false
+	}
+	return &o.CloudProviderRegion, true
+}
+
+// SetCloudProviderRegion sets field value
+func (o *Deployment) SetCloudProviderRegion(v SupportedCloudRegion) {
+	o.CloudProviderRegion = v
+}
+
 func (o Deployment) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
@@ -512,6 +538,9 @@ func (o Deployment) MarshalJSON() ([]byte, error) {
 	}
 	if true {
 		toSerialize["enableTailscale"] = o.EnableTailscale
+	}
+	if true {
+		toSerialize["cloudProviderRegion"] = o.CloudProviderRegion
 	}
 	return json.Marshal(toSerialize)
 }

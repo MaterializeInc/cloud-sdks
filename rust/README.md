@@ -24,6 +24,7 @@ All URIs are relative to *https://cloud.materialize.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*CloudProvidersApi* | [**cloud_providers_retrieve**](docs/CloudProvidersApi.md#cloud_providers_retrieve) | **GET** /api/cloud-providers | 
 *DeploymentsApi* | [**deployments_certs_retrieve**](docs/DeploymentsApi.md#deployments_certs_retrieve) | **GET** /api/deployments/{id}/certs | 
 *DeploymentsApi* | [**deployments_create**](docs/DeploymentsApi.md#deployments_create) | **POST** /api/deployments | 
 *DeploymentsApi* | [**deployments_destroy**](docs/DeploymentsApi.md#deployments_destroy) | **DELETE** /api/deployments/{id} | 
@@ -32,12 +33,12 @@ Class | Method | HTTP request | Description
 *DeploymentsApi* | [**deployments_partial_update**](docs/DeploymentsApi.md#deployments_partial_update) | **PATCH** /api/deployments/{id} | 
 *DeploymentsApi* | [**deployments_retrieve**](docs/DeploymentsApi.md#deployments_retrieve) | **GET** /api/deployments/{id} | 
 *DeploymentsApi* | [**deployments_tailscale_logs_retrieve**](docs/DeploymentsApi.md#deployments_tailscale_logs_retrieve) | **GET** /api/deployments/{id}/tailscale_logs | 
-*DeploymentsApi* | [**deployments_update**](docs/DeploymentsApi.md#deployments_update) | **PUT** /api/deployments/{id} | 
 *HealthApi* | [**health_retrieve**](docs/HealthApi.md#health_retrieve) | **GET** /api/health | 
 *MzVersionsApi* | [**mz_versions_latest_retrieve**](docs/MzVersionsApi.md#mz_versions_latest_retrieve) | **GET** /api/mz-versions/latest | 
 *MzVersionsApi* | [**mz_versions_list**](docs/MzVersionsApi.md#mz_versions_list) | **GET** /api/mz-versions | 
 *OnboardingCallApi* | [**onboarding_call_retrieve**](docs/OnboardingCallApi.md#onboarding_call_retrieve) | **GET** /api/onboarding-call | 
 *OrganizationsApi* | [**organizations_retrieve**](docs/OrganizationsApi.md#organizations_retrieve) | **GET** /api/organizations/{id} | 
+*RegionsApi* | [**regions_retrieve**](docs/RegionsApi.md#regions_retrieve) | **GET** /api/regions/{providerName} | 
 *SchemaApi* | [**schema_retrieve**](docs/SchemaApi.md#schema_retrieve) | **GET** /api/schema | 
 
 
@@ -48,9 +49,12 @@ Class | Method | HTTP request | Description
  - [DeploymentSizeEnum](docs/DeploymentSizeEnum.md)
  - [OnboardingCall](docs/OnboardingCall.md)
  - [Organization](docs/Organization.md)
- - [PatchedDeploymentRequest](docs/PatchedDeploymentRequest.md)
+ - [PatchedDeploymentUpdateRequest](docs/PatchedDeploymentUpdateRequest.md)
  - [PendingMigration](docs/PendingMigration.md)
  - [PendingMigrationRequest](docs/PendingMigrationRequest.md)
+ - [ProviderEnum](docs/ProviderEnum.md)
+ - [SupportedCloudRegion](docs/SupportedCloudRegion.md)
+ - [SupportedCloudRegionRequest](docs/SupportedCloudRegionRequest.md)
 
 
 To get access to the crate's generated documentation, use:

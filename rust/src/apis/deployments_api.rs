@@ -69,13 +69,6 @@ pub enum DeploymentsTailscaleLogsRetrieveError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method `deployments_update`
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum DeploymentsUpdateError {
-    UnknownValue(serde_json::Value),
-}
-
 /// Retrieve a TLS certificate bundle for a deployment.  The TLS certificate bundle is a ZIP file containing PEM and DER formatted keys that permit authenticating to the deployment as the `materialize` user.
 pub async fn deployments_certs_retrieve(
     configuration: &configuration::Configuration,
@@ -122,7 +115,7 @@ pub async fn deployments_certs_retrieve(
 /// Create a new deployment.
 pub async fn deployments_create(
     configuration: &configuration::Configuration,
-    deployment_request: Option<crate::models::DeploymentRequest>,
+    deployment_request: crate::models::DeploymentRequest,
 ) -> Result<crate::models::Deployment, Error<DeploymentsCreateError>> {
     let local_var_client = &configuration.client;
 
@@ -292,7 +285,7 @@ pub async fn deployments_logs_retrieve(
 pub async fn deployments_partial_update(
     configuration: &configuration::Configuration,
     id: &str,
-    patched_deployment_request: Option<crate::models::PatchedDeploymentRequest>,
+    patched_deployment_update_request: Option<crate::models::PatchedDeploymentUpdateRequest>,
 ) -> Result<crate::models::Deployment, Error<DeploymentsPartialUpdateError>> {
     let local_var_client = &configuration.client;
 
@@ -311,7 +304,7 @@ pub async fn deployments_partial_update(
     if let Some(ref local_var_token) = configuration.bearer_access_token {
         local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
     };
-    local_var_req_builder = local_var_req_builder.json(&patched_deployment_request);
+    local_var_req_builder = local_var_req_builder.json(&patched_deployment_update_request);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
@@ -414,51 +407,6 @@ pub async fn deployments_tailscale_logs_retrieve(
         Ok(local_var_content)
     } else {
         let local_var_entity: Option<DeploymentsTailscaleLogsRetrieveError> =
-            serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-        };
-        Err(Error::ResponseError(local_var_error))
-    }
-}
-
-/// Update a deployment.
-pub async fn deployments_update(
-    configuration: &configuration::Configuration,
-    id: &str,
-    deployment_request: Option<crate::models::DeploymentRequest>,
-) -> Result<crate::models::Deployment, Error<DeploymentsUpdateError>> {
-    let local_var_client = &configuration.client;
-
-    let local_var_uri_str = format!(
-        "{}/api/deployments/{id}",
-        configuration.base_path,
-        id = crate::apis::urlencode(id)
-    );
-    let mut local_var_req_builder =
-        local_var_client.request(reqwest::Method::PUT, local_var_uri_str.as_str());
-
-    if let Some(ref local_var_user_agent) = configuration.user_agent {
-        local_var_req_builder =
-            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
-    }
-    if let Some(ref local_var_token) = configuration.bearer_access_token {
-        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
-    };
-    local_var_req_builder = local_var_req_builder.json(&deployment_request);
-
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
-
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
-
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
-    } else {
-        let local_var_entity: Option<DeploymentsUpdateError> =
             serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent {
             status: local_var_status,

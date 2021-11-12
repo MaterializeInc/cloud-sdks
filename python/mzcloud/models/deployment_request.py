@@ -3,6 +3,7 @@ from typing import Any, BinaryIO, Dict, List, Optional, TextIO, Tuple, Type, Typ
 import attr
 
 from ..models.deployment_size_enum import DeploymentSizeEnum
+from ..models.supported_cloud_region_request import SupportedCloudRegionRequest
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="DeploymentRequest")
@@ -12,6 +13,7 @@ T = TypeVar("T", bound="DeploymentRequest")
 class DeploymentRequest:
     """ """
 
+    cloud_provider_region: SupportedCloudRegionRequest
     name: Union[Unset, str] = UNSET
     size: Union[Unset, DeploymentSizeEnum] = DeploymentSizeEnum.XS
     storage_mb: Union[Unset, int] = 100
@@ -23,6 +25,8 @@ class DeploymentRequest:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        cloud_provider_region = self.cloud_provider_region.to_dict()
+
         name = self.name
         size: Union[Unset, str] = UNSET
         if not isinstance(self.size, Unset):
@@ -40,7 +44,11 @@ class DeploymentRequest:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({})
+        field_dict.update(
+            {
+                "cloudProviderRegion": cloud_provider_region,
+            }
+        )
         if name is not UNSET:
             field_dict["name"] = name
         if size is not UNSET:
@@ -63,6 +71,8 @@ class DeploymentRequest:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        cloud_provider_region = SupportedCloudRegionRequest.from_dict(d.pop("cloudProviderRegion"))
+
         name = d.pop("name", UNSET)
 
         _size = d.pop("size", UNSET)
@@ -85,6 +95,7 @@ class DeploymentRequest:
         tailscale_auth_key = d.pop("tailscaleAuthKey", UNSET)
 
         deployment_request = cls(
+            cloud_provider_region=cloud_provider_region,
             name=name,
             size=size,
             storage_mb=storage_mb,

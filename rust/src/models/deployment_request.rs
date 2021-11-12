@@ -29,10 +29,14 @@ pub struct DeploymentRequest {
     pub enable_tailscale: Option<bool>,
     #[serde(rename = "tailscaleAuthKey", skip_serializing_if = "Option::is_none")]
     pub tailscale_auth_key: Option<String>,
+    #[serde(rename = "cloudProviderRegion")]
+    pub cloud_provider_region: Box<crate::models::SupportedCloudRegionRequest>,
 }
 
 impl DeploymentRequest {
-    pub fn new() -> DeploymentRequest {
+    pub fn new(
+        cloud_provider_region: crate::models::SupportedCloudRegionRequest,
+    ) -> DeploymentRequest {
         DeploymentRequest {
             name: None,
             size: None,
@@ -42,6 +46,7 @@ impl DeploymentRequest {
             mz_version: None,
             enable_tailscale: None,
             tailscale_auth_key: None,
+            cloud_provider_region: Box::new(cloud_provider_region),
         }
     }
 }

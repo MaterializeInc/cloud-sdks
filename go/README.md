@@ -78,6 +78,7 @@ All URIs are relative to *https://cloud.materialize.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*CloudProvidersApi* | [**CloudProvidersRetrieve**](docs/CloudProvidersApi.md#cloudprovidersretrieve) | **Get** /api/cloud-providers | 
 *DeploymentsApi* | [**DeploymentsCertsRetrieve**](docs/DeploymentsApi.md#deploymentscertsretrieve) | **Get** /api/deployments/{id}/certs | 
 *DeploymentsApi* | [**DeploymentsCreate**](docs/DeploymentsApi.md#deploymentscreate) | **Post** /api/deployments | 
 *DeploymentsApi* | [**DeploymentsDestroy**](docs/DeploymentsApi.md#deploymentsdestroy) | **Delete** /api/deployments/{id} | 
@@ -86,12 +87,12 @@ Class | Method | HTTP request | Description
 *DeploymentsApi* | [**DeploymentsPartialUpdate**](docs/DeploymentsApi.md#deploymentspartialupdate) | **Patch** /api/deployments/{id} | 
 *DeploymentsApi* | [**DeploymentsRetrieve**](docs/DeploymentsApi.md#deploymentsretrieve) | **Get** /api/deployments/{id} | 
 *DeploymentsApi* | [**DeploymentsTailscaleLogsRetrieve**](docs/DeploymentsApi.md#deploymentstailscalelogsretrieve) | **Get** /api/deployments/{id}/tailscale_logs | 
-*DeploymentsApi* | [**DeploymentsUpdate**](docs/DeploymentsApi.md#deploymentsupdate) | **Put** /api/deployments/{id} | 
 *HealthApi* | [**HealthRetrieve**](docs/HealthApi.md#healthretrieve) | **Get** /api/health | 
 *MzVersionsApi* | [**MzVersionsLatestRetrieve**](docs/MzVersionsApi.md#mzversionslatestretrieve) | **Get** /api/mz-versions/latest | 
 *MzVersionsApi* | [**MzVersionsList**](docs/MzVersionsApi.md#mzversionslist) | **Get** /api/mz-versions | 
 *OnboardingCallApi* | [**OnboardingCallRetrieve**](docs/OnboardingCallApi.md#onboardingcallretrieve) | **Get** /api/onboarding-call | 
 *OrganizationsApi* | [**OrganizationsRetrieve**](docs/OrganizationsApi.md#organizationsretrieve) | **Get** /api/organizations/{id} | 
+*RegionsApi* | [**RegionsRetrieve**](docs/RegionsApi.md#regionsretrieve) | **Get** /api/regions/{providerName} | 
 *SchemaApi* | [**SchemaRetrieve**](docs/SchemaApi.md#schemaretrieve) | **Get** /api/schema | 
 
 
@@ -102,9 +103,12 @@ Class | Method | HTTP request | Description
  - [DeploymentSizeEnum](docs/DeploymentSizeEnum.md)
  - [OnboardingCall](docs/OnboardingCall.md)
  - [Organization](docs/Organization.md)
- - [PatchedDeploymentRequest](docs/PatchedDeploymentRequest.md)
+ - [PatchedDeploymentUpdateRequest](docs/PatchedDeploymentUpdateRequest.md)
  - [PendingMigration](docs/PendingMigration.md)
  - [PendingMigrationRequest](docs/PendingMigrationRequest.md)
+ - [ProviderEnum](docs/ProviderEnum.md)
+ - [SupportedCloudRegion](docs/SupportedCloudRegion.md)
+ - [SupportedCloudRegionRequest](docs/SupportedCloudRegionRequest.md)
 
 
 ## Documentation For Authorization

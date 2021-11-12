@@ -4,6 +4,7 @@ import attr
 
 from ..models.deployment_size_enum import DeploymentSizeEnum
 from ..models.pending_migration import PendingMigration
+from ..models.supported_cloud_region import SupportedCloudRegion
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Deployment")
@@ -22,6 +23,7 @@ class Deployment:
     materialized_extra_args: List[str]
     mz_version: str
     status: str
+    cloud_provider_region: SupportedCloudRegion
     hostname: Optional[str]
     cluster_id: Optional[str]
     pending_migration: Optional[PendingMigration]
@@ -47,6 +49,8 @@ class Deployment:
         mz_version = self.mz_version
         status = self.status
         enable_tailscale = self.enable_tailscale
+        cloud_provider_region = self.cloud_provider_region.to_dict()
+
         hostname = self.hostname
         cluster_id = self.cluster_id
         pending_migration = self.pending_migration.to_dict() if self.pending_migration else None
@@ -68,6 +72,7 @@ class Deployment:
                 "mzVersion": mz_version,
                 "status": status,
                 "enableTailscale": enable_tailscale,
+                "cloudProviderRegion": cloud_provider_region,
                 "hostname": hostname,
                 "clusterId": cluster_id,
                 "pendingMigration": pending_migration,
@@ -105,6 +110,8 @@ class Deployment:
 
         enable_tailscale = d.pop("enableTailscale")
 
+        cloud_provider_region = SupportedCloudRegion.from_dict(d.pop("cloudProviderRegion"))
+
         hostname = d.pop("hostname")
 
         cluster_id = d.pop("clusterId")
@@ -130,6 +137,7 @@ class Deployment:
             mz_version=mz_version,
             status=status,
             enable_tailscale=enable_tailscale,
+            cloud_provider_region=cloud_provider_region,
             hostname=hostname,
             cluster_id=cluster_id,
             pending_migration=pending_migration,

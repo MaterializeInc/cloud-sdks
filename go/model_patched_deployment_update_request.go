@@ -14,8 +14,8 @@ import (
 	"encoding/json"
 )
 
-// PatchedDeploymentRequest struct for PatchedDeploymentRequest
-type PatchedDeploymentRequest struct {
+// PatchedDeploymentUpdateRequest struct for PatchedDeploymentUpdateRequest
+type PatchedDeploymentUpdateRequest struct {
 	Name *string `json:"name,omitempty"`
 	Size *DeploymentSizeEnum `json:"size,omitempty"`
 	StorageMb *int32 `json:"storageMb,omitempty"`
@@ -26,12 +26,12 @@ type PatchedDeploymentRequest struct {
 	TailscaleAuthKey *string `json:"tailscaleAuthKey,omitempty"`
 }
 
-// NewPatchedDeploymentRequest instantiates a new PatchedDeploymentRequest object
+// NewPatchedDeploymentUpdateRequest instantiates a new PatchedDeploymentUpdateRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPatchedDeploymentRequest() *PatchedDeploymentRequest {
-	this := PatchedDeploymentRequest{}
+func NewPatchedDeploymentUpdateRequest() *PatchedDeploymentUpdateRequest {
+	this := PatchedDeploymentUpdateRequest{}
 	var storageMb int32 = 100
 	this.StorageMb = &storageMb
 	var disableUserIndexes bool = false
@@ -41,11 +41,11 @@ func NewPatchedDeploymentRequest() *PatchedDeploymentRequest {
 	return &this
 }
 
-// NewPatchedDeploymentRequestWithDefaults instantiates a new PatchedDeploymentRequest object
+// NewPatchedDeploymentUpdateRequestWithDefaults instantiates a new PatchedDeploymentUpdateRequest object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewPatchedDeploymentRequestWithDefaults() *PatchedDeploymentRequest {
-	this := PatchedDeploymentRequest{}
+func NewPatchedDeploymentUpdateRequestWithDefaults() *PatchedDeploymentUpdateRequest {
+	this := PatchedDeploymentUpdateRequest{}
 	var storageMb int32 = 100
 	this.StorageMb = &storageMb
 	var disableUserIndexes bool = false
@@ -56,7 +56,7 @@ func NewPatchedDeploymentRequestWithDefaults() *PatchedDeploymentRequest {
 }
 
 // GetName returns the Name field value if set, zero value otherwise.
-func (o *PatchedDeploymentRequest) GetName() string {
+func (o *PatchedDeploymentUpdateRequest) GetName() string {
 	if o == nil || o.Name == nil {
 		var ret string
 		return ret
@@ -66,7 +66,7 @@ func (o *PatchedDeploymentRequest) GetName() string {
 
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PatchedDeploymentRequest) GetNameOk() (*string, bool) {
+func (o *PatchedDeploymentUpdateRequest) GetNameOk() (*string, bool) {
 	if o == nil || o.Name == nil {
 		return nil, false
 	}
@@ -74,7 +74,7 @@ func (o *PatchedDeploymentRequest) GetNameOk() (*string, bool) {
 }
 
 // HasName returns a boolean if a field has been set.
-func (o *PatchedDeploymentRequest) HasName() bool {
+func (o *PatchedDeploymentUpdateRequest) HasName() bool {
 	if o != nil && o.Name != nil {
 		return true
 	}
@@ -83,12 +83,12 @@ func (o *PatchedDeploymentRequest) HasName() bool {
 }
 
 // SetName gets a reference to the given string and assigns it to the Name field.
-func (o *PatchedDeploymentRequest) SetName(v string) {
+func (o *PatchedDeploymentUpdateRequest) SetName(v string) {
 	o.Name = &v
 }
 
 // GetSize returns the Size field value if set, zero value otherwise.
-func (o *PatchedDeploymentRequest) GetSize() DeploymentSizeEnum {
+func (o *PatchedDeploymentUpdateRequest) GetSize() DeploymentSizeEnum {
 	if o == nil || o.Size == nil {
 		var ret DeploymentSizeEnum
 		return ret
@@ -98,7 +98,7 @@ func (o *PatchedDeploymentRequest) GetSize() DeploymentSizeEnum {
 
 // GetSizeOk returns a tuple with the Size field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PatchedDeploymentRequest) GetSizeOk() (*DeploymentSizeEnum, bool) {
+func (o *PatchedDeploymentUpdateRequest) GetSizeOk() (*DeploymentSizeEnum, bool) {
 	if o == nil || o.Size == nil {
 		return nil, false
 	}
@@ -106,7 +106,7 @@ func (o *PatchedDeploymentRequest) GetSizeOk() (*DeploymentSizeEnum, bool) {
 }
 
 // HasSize returns a boolean if a field has been set.
-func (o *PatchedDeploymentRequest) HasSize() bool {
+func (o *PatchedDeploymentUpdateRequest) HasSize() bool {
 	if o != nil && o.Size != nil {
 		return true
 	}
@@ -115,12 +115,12 @@ func (o *PatchedDeploymentRequest) HasSize() bool {
 }
 
 // SetSize gets a reference to the given DeploymentSizeEnum and assigns it to the Size field.
-func (o *PatchedDeploymentRequest) SetSize(v DeploymentSizeEnum) {
+func (o *PatchedDeploymentUpdateRequest) SetSize(v DeploymentSizeEnum) {
 	o.Size = &v
 }
 
 // GetStorageMb returns the StorageMb field value if set, zero value otherwise.
-func (o *PatchedDeploymentRequest) GetStorageMb() int32 {
+func (o *PatchedDeploymentUpdateRequest) GetStorageMb() int32 {
 	if o == nil || o.StorageMb == nil {
 		var ret int32
 		return ret
@@ -130,7 +130,7 @@ func (o *PatchedDeploymentRequest) GetStorageMb() int32 {
 
 // GetStorageMbOk returns a tuple with the StorageMb field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PatchedDeploymentRequest) GetStorageMbOk() (*int32, bool) {
+func (o *PatchedDeploymentUpdateRequest) GetStorageMbOk() (*int32, bool) {
 	if o == nil || o.StorageMb == nil {
 		return nil, false
 	}
@@ -138,7 +138,7 @@ func (o *PatchedDeploymentRequest) GetStorageMbOk() (*int32, bool) {
 }
 
 // HasStorageMb returns a boolean if a field has been set.
-func (o *PatchedDeploymentRequest) HasStorageMb() bool {
+func (o *PatchedDeploymentUpdateRequest) HasStorageMb() bool {
 	if o != nil && o.StorageMb != nil {
 		return true
 	}
@@ -147,12 +147,12 @@ func (o *PatchedDeploymentRequest) HasStorageMb() bool {
 }
 
 // SetStorageMb gets a reference to the given int32 and assigns it to the StorageMb field.
-func (o *PatchedDeploymentRequest) SetStorageMb(v int32) {
+func (o *PatchedDeploymentUpdateRequest) SetStorageMb(v int32) {
 	o.StorageMb = &v
 }
 
 // GetDisableUserIndexes returns the DisableUserIndexes field value if set, zero value otherwise.
-func (o *PatchedDeploymentRequest) GetDisableUserIndexes() bool {
+func (o *PatchedDeploymentUpdateRequest) GetDisableUserIndexes() bool {
 	if o == nil || o.DisableUserIndexes == nil {
 		var ret bool
 		return ret
@@ -162,7 +162,7 @@ func (o *PatchedDeploymentRequest) GetDisableUserIndexes() bool {
 
 // GetDisableUserIndexesOk returns a tuple with the DisableUserIndexes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PatchedDeploymentRequest) GetDisableUserIndexesOk() (*bool, bool) {
+func (o *PatchedDeploymentUpdateRequest) GetDisableUserIndexesOk() (*bool, bool) {
 	if o == nil || o.DisableUserIndexes == nil {
 		return nil, false
 	}
@@ -170,7 +170,7 @@ func (o *PatchedDeploymentRequest) GetDisableUserIndexesOk() (*bool, bool) {
 }
 
 // HasDisableUserIndexes returns a boolean if a field has been set.
-func (o *PatchedDeploymentRequest) HasDisableUserIndexes() bool {
+func (o *PatchedDeploymentUpdateRequest) HasDisableUserIndexes() bool {
 	if o != nil && o.DisableUserIndexes != nil {
 		return true
 	}
@@ -179,12 +179,12 @@ func (o *PatchedDeploymentRequest) HasDisableUserIndexes() bool {
 }
 
 // SetDisableUserIndexes gets a reference to the given bool and assigns it to the DisableUserIndexes field.
-func (o *PatchedDeploymentRequest) SetDisableUserIndexes(v bool) {
+func (o *PatchedDeploymentUpdateRequest) SetDisableUserIndexes(v bool) {
 	o.DisableUserIndexes = &v
 }
 
 // GetMaterializedExtraArgs returns the MaterializedExtraArgs field value if set, zero value otherwise.
-func (o *PatchedDeploymentRequest) GetMaterializedExtraArgs() []string {
+func (o *PatchedDeploymentUpdateRequest) GetMaterializedExtraArgs() []string {
 	if o == nil || o.MaterializedExtraArgs == nil {
 		var ret []string
 		return ret
@@ -194,7 +194,7 @@ func (o *PatchedDeploymentRequest) GetMaterializedExtraArgs() []string {
 
 // GetMaterializedExtraArgsOk returns a tuple with the MaterializedExtraArgs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PatchedDeploymentRequest) GetMaterializedExtraArgsOk() (*[]string, bool) {
+func (o *PatchedDeploymentUpdateRequest) GetMaterializedExtraArgsOk() (*[]string, bool) {
 	if o == nil || o.MaterializedExtraArgs == nil {
 		return nil, false
 	}
@@ -202,7 +202,7 @@ func (o *PatchedDeploymentRequest) GetMaterializedExtraArgsOk() (*[]string, bool
 }
 
 // HasMaterializedExtraArgs returns a boolean if a field has been set.
-func (o *PatchedDeploymentRequest) HasMaterializedExtraArgs() bool {
+func (o *PatchedDeploymentUpdateRequest) HasMaterializedExtraArgs() bool {
 	if o != nil && o.MaterializedExtraArgs != nil {
 		return true
 	}
@@ -211,12 +211,12 @@ func (o *PatchedDeploymentRequest) HasMaterializedExtraArgs() bool {
 }
 
 // SetMaterializedExtraArgs gets a reference to the given []string and assigns it to the MaterializedExtraArgs field.
-func (o *PatchedDeploymentRequest) SetMaterializedExtraArgs(v []string) {
+func (o *PatchedDeploymentUpdateRequest) SetMaterializedExtraArgs(v []string) {
 	o.MaterializedExtraArgs = &v
 }
 
 // GetMzVersion returns the MzVersion field value if set, zero value otherwise.
-func (o *PatchedDeploymentRequest) GetMzVersion() string {
+func (o *PatchedDeploymentUpdateRequest) GetMzVersion() string {
 	if o == nil || o.MzVersion == nil {
 		var ret string
 		return ret
@@ -226,7 +226,7 @@ func (o *PatchedDeploymentRequest) GetMzVersion() string {
 
 // GetMzVersionOk returns a tuple with the MzVersion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PatchedDeploymentRequest) GetMzVersionOk() (*string, bool) {
+func (o *PatchedDeploymentUpdateRequest) GetMzVersionOk() (*string, bool) {
 	if o == nil || o.MzVersion == nil {
 		return nil, false
 	}
@@ -234,7 +234,7 @@ func (o *PatchedDeploymentRequest) GetMzVersionOk() (*string, bool) {
 }
 
 // HasMzVersion returns a boolean if a field has been set.
-func (o *PatchedDeploymentRequest) HasMzVersion() bool {
+func (o *PatchedDeploymentUpdateRequest) HasMzVersion() bool {
 	if o != nil && o.MzVersion != nil {
 		return true
 	}
@@ -243,12 +243,12 @@ func (o *PatchedDeploymentRequest) HasMzVersion() bool {
 }
 
 // SetMzVersion gets a reference to the given string and assigns it to the MzVersion field.
-func (o *PatchedDeploymentRequest) SetMzVersion(v string) {
+func (o *PatchedDeploymentUpdateRequest) SetMzVersion(v string) {
 	o.MzVersion = &v
 }
 
 // GetEnableTailscale returns the EnableTailscale field value if set, zero value otherwise.
-func (o *PatchedDeploymentRequest) GetEnableTailscale() bool {
+func (o *PatchedDeploymentUpdateRequest) GetEnableTailscale() bool {
 	if o == nil || o.EnableTailscale == nil {
 		var ret bool
 		return ret
@@ -258,7 +258,7 @@ func (o *PatchedDeploymentRequest) GetEnableTailscale() bool {
 
 // GetEnableTailscaleOk returns a tuple with the EnableTailscale field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PatchedDeploymentRequest) GetEnableTailscaleOk() (*bool, bool) {
+func (o *PatchedDeploymentUpdateRequest) GetEnableTailscaleOk() (*bool, bool) {
 	if o == nil || o.EnableTailscale == nil {
 		return nil, false
 	}
@@ -266,7 +266,7 @@ func (o *PatchedDeploymentRequest) GetEnableTailscaleOk() (*bool, bool) {
 }
 
 // HasEnableTailscale returns a boolean if a field has been set.
-func (o *PatchedDeploymentRequest) HasEnableTailscale() bool {
+func (o *PatchedDeploymentUpdateRequest) HasEnableTailscale() bool {
 	if o != nil && o.EnableTailscale != nil {
 		return true
 	}
@@ -275,12 +275,12 @@ func (o *PatchedDeploymentRequest) HasEnableTailscale() bool {
 }
 
 // SetEnableTailscale gets a reference to the given bool and assigns it to the EnableTailscale field.
-func (o *PatchedDeploymentRequest) SetEnableTailscale(v bool) {
+func (o *PatchedDeploymentUpdateRequest) SetEnableTailscale(v bool) {
 	o.EnableTailscale = &v
 }
 
 // GetTailscaleAuthKey returns the TailscaleAuthKey field value if set, zero value otherwise.
-func (o *PatchedDeploymentRequest) GetTailscaleAuthKey() string {
+func (o *PatchedDeploymentUpdateRequest) GetTailscaleAuthKey() string {
 	if o == nil || o.TailscaleAuthKey == nil {
 		var ret string
 		return ret
@@ -290,7 +290,7 @@ func (o *PatchedDeploymentRequest) GetTailscaleAuthKey() string {
 
 // GetTailscaleAuthKeyOk returns a tuple with the TailscaleAuthKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PatchedDeploymentRequest) GetTailscaleAuthKeyOk() (*string, bool) {
+func (o *PatchedDeploymentUpdateRequest) GetTailscaleAuthKeyOk() (*string, bool) {
 	if o == nil || o.TailscaleAuthKey == nil {
 		return nil, false
 	}
@@ -298,7 +298,7 @@ func (o *PatchedDeploymentRequest) GetTailscaleAuthKeyOk() (*string, bool) {
 }
 
 // HasTailscaleAuthKey returns a boolean if a field has been set.
-func (o *PatchedDeploymentRequest) HasTailscaleAuthKey() bool {
+func (o *PatchedDeploymentUpdateRequest) HasTailscaleAuthKey() bool {
 	if o != nil && o.TailscaleAuthKey != nil {
 		return true
 	}
@@ -307,11 +307,11 @@ func (o *PatchedDeploymentRequest) HasTailscaleAuthKey() bool {
 }
 
 // SetTailscaleAuthKey gets a reference to the given string and assigns it to the TailscaleAuthKey field.
-func (o *PatchedDeploymentRequest) SetTailscaleAuthKey(v string) {
+func (o *PatchedDeploymentUpdateRequest) SetTailscaleAuthKey(v string) {
 	o.TailscaleAuthKey = &v
 }
 
-func (o PatchedDeploymentRequest) MarshalJSON() ([]byte, error) {
+func (o PatchedDeploymentUpdateRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Name != nil {
 		toSerialize["name"] = o.Name
@@ -340,38 +340,38 @@ func (o PatchedDeploymentRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-type NullablePatchedDeploymentRequest struct {
-	value *PatchedDeploymentRequest
+type NullablePatchedDeploymentUpdateRequest struct {
+	value *PatchedDeploymentUpdateRequest
 	isSet bool
 }
 
-func (v NullablePatchedDeploymentRequest) Get() *PatchedDeploymentRequest {
+func (v NullablePatchedDeploymentUpdateRequest) Get() *PatchedDeploymentUpdateRequest {
 	return v.value
 }
 
-func (v *NullablePatchedDeploymentRequest) Set(val *PatchedDeploymentRequest) {
+func (v *NullablePatchedDeploymentUpdateRequest) Set(val *PatchedDeploymentUpdateRequest) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullablePatchedDeploymentRequest) IsSet() bool {
+func (v NullablePatchedDeploymentUpdateRequest) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullablePatchedDeploymentRequest) Unset() {
+func (v *NullablePatchedDeploymentUpdateRequest) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullablePatchedDeploymentRequest(val *PatchedDeploymentRequest) *NullablePatchedDeploymentRequest {
-	return &NullablePatchedDeploymentRequest{value: val, isSet: true}
+func NewNullablePatchedDeploymentUpdateRequest(val *PatchedDeploymentUpdateRequest) *NullablePatchedDeploymentUpdateRequest {
+	return &NullablePatchedDeploymentUpdateRequest{value: val, isSet: true}
 }
 
-func (v NullablePatchedDeploymentRequest) MarshalJSON() ([]byte, error) {
+func (v NullablePatchedDeploymentUpdateRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullablePatchedDeploymentRequest) UnmarshalJSON(src []byte) error {
+func (v *NullablePatchedDeploymentUpdateRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
