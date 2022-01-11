@@ -9,14 +9,14 @@ index 9303100..949cc56 100644
 -) -> Result<std::path::PathBuf, Error<DeploymentsCertsRetrieveError>> {
 +) -> Result<Vec<u8>, Error<DeploymentsCertsRetrieveError>> {
      let local_var_client = &configuration.client;
- 
+
      let local_var_uri_str = format!(
 @@ -103,11 +103,11 @@ pub async fn deployments_certs_retrieve(
      let local_var_resp = local_var_client.execute(local_var_req).await?;
- 
+
      let local_var_status = local_var_resp.status();
 -    let local_var_content = local_var_resp.text().await?;
- 
+
      if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
 -        serde_json::from_str(&local_var_content).map_err(Error::from)
 +        Ok(local_var_resp.bytes().await?.to_vec())
@@ -27,7 +27,7 @@ index 9303100..949cc56 100644
          let local_var_error = ResponseContent {
 @@ -270,7 +270,7 @@ pub async fn deployments_logs_retrieve(
      let local_var_content = local_var_resp.text().await?;
- 
+
      if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
 -        serde_json::from_str(&local_var_content).map_err(Error::from)
 +        Ok(local_var_content)
@@ -36,23 +36,10 @@ index 9303100..949cc56 100644
              serde_json::from_str(&local_var_content).ok();
 @@ -401,7 +401,7 @@ pub async fn deployments_tailscale_logs_retrieve(
      let local_var_content = local_var_resp.text().await?;
- 
+
      if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
 -        serde_json::from_str(&local_var_content).map_err(Error::from)
 +        Ok(local_var_content)
      } else {
          let local_var_entity: Option<DeploymentsTailscaleLogsRetrieveError> =
              serde_json::from_str(&local_var_content).ok();
-diff --git a/rust/src/models/deployment.rs b/rust/src/models/deployment.rs
-index c32783a..36ba1bb 100644
---- a/rust/src/models/deployment.rs
-+++ b/rust/src/models/deployment.rs
-@@ -74,7 +74,7 @@ impl Deployment {
-             materialized_extra_args,
-             cluster_id,
-             mz_version,
--            pending_migration: Box::new(pending_migration),
-+            pending_migration: pending_migration.map(Box::new),
-             status,
-         }
-     }

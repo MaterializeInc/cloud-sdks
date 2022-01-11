@@ -23,13 +23,13 @@ type Deployment struct {
 	Hostname NullableString `json:"hostname"`
 	FlaggedForDeletion bool `json:"flaggedForDeletion"`
 	FlaggedForUpdate bool `json:"flaggedForUpdate"`
+	CatalogRestoreMode bool `json:"catalogRestoreMode"`
 	Size DeploymentSizeEnum `json:"size"`
 	StorageMb int32 `json:"storageMb"`
 	DisableUserIndexes bool `json:"disableUserIndexes"`
 	MaterializedExtraArgs []string `json:"materializedExtraArgs"`
 	ClusterId NullableString `json:"clusterId"`
 	MzVersion string `json:"mzVersion"`
-	PendingMigration NullablePendingMigration `json:"pendingMigration"`
 	Status string `json:"status"`
 	EnableTailscale bool `json:"enableTailscale"`
 	CloudProviderRegion SupportedCloudRegion `json:"cloudProviderRegion"`
@@ -39,7 +39,7 @@ type Deployment struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDeployment(id string, organization string, tlsAuthority string, name string, hostname NullableString, flaggedForDeletion bool, flaggedForUpdate bool, size DeploymentSizeEnum, storageMb int32, disableUserIndexes bool, materializedExtraArgs []string, clusterId NullableString, mzVersion string, pendingMigration NullablePendingMigration, status string, enableTailscale bool, cloudProviderRegion SupportedCloudRegion) *Deployment {
+func NewDeployment(id string, organization string, tlsAuthority string, name string, hostname NullableString, flaggedForDeletion bool, flaggedForUpdate bool, catalogRestoreMode bool, size DeploymentSizeEnum, storageMb int32, disableUserIndexes bool, materializedExtraArgs []string, clusterId NullableString, mzVersion string, status string, enableTailscale bool, cloudProviderRegion SupportedCloudRegion) *Deployment {
 	this := Deployment{}
 	this.Id = id
 	this.Organization = organization
@@ -48,13 +48,13 @@ func NewDeployment(id string, organization string, tlsAuthority string, name str
 	this.Hostname = hostname
 	this.FlaggedForDeletion = flaggedForDeletion
 	this.FlaggedForUpdate = flaggedForUpdate
+	this.CatalogRestoreMode = catalogRestoreMode
 	this.Size = size
 	this.StorageMb = storageMb
 	this.DisableUserIndexes = disableUserIndexes
 	this.MaterializedExtraArgs = materializedExtraArgs
 	this.ClusterId = clusterId
 	this.MzVersion = mzVersion
-	this.PendingMigration = pendingMigration
 	this.Status = status
 	this.EnableTailscale = enableTailscale
 	this.CloudProviderRegion = cloudProviderRegion
@@ -66,6 +66,8 @@ func NewDeployment(id string, organization string, tlsAuthority string, name str
 // but it doesn't guarantee that properties required by API are set
 func NewDeploymentWithDefaults() *Deployment {
 	this := Deployment{}
+	var catalogRestoreMode bool = false
+	this.CatalogRestoreMode = catalogRestoreMode
 	var storageMb int32 = 100
 	this.StorageMb = storageMb
 	var disableUserIndexes bool = false
@@ -245,6 +247,30 @@ func (o *Deployment) SetFlaggedForUpdate(v bool) {
 	o.FlaggedForUpdate = v
 }
 
+// GetCatalogRestoreMode returns the CatalogRestoreMode field value
+func (o *Deployment) GetCatalogRestoreMode() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.CatalogRestoreMode
+}
+
+// GetCatalogRestoreModeOk returns a tuple with the CatalogRestoreMode field value
+// and a boolean to check if the value has been set.
+func (o *Deployment) GetCatalogRestoreModeOk() (*bool, bool) {
+	if o == nil  {
+		return nil, false
+	}
+	return &o.CatalogRestoreMode, true
+}
+
+// SetCatalogRestoreMode sets field value
+func (o *Deployment) SetCatalogRestoreMode(v bool) {
+	o.CatalogRestoreMode = v
+}
+
 // GetSize returns the Size field value
 func (o *Deployment) GetSize() DeploymentSizeEnum {
 	if o == nil {
@@ -391,32 +417,6 @@ func (o *Deployment) SetMzVersion(v string) {
 	o.MzVersion = v
 }
 
-// GetPendingMigration returns the PendingMigration field value
-// If the value is explicit nil, the zero value for PendingMigration will be returned
-func (o *Deployment) GetPendingMigration() PendingMigration {
-	if o == nil || o.PendingMigration.Get() == nil {
-		var ret PendingMigration
-		return ret
-	}
-
-	return *o.PendingMigration.Get()
-}
-
-// GetPendingMigrationOk returns a tuple with the PendingMigration field value
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Deployment) GetPendingMigrationOk() (*PendingMigration, bool) {
-	if o == nil  {
-		return nil, false
-	}
-	return o.PendingMigration.Get(), o.PendingMigration.IsSet()
-}
-
-// SetPendingMigration sets field value
-func (o *Deployment) SetPendingMigration(v PendingMigration) {
-	o.PendingMigration.Set(&v)
-}
-
 // GetStatus returns the Status field value
 func (o *Deployment) GetStatus() string {
 	if o == nil {
@@ -513,6 +513,9 @@ func (o Deployment) MarshalJSON() ([]byte, error) {
 		toSerialize["flaggedForUpdate"] = o.FlaggedForUpdate
 	}
 	if true {
+		toSerialize["catalogRestoreMode"] = o.CatalogRestoreMode
+	}
+	if true {
 		toSerialize["size"] = o.Size
 	}
 	if true {
@@ -529,9 +532,6 @@ func (o Deployment) MarshalJSON() ([]byte, error) {
 	}
 	if true {
 		toSerialize["mzVersion"] = o.MzVersion
-	}
-	if true {
-		toSerialize["pendingMigration"] = o.PendingMigration.Get()
 	}
 	if true {
 		toSerialize["status"] = o.Status

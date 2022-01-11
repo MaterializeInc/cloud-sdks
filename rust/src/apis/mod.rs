@@ -65,7 +65,6 @@ pub mod cloud_providers_api;
 pub mod deployments_api;
 pub mod health_api;
 pub mod mz_versions_api;
-pub mod onboarding_call_api;
 pub mod organizations_api;
 pub mod regions_api;
 pub mod schema_api;

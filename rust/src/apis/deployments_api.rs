@@ -20,6 +20,13 @@ pub enum DeploymentsCertsRetrieveError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method `deployments_changes_list`
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeploymentsChangesListError {
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method `deployments_create`
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -45,6 +52,20 @@ pub enum DeploymentsListError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeploymentsLogsRetrieveError {
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method `deployments_metrics_cpu_retrieve`
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeploymentsMetricsCpuRetrieveError {
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method `deployments_metrics_memory_retrieve`
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeploymentsMetricsMemoryRetrieveError {
     UnknownValue(serde_json::Value),
 }
 
@@ -102,6 +123,48 @@ pub async fn deployments_certs_retrieve(
     } else {
         let local_var_content = local_var_resp.text().await?;
         let local_var_entity: Option<DeploymentsCertsRetrieveError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+pub async fn deployments_changes_list(
+    configuration: &configuration::Configuration,
+    id: &str,
+) -> Result<Vec<crate::models::HistoricalDeploymentDelta>, Error<DeploymentsChangesListError>> {
+    let local_var_client = &configuration.client;
+
+    let local_var_uri_str = format!(
+        "{}/api/deployments/{id}/changes",
+        configuration.base_path,
+        id = crate::apis::urlencode(id)
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = configuration.user_agent {
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_token) = configuration.bearer_access_token {
+        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    };
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<DeploymentsChangesListError> =
             serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent {
             status: local_var_status,
@@ -271,6 +334,96 @@ pub async fn deployments_logs_retrieve(
         Ok(local_var_content)
     } else {
         let local_var_entity: Option<DeploymentsLogsRetrieveError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// Retrieve cpu line graph as a list of tuples (timestamps / utilization in %)) for a deployment.
+pub async fn deployments_metrics_cpu_retrieve(
+    configuration: &configuration::Configuration,
+    id: &str,
+    period: f32,
+) -> Result<crate::models::PrometheusMetrics, Error<DeploymentsMetricsCpuRetrieveError>> {
+    let local_var_client = &configuration.client;
+
+    let local_var_uri_str = format!(
+        "{}/api/deployments/{id}/metrics/cpu/{period}",
+        configuration.base_path,
+        id = crate::apis::urlencode(id),
+        period = period
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = configuration.user_agent {
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_token) = configuration.bearer_access_token {
+        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    };
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<DeploymentsMetricsCpuRetrieveError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// Retrieve memory line graph data (as a list of tuples (timestamps / utilization in %)) for a deployment.
+pub async fn deployments_metrics_memory_retrieve(
+    configuration: &configuration::Configuration,
+    id: &str,
+    period: f32,
+) -> Result<crate::models::PrometheusMetrics, Error<DeploymentsMetricsMemoryRetrieveError>> {
+    let local_var_client = &configuration.client;
+
+    let local_var_uri_str = format!(
+        "{}/api/deployments/{id}/metrics/memory/{period}",
+        configuration.base_path,
+        id = crate::apis::urlencode(id),
+        period = period
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = configuration.user_agent {
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_token) = configuration.bearer_access_token {
+        local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
+    };
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<DeploymentsMetricsMemoryRetrieveError> =
             serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent {
             status: local_var_status,

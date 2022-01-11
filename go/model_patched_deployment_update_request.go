@@ -17,6 +17,7 @@ import (
 // PatchedDeploymentUpdateRequest struct for PatchedDeploymentUpdateRequest
 type PatchedDeploymentUpdateRequest struct {
 	Name *string `json:"name,omitempty"`
+	CatalogRestoreMode *bool `json:"catalogRestoreMode,omitempty"`
 	Size *DeploymentSizeEnum `json:"size,omitempty"`
 	StorageMb *int32 `json:"storageMb,omitempty"`
 	DisableUserIndexes *bool `json:"disableUserIndexes,omitempty"`
@@ -32,6 +33,8 @@ type PatchedDeploymentUpdateRequest struct {
 // will change when the set of required properties is changed
 func NewPatchedDeploymentUpdateRequest() *PatchedDeploymentUpdateRequest {
 	this := PatchedDeploymentUpdateRequest{}
+	var catalogRestoreMode bool = false
+	this.CatalogRestoreMode = &catalogRestoreMode
 	var storageMb int32 = 100
 	this.StorageMb = &storageMb
 	var disableUserIndexes bool = false
@@ -46,6 +49,8 @@ func NewPatchedDeploymentUpdateRequest() *PatchedDeploymentUpdateRequest {
 // but it doesn't guarantee that properties required by API are set
 func NewPatchedDeploymentUpdateRequestWithDefaults() *PatchedDeploymentUpdateRequest {
 	this := PatchedDeploymentUpdateRequest{}
+	var catalogRestoreMode bool = false
+	this.CatalogRestoreMode = &catalogRestoreMode
 	var storageMb int32 = 100
 	this.StorageMb = &storageMb
 	var disableUserIndexes bool = false
@@ -85,6 +90,38 @@ func (o *PatchedDeploymentUpdateRequest) HasName() bool {
 // SetName gets a reference to the given string and assigns it to the Name field.
 func (o *PatchedDeploymentUpdateRequest) SetName(v string) {
 	o.Name = &v
+}
+
+// GetCatalogRestoreMode returns the CatalogRestoreMode field value if set, zero value otherwise.
+func (o *PatchedDeploymentUpdateRequest) GetCatalogRestoreMode() bool {
+	if o == nil || o.CatalogRestoreMode == nil {
+		var ret bool
+		return ret
+	}
+	return *o.CatalogRestoreMode
+}
+
+// GetCatalogRestoreModeOk returns a tuple with the CatalogRestoreMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PatchedDeploymentUpdateRequest) GetCatalogRestoreModeOk() (*bool, bool) {
+	if o == nil || o.CatalogRestoreMode == nil {
+		return nil, false
+	}
+	return o.CatalogRestoreMode, true
+}
+
+// HasCatalogRestoreMode returns a boolean if a field has been set.
+func (o *PatchedDeploymentUpdateRequest) HasCatalogRestoreMode() bool {
+	if o != nil && o.CatalogRestoreMode != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetCatalogRestoreMode gets a reference to the given bool and assigns it to the CatalogRestoreMode field.
+func (o *PatchedDeploymentUpdateRequest) SetCatalogRestoreMode(v bool) {
+	o.CatalogRestoreMode = &v
 }
 
 // GetSize returns the Size field value if set, zero value otherwise.
@@ -315,6 +352,9 @@ func (o PatchedDeploymentUpdateRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Name != nil {
 		toSerialize["name"] = o.Name
+	}
+	if o.CatalogRestoreMode != nil {
+		toSerialize["catalogRestoreMode"] = o.CatalogRestoreMode
 	}
 	if o.Size != nil {
 		toSerialize["size"] = o.Size

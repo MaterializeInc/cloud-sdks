@@ -12,9 +12,6 @@
 pub struct Organization {
     #[serde(rename = "id")]
     pub id: String,
-    /// Whether this organization has been admitted to Materialize Cloud.
-    #[serde(rename = "admitted")]
-    pub admitted: bool,
     #[serde(rename = "deploymentLimit")]
     pub deployment_limit: i32,
     /// When this organization's trial period expires. If empty, the organization is on an enterprise plan.
@@ -25,13 +22,11 @@ pub struct Organization {
 impl Organization {
     pub fn new(
         id: String,
-        admitted: bool,
         deployment_limit: i32,
         trial_expires_at: Option<String>,
     ) -> Organization {
         Organization {
             id,
-            admitted,
             deployment_limit,
             trial_expires_at,
         }

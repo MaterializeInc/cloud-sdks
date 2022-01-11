@@ -1,35 +1,33 @@
-import datetime
 from typing import Any, BinaryIO, Dict, List, Optional, TextIO, Tuple, Type, TypeVar, cast
 
 import attr
-from dateutil.parser import isoparse
 
+from ..models.historical_deployment_change import HistoricalDeploymentChange
+from ..models.historical_deployment_metadata import HistoricalDeploymentMetadata
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Organization")
+T = TypeVar("T", bound="HistoricalDeploymentDelta")
 
 
 @attr.s(auto_attribs=True)
-class Organization:
+class HistoricalDeploymentDelta:
     """ """
 
-    id: str
-    deployment_limit: int
-    trial_expires_at: Optional[datetime.datetime]
+    changes: HistoricalDeploymentChange
+    metadata: HistoricalDeploymentMetadata
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        id = self.id
-        deployment_limit = self.deployment_limit
-        trial_expires_at = self.trial_expires_at.isoformat() if self.trial_expires_at else None
+        changes = self.changes.to_dict()
+
+        metadata = self.metadata.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "id": id,
-                "deploymentLimit": deployment_limit,
-                "trialExpiresAt": trial_expires_at,
+                "changes": changes,
+                "metadata": metadata,
             }
         )
 
@@ -38,25 +36,17 @@ class Organization:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        id = d.pop("id")
+        changes = HistoricalDeploymentChange.from_dict(d.pop("changes"))
 
-        deployment_limit = d.pop("deploymentLimit")
+        metadata = HistoricalDeploymentMetadata.from_dict(d.pop("metadata"))
 
-        _trial_expires_at = d.pop("trialExpiresAt")
-        trial_expires_at: Optional[datetime.datetime]
-        if _trial_expires_at is None:
-            trial_expires_at = None
-        else:
-            trial_expires_at = isoparse(_trial_expires_at)
-
-        organization = cls(
-            id=id,
-            deployment_limit=deployment_limit,
-            trial_expires_at=trial_expires_at,
+        historical_deployment_delta = cls(
+            changes=changes,
+            metadata=metadata,
         )
 
-        organization.additional_properties = d
-        return organization
+        historical_deployment_delta.additional_properties = d
+        return historical_deployment_delta
 
     @property
     def additional_keys(self) -> List[str]:

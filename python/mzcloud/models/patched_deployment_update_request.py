@@ -13,6 +13,7 @@ class PatchedDeploymentUpdateRequest:
     """ """
 
     name: Union[Unset, str] = UNSET
+    catalog_restore_mode: Union[Unset, bool] = False
     size: Union[Unset, DeploymentSizeEnum] = DeploymentSizeEnum.XS
     storage_mb: Union[Unset, int] = 100
     disable_user_indexes: Union[Unset, bool] = False
@@ -24,6 +25,7 @@ class PatchedDeploymentUpdateRequest:
 
     def to_dict(self) -> Dict[str, Any]:
         name = self.name
+        catalog_restore_mode = self.catalog_restore_mode
         size: Union[Unset, str] = UNSET
         if not isinstance(self.size, Unset):
             size = self.size.value
@@ -43,6 +45,8 @@ class PatchedDeploymentUpdateRequest:
         field_dict.update({})
         if name is not UNSET:
             field_dict["name"] = name
+        if catalog_restore_mode is not UNSET:
+            field_dict["catalogRestoreMode"] = catalog_restore_mode
         if size is not UNSET:
             field_dict["size"] = size
         if storage_mb is not UNSET:
@@ -65,6 +69,8 @@ class PatchedDeploymentUpdateRequest:
         d = src_dict.copy()
         name = d.pop("name", UNSET)
 
+        catalog_restore_mode = d.pop("catalogRestoreMode", UNSET)
+
         _size = d.pop("size", UNSET)
         size: Union[Unset, DeploymentSizeEnum]
         if isinstance(_size, Unset):
@@ -86,6 +92,7 @@ class PatchedDeploymentUpdateRequest:
 
         patched_deployment_update_request = cls(
             name=name,
+            catalog_restore_mode=catalog_restore_mode,
             size=size,
             storage_mb=storage_mb,
             disable_user_indexes=disable_user_indexes,

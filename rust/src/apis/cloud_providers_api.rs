@@ -13,17 +13,17 @@ use reqwest;
 use super::{configuration, Error};
 use crate::apis::ResponseContent;
 
-/// struct for typed errors of method `cloud_providers_retrieve`
+/// struct for typed errors of method `cloud_providers_list`
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum CloudProvidersRetrieveError {
+pub enum CloudProvidersListError {
     UnknownValue(serde_json::Value),
 }
 
 /// List the cloud provider and regions
-pub async fn cloud_providers_retrieve(
+pub async fn cloud_providers_list(
     configuration: &configuration::Configuration,
-) -> Result<crate::models::SupportedCloudRegion, Error<CloudProvidersRetrieveError>> {
+) -> Result<Vec<crate::models::SupportedCloudRegion>, Error<CloudProvidersListError>> {
     let local_var_client = &configuration.client;
 
     let local_var_uri_str = format!("{}/api/cloud-providers", configuration.base_path);
@@ -47,7 +47,7 @@ pub async fn cloud_providers_retrieve(
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<CloudProvidersRetrieveError> =
+        let local_var_entity: Option<CloudProvidersListError> =
             serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent {
             status: local_var_status,

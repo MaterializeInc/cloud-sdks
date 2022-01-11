@@ -138,6 +138,111 @@ func (a *DeploymentsApiService) DeploymentsCertsRetrieveExecute(r ApiDeployments
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiDeploymentsChangesListRequest struct {
+	ctx _context.Context
+	ApiService *DeploymentsApiService
+	id string
+}
+
+
+func (r ApiDeploymentsChangesListRequest) Execute() ([]HistoricalDeploymentDelta, *_nethttp.Response, error) {
+	return r.ApiService.DeploymentsChangesListExecute(r)
+}
+
+/*
+ * DeploymentsChangesList Method for DeploymentsChangesList
+ * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param id
+ * @return ApiDeploymentsChangesListRequest
+ */
+func (a *DeploymentsApiService) DeploymentsChangesList(ctx _context.Context, id string) ApiDeploymentsChangesListRequest {
+	return ApiDeploymentsChangesListRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+/*
+ * Execute executes the request
+ * @return []HistoricalDeploymentDelta
+ */
+func (a *DeploymentsApiService) DeploymentsChangesListExecute(r ApiDeploymentsChangesListRequest) ([]HistoricalDeploymentDelta, *_nethttp.Response, error) {
+	var (
+		localVarHTTPMethod   = _nethttp.MethodGet
+		localVarPostBody     interface{}
+		localVarFormFileName string
+		localVarFileName     string
+		localVarFileBytes    []byte
+		localVarReturnValue  []HistoricalDeploymentDelta
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DeploymentsApiService.DeploymentsChangesList")
+	if err != nil {
+		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/deployments/{id}/changes"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := _neturl.Values{}
+	localVarFormParams := _neturl.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiDeploymentsCreateRequest struct {
 	ctx _context.Context
 	ApiService *DeploymentsApiService
@@ -518,6 +623,226 @@ func (a *DeploymentsApiService) DeploymentsLogsRetrieveExecute(r ApiDeploymentsL
 
 	// to determine the Accept header
 	localVarHTTPHeaderAccepts := []string{"text/plain"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiDeploymentsMetricsCpuRetrieveRequest struct {
+	ctx _context.Context
+	ApiService *DeploymentsApiService
+	id string
+	period float32
+}
+
+
+func (r ApiDeploymentsMetricsCpuRetrieveRequest) Execute() (PrometheusMetrics, *_nethttp.Response, error) {
+	return r.ApiService.DeploymentsMetricsCpuRetrieveExecute(r)
+}
+
+/*
+ * DeploymentsMetricsCpuRetrieve Method for DeploymentsMetricsCpuRetrieve
+ * Retrieve cpu line graph as a list of tuples (timestamps / utilization in %)) for a deployment.
+ * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param id
+ * @param period
+ * @return ApiDeploymentsMetricsCpuRetrieveRequest
+ */
+func (a *DeploymentsApiService) DeploymentsMetricsCpuRetrieve(ctx _context.Context, id string, period float32) ApiDeploymentsMetricsCpuRetrieveRequest {
+	return ApiDeploymentsMetricsCpuRetrieveRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+		period: period,
+	}
+}
+
+/*
+ * Execute executes the request
+ * @return PrometheusMetrics
+ */
+func (a *DeploymentsApiService) DeploymentsMetricsCpuRetrieveExecute(r ApiDeploymentsMetricsCpuRetrieveRequest) (PrometheusMetrics, *_nethttp.Response, error) {
+	var (
+		localVarHTTPMethod   = _nethttp.MethodGet
+		localVarPostBody     interface{}
+		localVarFormFileName string
+		localVarFileName     string
+		localVarFileBytes    []byte
+		localVarReturnValue  PrometheusMetrics
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DeploymentsApiService.DeploymentsMetricsCpuRetrieve")
+	if err != nil {
+		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/deployments/{id}/metrics/cpu/{period}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"period"+"}", _neturl.PathEscape(parameterToString(r.period, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := _neturl.Values{}
+	localVarFormParams := _neturl.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiDeploymentsMetricsMemoryRetrieveRequest struct {
+	ctx _context.Context
+	ApiService *DeploymentsApiService
+	id string
+	period float32
+}
+
+
+func (r ApiDeploymentsMetricsMemoryRetrieveRequest) Execute() (PrometheusMetrics, *_nethttp.Response, error) {
+	return r.ApiService.DeploymentsMetricsMemoryRetrieveExecute(r)
+}
+
+/*
+ * DeploymentsMetricsMemoryRetrieve Method for DeploymentsMetricsMemoryRetrieve
+ * Retrieve memory line graph data (as a list of tuples (timestamps / utilization in %)) for a deployment.
+ * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param id
+ * @param period
+ * @return ApiDeploymentsMetricsMemoryRetrieveRequest
+ */
+func (a *DeploymentsApiService) DeploymentsMetricsMemoryRetrieve(ctx _context.Context, id string, period float32) ApiDeploymentsMetricsMemoryRetrieveRequest {
+	return ApiDeploymentsMetricsMemoryRetrieveRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+		period: period,
+	}
+}
+
+/*
+ * Execute executes the request
+ * @return PrometheusMetrics
+ */
+func (a *DeploymentsApiService) DeploymentsMetricsMemoryRetrieveExecute(r ApiDeploymentsMetricsMemoryRetrieveRequest) (PrometheusMetrics, *_nethttp.Response, error) {
+	var (
+		localVarHTTPMethod   = _nethttp.MethodGet
+		localVarPostBody     interface{}
+		localVarFormFileName string
+		localVarFileName     string
+		localVarFileBytes    []byte
+		localVarReturnValue  PrometheusMetrics
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DeploymentsApiService.DeploymentsMetricsMemoryRetrieve")
+	if err != nil {
+		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/deployments/{id}/metrics/memory/{period}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"period"+"}", _neturl.PathEscape(parameterToString(r.period, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := _neturl.Values{}
+	localVarFormParams := _neturl.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)

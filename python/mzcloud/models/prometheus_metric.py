@@ -1,32 +1,34 @@
-import datetime
 from typing import Any, BinaryIO, Dict, List, Optional, TextIO, Tuple, Type, TypeVar, cast
 
 import attr
-from dateutil.parser import isoparse
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="PendingMigration")
+T = TypeVar("T", bound="PrometheusMetric")
 
 
 @attr.s(auto_attribs=True)
-class PendingMigration:
+class PrometheusMetric:
     """ """
 
-    description: str
-    deadline: datetime.date
+    name: str
+    values: List[List[str]]
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        description = self.description
-        deadline = self.deadline.isoformat()
+        name = self.name
+        values = []
+        for values_item_data in self.values:
+            values_item = values_item_data
+
+            values.append(values_item)
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "description": description,
-                "deadline": deadline,
+                "name": name,
+                "values": values,
             }
         )
 
@@ -35,17 +37,22 @@ class PendingMigration:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        description = d.pop("description")
+        name = d.pop("name")
 
-        deadline = isoparse(d.pop("deadline")).date()
+        values = []
+        _values = d.pop("values")
+        for values_item_data in _values:
+            values_item = cast(List[str], values_item_data)
 
-        pending_migration = cls(
-            description=description,
-            deadline=deadline,
+            values.append(values_item)
+
+        prometheus_metric = cls(
+            name=name,
+            values=values,
         )
 
-        pending_migration.additional_properties = d
-        return pending_migration
+        prometheus_metric.additional_properties = d
+        return prometheus_metric
 
     @property
     def additional_keys(self) -> List[str]:
