@@ -24,6 +24,8 @@ pub struct Deployment {
     pub flagged_for_deletion: bool,
     #[serde(rename = "flaggedForUpdate")]
     pub flagged_for_update: bool,
+    #[serde(rename = "catalogRestoreMode")]
+    pub catalog_restore_mode: bool,
     #[serde(rename = "size")]
     pub size: Box<crate::models::DeploymentSizeEnum>,
     #[serde(rename = "storageMb")]
@@ -36,8 +38,6 @@ pub struct Deployment {
     pub cluster_id: Option<String>,
     #[serde(rename = "mzVersion")]
     pub mz_version: String,
-    #[serde(rename = "pendingMigration")]
-    pub pending_migration: Option<Box<crate::models::PendingMigration>>,
     #[serde(rename = "status")]
     pub status: String,
     #[serde(rename = "enableTailscale")]
@@ -55,13 +55,13 @@ impl Deployment {
         hostname: Option<String>,
         flagged_for_deletion: bool,
         flagged_for_update: bool,
+        catalog_restore_mode: bool,
         size: crate::models::DeploymentSizeEnum,
         storage_mb: i32,
         disable_user_indexes: bool,
         materialized_extra_args: Vec<String>,
         cluster_id: Option<String>,
         mz_version: String,
-        pending_migration: Option<crate::models::PendingMigration>,
         status: String,
         enable_tailscale: bool,
         cloud_provider_region: crate::models::SupportedCloudRegion,
@@ -74,13 +74,13 @@ impl Deployment {
             hostname,
             flagged_for_deletion,
             flagged_for_update,
+            catalog_restore_mode,
             size: Box::new(size),
             storage_mb,
             disable_user_indexes,
             materialized_extra_args,
             cluster_id,
             mz_version,
-            pending_migration: pending_migration.map(Box::new),
             status,
             enable_tailscale,
             cloud_provider_region: Box::new(cloud_provider_region),

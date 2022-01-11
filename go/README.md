@@ -78,21 +78,23 @@ All URIs are relative to *https://cloud.materialize.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*CloudProvidersApi* | [**CloudProvidersRetrieve**](docs/CloudProvidersApi.md#cloudprovidersretrieve) | **Get** /api/cloud-providers | 
+*CloudProvidersApi* | [**CloudProvidersList**](docs/CloudProvidersApi.md#cloudproviderslist) | **Get** /api/cloud-providers | 
 *DeploymentsApi* | [**DeploymentsCertsRetrieve**](docs/DeploymentsApi.md#deploymentscertsretrieve) | **Get** /api/deployments/{id}/certs | 
+*DeploymentsApi* | [**DeploymentsChangesList**](docs/DeploymentsApi.md#deploymentschangeslist) | **Get** /api/deployments/{id}/changes | 
 *DeploymentsApi* | [**DeploymentsCreate**](docs/DeploymentsApi.md#deploymentscreate) | **Post** /api/deployments | 
 *DeploymentsApi* | [**DeploymentsDestroy**](docs/DeploymentsApi.md#deploymentsdestroy) | **Delete** /api/deployments/{id} | 
 *DeploymentsApi* | [**DeploymentsList**](docs/DeploymentsApi.md#deploymentslist) | **Get** /api/deployments | 
 *DeploymentsApi* | [**DeploymentsLogsRetrieve**](docs/DeploymentsApi.md#deploymentslogsretrieve) | **Get** /api/deployments/{id}/logs | 
+*DeploymentsApi* | [**DeploymentsMetricsCpuRetrieve**](docs/DeploymentsApi.md#deploymentsmetricscpuretrieve) | **Get** /api/deployments/{id}/metrics/cpu/{period} | 
+*DeploymentsApi* | [**DeploymentsMetricsMemoryRetrieve**](docs/DeploymentsApi.md#deploymentsmetricsmemoryretrieve) | **Get** /api/deployments/{id}/metrics/memory/{period} | 
 *DeploymentsApi* | [**DeploymentsPartialUpdate**](docs/DeploymentsApi.md#deploymentspartialupdate) | **Patch** /api/deployments/{id} | 
 *DeploymentsApi* | [**DeploymentsRetrieve**](docs/DeploymentsApi.md#deploymentsretrieve) | **Get** /api/deployments/{id} | 
 *DeploymentsApi* | [**DeploymentsTailscaleLogsRetrieve**](docs/DeploymentsApi.md#deploymentstailscalelogsretrieve) | **Get** /api/deployments/{id}/tailscale_logs | 
 *HealthApi* | [**HealthRetrieve**](docs/HealthApi.md#healthretrieve) | **Get** /api/health | 
 *MzVersionsApi* | [**MzVersionsLatestRetrieve**](docs/MzVersionsApi.md#mzversionslatestretrieve) | **Get** /api/mz-versions/latest | 
 *MzVersionsApi* | [**MzVersionsList**](docs/MzVersionsApi.md#mzversionslist) | **Get** /api/mz-versions | 
-*OnboardingCallApi* | [**OnboardingCallRetrieve**](docs/OnboardingCallApi.md#onboardingcallretrieve) | **Get** /api/onboarding-call | 
 *OrganizationsApi* | [**OrganizationsRetrieve**](docs/OrganizationsApi.md#organizationsretrieve) | **Get** /api/organizations/{id} | 
-*RegionsApi* | [**RegionsRetrieve**](docs/RegionsApi.md#regionsretrieve) | **Get** /api/regions/{providerName} | 
+*RegionsApi* | [**RegionsList**](docs/RegionsApi.md#regionslist) | **Get** /api/regions/{providerName} | 
 *SchemaApi* | [**SchemaRetrieve**](docs/SchemaApi.md#schemaretrieve) | **Get** /api/schema | 
 
 
@@ -101,11 +103,18 @@ Class | Method | HTTP request | Description
  - [Deployment](docs/Deployment.md)
  - [DeploymentRequest](docs/DeploymentRequest.md)
  - [DeploymentSizeEnum](docs/DeploymentSizeEnum.md)
- - [OnboardingCall](docs/OnboardingCall.md)
+ - [HistoricalDeploymentChange](docs/HistoricalDeploymentChange.md)
+ - [HistoricalDeploymentDelta](docs/HistoricalDeploymentDelta.md)
+ - [HistoricalDeploymentMetadata](docs/HistoricalDeploymentMetadata.md)
+ - [ModifiedBoolean](docs/ModifiedBoolean.md)
+ - [ModifiedSize](docs/ModifiedSize.md)
+ - [ModifiedString](docs/ModifiedString.md)
+ - [ModifiedStringList](docs/ModifiedStringList.md)
+ - [OperationEnum](docs/OperationEnum.md)
  - [Organization](docs/Organization.md)
  - [PatchedDeploymentUpdateRequest](docs/PatchedDeploymentUpdateRequest.md)
- - [PendingMigration](docs/PendingMigration.md)
- - [PendingMigrationRequest](docs/PendingMigrationRequest.md)
+ - [PrometheusMetric](docs/PrometheusMetric.md)
+ - [PrometheusMetrics](docs/PrometheusMetrics.md)
  - [ProviderEnum](docs/ProviderEnum.md)
  - [SupportedCloudRegion](docs/SupportedCloudRegion.md)
  - [SupportedCloudRegionRequest](docs/SupportedCloudRegionRequest.md)

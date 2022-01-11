@@ -27,25 +27,25 @@ var (
 // RegionsApiService RegionsApi service
 type RegionsApiService service
 
-type ApiRegionsRetrieveRequest struct {
+type ApiRegionsListRequest struct {
 	ctx _context.Context
 	ApiService *RegionsApiService
 	providerName string
 }
 
 
-func (r ApiRegionsRetrieveRequest) Execute() (SupportedCloudRegion, *_nethttp.Response, error) {
-	return r.ApiService.RegionsRetrieveExecute(r)
+func (r ApiRegionsListRequest) Execute() ([]SupportedCloudRegion, *_nethttp.Response, error) {
+	return r.ApiService.RegionsListExecute(r)
 }
 
 /*
- * RegionsRetrieve Method for RegionsRetrieve
+ * RegionsList Method for RegionsList
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param providerName
- * @return ApiRegionsRetrieveRequest
+ * @return ApiRegionsListRequest
  */
-func (a *RegionsApiService) RegionsRetrieve(ctx _context.Context, providerName string) ApiRegionsRetrieveRequest {
-	return ApiRegionsRetrieveRequest{
+func (a *RegionsApiService) RegionsList(ctx _context.Context, providerName string) ApiRegionsListRequest {
+	return ApiRegionsListRequest{
 		ApiService: a,
 		ctx: ctx,
 		providerName: providerName,
@@ -54,19 +54,19 @@ func (a *RegionsApiService) RegionsRetrieve(ctx _context.Context, providerName s
 
 /*
  * Execute executes the request
- * @return SupportedCloudRegion
+ * @return []SupportedCloudRegion
  */
-func (a *RegionsApiService) RegionsRetrieveExecute(r ApiRegionsRetrieveRequest) (SupportedCloudRegion, *_nethttp.Response, error) {
+func (a *RegionsApiService) RegionsListExecute(r ApiRegionsListRequest) ([]SupportedCloudRegion, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  SupportedCloudRegion
+		localVarReturnValue  []SupportedCloudRegion
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RegionsApiService.RegionsRetrieve")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RegionsApiService.RegionsList")
 	if err != nil {
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}

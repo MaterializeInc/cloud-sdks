@@ -13,17 +13,17 @@ use reqwest;
 use super::{configuration, Error};
 use crate::apis::ResponseContent;
 
-/// struct for typed errors of method `regions_retrieve`
+/// struct for typed errors of method `regions_list`
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum RegionsRetrieveError {
+pub enum RegionsListError {
     UnknownValue(serde_json::Value),
 }
 
-pub async fn regions_retrieve(
+pub async fn regions_list(
     configuration: &configuration::Configuration,
     provider_name: &str,
-) -> Result<crate::models::SupportedCloudRegion, Error<RegionsRetrieveError>> {
+) -> Result<Vec<crate::models::SupportedCloudRegion>, Error<RegionsListError>> {
     let local_var_client = &configuration.client;
 
     let local_var_uri_str = format!(
@@ -51,7 +51,7 @@ pub async fn regions_retrieve(
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<RegionsRetrieveError> =
+        let local_var_entity: Option<RegionsListError> =
             serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent {
             status: local_var_status,

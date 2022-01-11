@@ -12,6 +12,8 @@
 pub struct DeploymentRequest {
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
+    #[serde(rename = "catalogRestoreMode", skip_serializing_if = "Option::is_none")]
+    pub catalog_restore_mode: Option<bool>,
     #[serde(rename = "size", skip_serializing_if = "Option::is_none")]
     pub size: Option<Box<crate::models::DeploymentSizeEnum>>,
     #[serde(rename = "storageMb", skip_serializing_if = "Option::is_none")]
@@ -39,6 +41,7 @@ impl DeploymentRequest {
     ) -> DeploymentRequest {
         DeploymentRequest {
             name: None,
+            catalog_restore_mode: None,
             size: None,
             storage_mb: None,
             disable_user_indexes: None,

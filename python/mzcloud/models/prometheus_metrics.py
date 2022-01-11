@@ -1,35 +1,32 @@
-import datetime
 from typing import Any, BinaryIO, Dict, List, Optional, TextIO, Tuple, Type, TypeVar, cast
 
 import attr
-from dateutil.parser import isoparse
 
+from ..models.prometheus_metric import PrometheusMetric
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Organization")
+T = TypeVar("T", bound="PrometheusMetrics")
 
 
 @attr.s(auto_attribs=True)
-class Organization:
-    """ """
+class PrometheusMetrics:
+    """Serializer for the prometheus metrics."""
 
-    id: str
-    deployment_limit: int
-    trial_expires_at: Optional[datetime.datetime]
+    metrics: List[PrometheusMetric]
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        id = self.id
-        deployment_limit = self.deployment_limit
-        trial_expires_at = self.trial_expires_at.isoformat() if self.trial_expires_at else None
+        metrics = []
+        for metrics_item_data in self.metrics:
+            metrics_item = metrics_item_data.to_dict()
+
+            metrics.append(metrics_item)
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "id": id,
-                "deploymentLimit": deployment_limit,
-                "trialExpiresAt": trial_expires_at,
+                "metrics": metrics,
             }
         )
 
@@ -38,25 +35,19 @@ class Organization:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        id = d.pop("id")
+        metrics = []
+        _metrics = d.pop("metrics")
+        for metrics_item_data in _metrics:
+            metrics_item = PrometheusMetric.from_dict(metrics_item_data)
 
-        deployment_limit = d.pop("deploymentLimit")
+            metrics.append(metrics_item)
 
-        _trial_expires_at = d.pop("trialExpiresAt")
-        trial_expires_at: Optional[datetime.datetime]
-        if _trial_expires_at is None:
-            trial_expires_at = None
-        else:
-            trial_expires_at = isoparse(_trial_expires_at)
-
-        organization = cls(
-            id=id,
-            deployment_limit=deployment_limit,
-            trial_expires_at=trial_expires_at,
+        prometheus_metrics = cls(
+            metrics=metrics,
         )
 
-        organization.additional_properties = d
-        return organization
+        prometheus_metrics.additional_properties = d
+        return prometheus_metrics
 
     @property
     def additional_keys(self) -> List[str]:

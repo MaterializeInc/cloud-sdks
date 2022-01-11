@@ -5,7 +5,7 @@ info:
 paths:
   /api/cloud-providers:
     get:
-      operationId: cloudProvidersRetrieve
+      operationId: cloudProvidersList
       description: List the cloud provider and regions
       tags:
       - cloud-providers
@@ -17,7 +17,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SupportedCloudRegion'
+                type: array
+                items:
+                  $ref: '#/components/schemas/SupportedCloudRegion'
           description: ''
   /api/deployments:
     get:
@@ -145,6 +147,28 @@ paths:
                 type: string
                 format: binary
           description: ''
+  /api/deployments/{id}/changes:
+    get:
+      operationId: deploymentsChangesList
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - deployments
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HistoricalDeploymentDelta'
+          description: ''
   /api/deployments/{id}/logs:
     get:
       operationId: deploymentsLogsRetrieve
@@ -170,6 +194,60 @@ paths:
             text/plain:
               schema:
                 type: string
+          description: ''
+  /api/deployments/{id}/metrics/cpu/{period}:
+    get:
+      operationId: deploymentsMetricsCpuRetrieve
+      description: Retrieve cpu line graph as a list of tuples (timestamps / utilization
+        in %)) for a deployment.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: period
+        schema:
+          type: number
+        required: true
+      tags:
+      - deployments
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrometheusMetrics'
+          description: ''
+  /api/deployments/{id}/metrics/memory/{period}:
+    get:
+      operationId: deploymentsMetricsMemoryRetrieve
+      description: Retrieve memory line graph data (as a list of tuples (timestamps
+        / utilization in %)) for a deployment.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: period
+        schema:
+          type: number
+        required: true
+      tags:
+      - deployments
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrometheusMetrics'
           description: ''
   /api/deployments/{id}/tailscale_logs:
     get:
@@ -257,21 +335,6 @@ paths:
               schema:
                 type: string
           description: ''
-  /api/onboarding-call:
-    get:
-      operationId: onboardingCallRetrieve
-      description: Retrieve the first scheduled onboarding call for a user.
-      tags:
-      - onboarding-call
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OnboardingCall'
-          description: ''
   /api/organizations/{id}:
     get:
       operationId: organizationsRetrieve
@@ -297,7 +360,7 @@ paths:
           description: ''
   /api/regions/{providerName}:
     get:
-      operationId: regionsRetrieve
+      operationId: regionsList
       parameters:
       - in: path
         name: providerName
@@ -314,7 +377,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SupportedCloudRegion'
+                type: array
+                items:
+                  $ref: '#/components/schemas/SupportedCloudRegion'
           description: ''
   /api/schema:
     get:
@@ -385,6 +450,9 @@ components:
         flaggedForUpdate:
           type: boolean
           readOnly: true
+        catalogRestoreMode:
+          type: boolean
+          default: false
         size:
           allOf:
           - $ref: '#/components/schemas/DeploymentSizeEnum'
@@ -410,11 +478,6 @@ components:
           nullable: true
         mzVersion:
           type: string
-        pendingMigration:
-          allOf:
-          - $ref: '#/components/schemas/PendingMigration'
-          readOnly: true
-          nullable: true
         status:
           type: string
           readOnly: true
@@ -424,6 +487,7 @@ components:
         cloudProviderRegion:
           $ref: '#/components/schemas/SupportedCloudRegion'
       required:
+      - catalogRestoreMode
       - cloudProviderRegion
       - clusterId
       - disableUserIndexes
@@ -436,7 +500,6 @@ components:
       - mzVersion
       - name
       - organization
-      - pendingMigration
       - size
       - status
       - storageMb
@@ -446,6 +509,10 @@ components:
       properties:
         name:
           type: string
+          minLength: 1
+        catalogRestoreMode:
+          type: boolean
+          default: false
         size:
           allOf:
           - $ref: '#/components/schemas/DeploymentSizeEnum'
@@ -462,16 +529,19 @@ components:
           type: array
           items:
             type: string
+            minLength: 1
             maxLength: 255
           title: Extra materialized arguments
         mzVersion:
           type: string
+          minLength: 1
         enableTailscale:
           type: boolean
           default: false
         tailscaleAuthKey:
           type: string
           writeOnly: true
+          minLength: 1
         cloudProviderRegion:
           $ref: '#/components/schemas/SupportedCloudRegionRequest'
       required:
@@ -484,18 +554,137 @@ components:
       - L
       - XL
       type: string
-    OnboardingCall:
+    HistoricalDeploymentChange:
       type: object
       properties:
-        start:
-          type: string
-          format: date-time
-        end:
-          type: string
-          format: date-time
+        name:
+          allOf:
+          - $ref: '#/components/schemas/ModifiedString'
+          readOnly: true
+        hostname:
+          allOf:
+          - $ref: '#/components/schemas/ModifiedString'
+          readOnly: true
+        flaggedForDeletion:
+          allOf:
+          - $ref: '#/components/schemas/ModifiedBoolean'
+          readOnly: true
+        flaggedForUpdate:
+          allOf:
+          - $ref: '#/components/schemas/ModifiedBoolean'
+          readOnly: true
+        catalogRestoreMode:
+          allOf:
+          - $ref: '#/components/schemas/ModifiedBoolean'
+          readOnly: true
+        size:
+          allOf:
+          - $ref: '#/components/schemas/ModifiedSize'
+          readOnly: true
+        disableUserIndexes:
+          allOf:
+          - $ref: '#/components/schemas/ModifiedBoolean'
+          readOnly: true
+        materializedExtraArgs:
+          allOf:
+          - $ref: '#/components/schemas/ModifiedStringList'
+          readOnly: true
+        clusterId:
+          allOf:
+          - $ref: '#/components/schemas/ModifiedString'
+          readOnly: true
+        mzVersion:
+          allOf:
+          - $ref: '#/components/schemas/ModifiedString'
+          readOnly: true
+        enableTailscale:
+          allOf:
+          - $ref: '#/components/schemas/ModifiedBoolean'
+          readOnly: true
+    HistoricalDeploymentDelta:
+      type: object
+      properties:
+        changes:
+          $ref: '#/components/schemas/HistoricalDeploymentChange'
+        metadata:
+          $ref: '#/components/schemas/HistoricalDeploymentMetadata'
       required:
-      - end
-      - start
+      - changes
+      - metadata
+    HistoricalDeploymentMetadata:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+          readOnly: true
+        user:
+          type: string
+          readOnly: true
+        operation:
+          allOf:
+          - $ref: '#/components/schemas/OperationEnum'
+          readOnly: true
+      required:
+      - date
+      - operation
+      - user
+    ModifiedBoolean:
+      type: object
+      properties:
+        old:
+          type: boolean
+          nullable: true
+        new:
+          type: boolean
+          nullable: true
+      required:
+      - new
+      - old
+    ModifiedSize:
+      type: object
+      properties:
+        old:
+          $ref: '#/components/schemas/DeploymentSizeEnum'
+        new:
+          $ref: '#/components/schemas/DeploymentSizeEnum'
+      required:
+      - new
+      - old
+    ModifiedString:
+      type: object
+      properties:
+        old:
+          type: string
+          nullable: true
+        new:
+          type: string
+          nullable: true
+      required:
+      - new
+      - old
+    ModifiedStringList:
+      type: object
+      properties:
+        old:
+          type: array
+          items:
+            type: string
+            nullable: true
+        new:
+          type: array
+          items:
+            type: string
+            nullable: true
+      required:
+      - new
+      - old
+    OperationEnum:
+      enum:
+      - CREATE
+      - UPDATE
+      - DELETE
+      type: string
     Organization:
       type: object
       properties:
@@ -503,11 +692,6 @@ components:
           type: string
           format: uuid
           readOnly: true
-        admitted:
-          type: boolean
-          readOnly: true
-          description: Whether this organization has been admitted to Materialize
-            Cloud.
         deploymentLimit:
           type: integer
           readOnly: true
@@ -519,7 +703,6 @@ components:
           description: When this organization's trial period expires. If empty, the
             organization is on an enterprise plan.
       required:
-      - admitted
       - deploymentLimit
       - id
       - trialExpiresAt
@@ -528,6 +711,10 @@ components:
       properties:
         name:
           type: string
+          minLength: 1
+        catalogRestoreMode:
+          type: boolean
+          default: false
         size:
           allOf:
           - $ref: '#/components/schemas/DeploymentSizeEnum'
@@ -544,38 +731,43 @@ components:
           type: array
           items:
             type: string
+            minLength: 1
             maxLength: 255
           title: Extra materialized arguments
         mzVersion:
           type: string
+          minLength: 1
         enableTailscale:
           type: boolean
           default: false
         tailscaleAuthKey:
           type: string
           writeOnly: true
-    PendingMigration:
+          minLength: 1
+    PrometheusMetric:
       type: object
       properties:
-        description:
+        name:
           type: string
-        deadline:
-          type: string
-          format: date
+        values:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
       required:
-      - deadline
-      - description
-    PendingMigrationRequest:
+      - name
+      - values
+    PrometheusMetrics:
       type: object
+      description: Serializer for the prometheus metrics.
       properties:
-        description:
-          type: string
-        deadline:
-          type: string
-          format: date
+        metrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrometheusMetric'
       required:
-      - deadline
-      - description
+      - metrics
     ProviderEnum:
       enum:
       - AWS
@@ -597,6 +789,7 @@ components:
           $ref: '#/components/schemas/ProviderEnum'
         region:
           type: string
+          minLength: 1
       required:
       - provider
       - region

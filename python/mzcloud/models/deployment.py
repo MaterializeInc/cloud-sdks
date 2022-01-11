@@ -3,7 +3,6 @@ from typing import Any, BinaryIO, Dict, List, Optional, TextIO, Tuple, Type, Typ
 import attr
 
 from ..models.deployment_size_enum import DeploymentSizeEnum
-from ..models.pending_migration import PendingMigration
 from ..models.supported_cloud_region import SupportedCloudRegion
 from ..types import UNSET, Unset
 
@@ -26,7 +25,7 @@ class Deployment:
     cloud_provider_region: SupportedCloudRegion
     hostname: Optional[str]
     cluster_id: Optional[str]
-    pending_migration: Optional[PendingMigration]
+    catalog_restore_mode: bool = False
     size: DeploymentSizeEnum = DeploymentSizeEnum.XS
     storage_mb: int = 100
     disable_user_indexes: bool = False
@@ -40,6 +39,7 @@ class Deployment:
         name = self.name
         flagged_for_deletion = self.flagged_for_deletion
         flagged_for_update = self.flagged_for_update
+        catalog_restore_mode = self.catalog_restore_mode
         size = self.size.value
 
         storage_mb = self.storage_mb
@@ -53,7 +53,6 @@ class Deployment:
 
         hostname = self.hostname
         cluster_id = self.cluster_id
-        pending_migration = self.pending_migration.to_dict() if self.pending_migration else None
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -65,6 +64,7 @@ class Deployment:
                 "name": name,
                 "flaggedForDeletion": flagged_for_deletion,
                 "flaggedForUpdate": flagged_for_update,
+                "catalogRestoreMode": catalog_restore_mode,
                 "size": size,
                 "storageMb": storage_mb,
                 "disableUserIndexes": disable_user_indexes,
@@ -75,7 +75,6 @@ class Deployment:
                 "cloudProviderRegion": cloud_provider_region,
                 "hostname": hostname,
                 "clusterId": cluster_id,
-                "pendingMigration": pending_migration,
             }
         )
 
@@ -95,6 +94,8 @@ class Deployment:
         flagged_for_deletion = d.pop("flaggedForDeletion")
 
         flagged_for_update = d.pop("flaggedForUpdate")
+
+        catalog_restore_mode = d.pop("catalogRestoreMode")
 
         size = DeploymentSizeEnum(d.pop("size"))
 
@@ -116,13 +117,6 @@ class Deployment:
 
         cluster_id = d.pop("clusterId")
 
-        _pending_migration = d.pop("pendingMigration")
-        pending_migration: Optional[PendingMigration]
-        if _pending_migration is None:
-            pending_migration = None
-        else:
-            pending_migration = PendingMigration.from_dict(_pending_migration)
-
         deployment = cls(
             id=id,
             organization=organization,
@@ -130,6 +124,7 @@ class Deployment:
             name=name,
             flagged_for_deletion=flagged_for_deletion,
             flagged_for_update=flagged_for_update,
+            catalog_restore_mode=catalog_restore_mode,
             size=size,
             storage_mb=storage_mb,
             disable_user_indexes=disable_user_indexes,
@@ -140,7 +135,6 @@ class Deployment:
             cloud_provider_region=cloud_provider_region,
             hostname=hostname,
             cluster_id=cluster_id,
-            pending_migration=pending_migration,
         )
 
         deployment.additional_properties = d

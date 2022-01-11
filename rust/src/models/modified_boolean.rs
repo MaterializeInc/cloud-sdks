@@ -9,15 +9,15 @@
  */
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct OnboardingCall {
-    #[serde(rename = "start")]
-    pub start: String,
-    #[serde(rename = "end")]
-    pub end: String,
+pub struct ModifiedBoolean {
+    #[serde(rename = "old")]
+    pub old: Option<bool>,
+    #[serde(rename = "new")]
+    pub new: Option<bool>,
 }
 
-impl OnboardingCall {
-    pub fn new(start: String, end: String) -> OnboardingCall {
-        OnboardingCall { start, end }
+impl ModifiedBoolean {
+    pub fn new(old: Option<bool>, new: Option<bool>) -> ModifiedBoolean {
+        ModifiedBoolean { old, new }
     }
 }

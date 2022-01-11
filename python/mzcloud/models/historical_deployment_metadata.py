@@ -4,32 +4,34 @@ from typing import Any, BinaryIO, Dict, List, Optional, TextIO, Tuple, Type, Typ
 import attr
 from dateutil.parser import isoparse
 
+from ..models.operation_enum import OperationEnum
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Organization")
+T = TypeVar("T", bound="HistoricalDeploymentMetadata")
 
 
 @attr.s(auto_attribs=True)
-class Organization:
+class HistoricalDeploymentMetadata:
     """ """
 
-    id: str
-    deployment_limit: int
-    trial_expires_at: Optional[datetime.datetime]
+    date: datetime.datetime
+    user: str
+    operation: OperationEnum
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        id = self.id
-        deployment_limit = self.deployment_limit
-        trial_expires_at = self.trial_expires_at.isoformat() if self.trial_expires_at else None
+        date = self.date.isoformat()
+
+        user = self.user
+        operation = self.operation.value
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "id": id,
-                "deploymentLimit": deployment_limit,
-                "trialExpiresAt": trial_expires_at,
+                "date": date,
+                "user": user,
+                "operation": operation,
             }
         )
 
@@ -38,25 +40,20 @@ class Organization:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        id = d.pop("id")
+        date = isoparse(d.pop("date"))
 
-        deployment_limit = d.pop("deploymentLimit")
+        user = d.pop("user")
 
-        _trial_expires_at = d.pop("trialExpiresAt")
-        trial_expires_at: Optional[datetime.datetime]
-        if _trial_expires_at is None:
-            trial_expires_at = None
-        else:
-            trial_expires_at = isoparse(_trial_expires_at)
+        operation = OperationEnum(d.pop("operation"))
 
-        organization = cls(
-            id=id,
-            deployment_limit=deployment_limit,
-            trial_expires_at=trial_expires_at,
+        historical_deployment_metadata = cls(
+            date=date,
+            user=user,
+            operation=operation,
         )
 
-        organization.additional_properties = d
-        return organization
+        historical_deployment_metadata.additional_properties = d
+        return historical_deployment_metadata
 
     @property
     def additional_keys(self) -> List[str]:

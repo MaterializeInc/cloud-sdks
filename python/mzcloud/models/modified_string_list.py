@@ -1,33 +1,31 @@
-import datetime
 from typing import Any, BinaryIO, Dict, List, Optional, TextIO, Tuple, Type, TypeVar, cast
 
 import attr
-from dateutil.parser import isoparse
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="OnboardingCall")
+T = TypeVar("T", bound="ModifiedStringList")
 
 
 @attr.s(auto_attribs=True)
-class OnboardingCall:
+class ModifiedStringList:
     """ """
 
-    start: datetime.datetime
-    end: datetime.datetime
+    old: List[Optional[str]]
+    new: List[Optional[str]]
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        start = self.start.isoformat()
+        old = self.old
 
-        end = self.end.isoformat()
+        new = self.new
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "start": start,
-                "end": end,
+                "old": old,
+                "new": new,
             }
         )
 
@@ -36,17 +34,17 @@ class OnboardingCall:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        start = isoparse(d.pop("start"))
+        old = cast(List[Optional[str]], d.pop("old"))
 
-        end = isoparse(d.pop("end"))
+        new = cast(List[Optional[str]], d.pop("new"))
 
-        onboarding_call = cls(
-            start=start,
-            end=end,
+        modified_string_list = cls(
+            old=old,
+            new=new,
         )
 
-        onboarding_call.additional_properties = d
-        return onboarding_call
+        modified_string_list.additional_properties = d
+        return modified_string_list
 
     @property
     def additional_keys(self) -> List[str]:

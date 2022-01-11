@@ -26,24 +26,24 @@ var (
 // CloudProvidersApiService CloudProvidersApi service
 type CloudProvidersApiService service
 
-type ApiCloudProvidersRetrieveRequest struct {
+type ApiCloudProvidersListRequest struct {
 	ctx _context.Context
 	ApiService *CloudProvidersApiService
 }
 
 
-func (r ApiCloudProvidersRetrieveRequest) Execute() (SupportedCloudRegion, *_nethttp.Response, error) {
-	return r.ApiService.CloudProvidersRetrieveExecute(r)
+func (r ApiCloudProvidersListRequest) Execute() ([]SupportedCloudRegion, *_nethttp.Response, error) {
+	return r.ApiService.CloudProvidersListExecute(r)
 }
 
 /*
- * CloudProvidersRetrieve Method for CloudProvidersRetrieve
+ * CloudProvidersList Method for CloudProvidersList
  * List the cloud provider and regions
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @return ApiCloudProvidersRetrieveRequest
+ * @return ApiCloudProvidersListRequest
  */
-func (a *CloudProvidersApiService) CloudProvidersRetrieve(ctx _context.Context) ApiCloudProvidersRetrieveRequest {
-	return ApiCloudProvidersRetrieveRequest{
+func (a *CloudProvidersApiService) CloudProvidersList(ctx _context.Context) ApiCloudProvidersListRequest {
+	return ApiCloudProvidersListRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -51,19 +51,19 @@ func (a *CloudProvidersApiService) CloudProvidersRetrieve(ctx _context.Context) 
 
 /*
  * Execute executes the request
- * @return SupportedCloudRegion
+ * @return []SupportedCloudRegion
  */
-func (a *CloudProvidersApiService) CloudProvidersRetrieveExecute(r ApiCloudProvidersRetrieveRequest) (SupportedCloudRegion, *_nethttp.Response, error) {
+func (a *CloudProvidersApiService) CloudProvidersListExecute(r ApiCloudProvidersListRequest) ([]SupportedCloudRegion, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  SupportedCloudRegion
+		localVarReturnValue  []SupportedCloudRegion
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CloudProvidersApiService.CloudProvidersRetrieve")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CloudProvidersApiService.CloudProvidersList")
 	if err != nil {
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
