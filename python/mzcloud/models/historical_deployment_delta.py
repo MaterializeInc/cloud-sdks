@@ -11,7 +11,11 @@ T = TypeVar("T", bound="HistoricalDeploymentDelta")
 
 @attr.s(auto_attribs=True)
 class HistoricalDeploymentDelta:
-    """ """
+    """
+    Attributes:
+        changes (HistoricalDeploymentChange):
+        metadata (HistoricalDeploymentMetadata):
+    """
 
     changes: HistoricalDeploymentChange
     metadata: HistoricalDeploymentMetadata

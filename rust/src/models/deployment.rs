@@ -15,7 +15,7 @@ pub struct Deployment {
     #[serde(rename = "organization")]
     pub organization: String,
     #[serde(rename = "tlsAuthority")]
-    pub tls_authority: String,
+    pub tls_authority: Option<String>,
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "hostname")]
@@ -38,6 +38,8 @@ pub struct Deployment {
     pub cluster_id: Option<String>,
     #[serde(rename = "mzVersion")]
     pub mz_version: String,
+    #[serde(rename = "releaseTrack")]
+    pub release_track: Box<crate::models::ReleaseTrackEnum>,
     #[serde(rename = "status")]
     pub status: String,
     #[serde(rename = "enableTailscale")]
@@ -50,7 +52,7 @@ impl Deployment {
     pub fn new(
         id: String,
         organization: String,
-        tls_authority: String,
+        tls_authority: Option<String>,
         name: String,
         hostname: Option<String>,
         flagged_for_deletion: bool,
@@ -62,6 +64,7 @@ impl Deployment {
         materialized_extra_args: Vec<String>,
         cluster_id: Option<String>,
         mz_version: String,
+        release_track: crate::models::ReleaseTrackEnum,
         status: String,
         enable_tailscale: bool,
         cloud_provider_region: crate::models::SupportedCloudRegion,
@@ -81,6 +84,7 @@ impl Deployment {
             materialized_extra_args,
             cluster_id,
             mz_version,
+            release_track: Box::new(release_track),
             status,
             enable_tailscale,
             cloud_provider_region: Box::new(cloud_provider_region),

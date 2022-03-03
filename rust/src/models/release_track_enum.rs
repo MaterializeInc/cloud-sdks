@@ -10,18 +10,18 @@
 
 ///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum ProviderEnum {
-    #[serde(rename = "AWS")]
-    AWS,
-    #[serde(rename = "local")]
-    Local,
+pub enum ReleaseTrackEnum {
+    #[serde(rename = "canary")]
+    Canary,
+    #[serde(rename = "stable")]
+    Stable,
 }
 
-impl ToString for ProviderEnum {
+impl ToString for ReleaseTrackEnum {
     fn to_string(&self) -> String {
         match self {
-            Self::AWS => String::from("AWS"),
-            Self::Local => String::from("local"),
+            Self::Canary => String::from("canary"),
+            Self::Stable => String::from("stable"),
         }
     }
 }

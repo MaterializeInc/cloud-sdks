@@ -9,7 +9,11 @@ T = TypeVar("T", bound="ModifiedString")
 
 @attr.s(auto_attribs=True)
 class ModifiedString:
-    """ """
+    """
+    Attributes:
+        old (Optional[str]):
+        new (Optional[str]):
+    """
 
     old: Optional[str]
     new: Optional[str]

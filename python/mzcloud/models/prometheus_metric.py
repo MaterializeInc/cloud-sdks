@@ -9,7 +9,11 @@ T = TypeVar("T", bound="PrometheusMetric")
 
 @attr.s(auto_attribs=True)
 class PrometheusMetric:
-    """ """
+    """
+    Attributes:
+        name (str):
+        values (List[List[str]]):
+    """
 
     name: str
     values: List[List[str]]

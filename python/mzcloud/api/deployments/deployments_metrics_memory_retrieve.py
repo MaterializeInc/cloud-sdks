@@ -8,17 +8,18 @@ from ...types import UNSET, Response
 
 
 def _get_kwargs(
-    *,
-    client: AuthenticatedClient,
     id: str,
     period: float,
+    *,
+    client: AuthenticatedClient,
 ) -> Dict[str, Any]:
     url = "{}/api/deployments/{id}/metrics/memory/{period}".format(client.base_url, id=id, period=period)
 
-    headers: Dict[str, Any] = client.get_headers()
+    headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
     return {
+        "method": "get",
         "url": url,
         "headers": headers,
         "cookies": cookies,
@@ -44,18 +45,30 @@ def _build_response(*, response: httpx.Response) -> Response[PrometheusMetrics]:
 
 
 def sync_detailed(
-    *,
-    client: AuthenticatedClient,
     id: str,
     period: float,
+    *,
+    client: AuthenticatedClient,
 ) -> Response[PrometheusMetrics]:
+    """Retrieve memory line graph data (as a list of tuples (timestamps / utilization in %)) for a
+    deployment.
+
+    Args:
+        id (str):
+        period (float):
+
+    Returns:
+        Response[PrometheusMetrics]
+    """
+
     kwargs = _get_kwargs(
-        client=client,
         id=id,
         period=period,
+        client=client,
     )
 
-    response = httpx.get(
+    response = httpx.request(
+        verify=client.verify_ssl,
         **kwargs,
     )
 
@@ -63,50 +76,79 @@ def sync_detailed(
 
 
 def sync(
-    *,
-    client: AuthenticatedClient,
     id: str,
     period: float,
+    *,
+    client: AuthenticatedClient,
 ) -> Optional[PrometheusMetrics]:
-    """Retrieve memory line graph data (as a list of tuples (timestamps / utilization in %)) for a deployment."""
+    """Retrieve memory line graph data (as a list of tuples (timestamps / utilization in %)) for a
+    deployment.
+
+    Args:
+        id (str):
+        period (float):
+
+    Returns:
+        Response[PrometheusMetrics]
+    """
 
     return sync_detailed(
-        client=client,
         id=id,
         period=period,
+        client=client,
     ).parsed
 
 
 async def asyncio_detailed(
-    *,
-    client: AuthenticatedClient,
     id: str,
     period: float,
+    *,
+    client: AuthenticatedClient,
 ) -> Response[PrometheusMetrics]:
+    """Retrieve memory line graph data (as a list of tuples (timestamps / utilization in %)) for a
+    deployment.
+
+    Args:
+        id (str):
+        period (float):
+
+    Returns:
+        Response[PrometheusMetrics]
+    """
+
     kwargs = _get_kwargs(
-        client=client,
         id=id,
         period=period,
+        client=client,
     )
 
-    async with httpx.AsyncClient() as _client:
-        response = await _client.get(**kwargs)
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.request(**kwargs)
 
     return _build_response(response=response)
 
 
 async def asyncio(
-    *,
-    client: AuthenticatedClient,
     id: str,
     period: float,
+    *,
+    client: AuthenticatedClient,
 ) -> Optional[PrometheusMetrics]:
-    """Retrieve memory line graph data (as a list of tuples (timestamps / utilization in %)) for a deployment."""
+    """Retrieve memory line graph data (as a list of tuples (timestamps / utilization in %)) for a
+    deployment.
+
+    Args:
+        id (str):
+        period (float):
+
+    Returns:
+        Response[PrometheusMetrics]
+    """
 
     return (
         await asyncio_detailed(
-            client=client,
             id=id,
             period=period,
+            client=client,
         )
     ).parsed

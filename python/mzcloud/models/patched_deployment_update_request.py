@@ -3,6 +3,7 @@ from typing import Any, BinaryIO, Dict, List, Optional, TextIO, Tuple, Type, Typ
 import attr
 
 from ..models.deployment_size_enum import DeploymentSizeEnum
+from ..models.release_track_enum import ReleaseTrackEnum
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="PatchedDeploymentUpdateRequest")
@@ -10,7 +11,19 @@ T = TypeVar("T", bound="PatchedDeploymentUpdateRequest")
 
 @attr.s(auto_attribs=True)
 class PatchedDeploymentUpdateRequest:
-    """ """
+    """
+    Attributes:
+        name (Union[Unset, str]):
+        catalog_restore_mode (Union[Unset, bool]):
+        size (Union[Unset, DeploymentSizeEnum]):  Default: DeploymentSizeEnum.XS.
+        storage_mb (Union[Unset, int]):  Default: 100.
+        disable_user_indexes (Union[Unset, bool]):
+        materialized_extra_args (Union[Unset, List[str]]):
+        mz_version (Union[Unset, str]):
+        release_track (Union[Unset, ReleaseTrackEnum]):  Default: ReleaseTrackEnum.STABLE.
+        enable_tailscale (Union[Unset, bool]):
+        tailscale_auth_key (Union[Unset, str]):
+    """
 
     name: Union[Unset, str] = UNSET
     catalog_restore_mode: Union[Unset, bool] = False
@@ -19,6 +32,7 @@ class PatchedDeploymentUpdateRequest:
     disable_user_indexes: Union[Unset, bool] = False
     materialized_extra_args: Union[Unset, List[str]] = UNSET
     mz_version: Union[Unset, str] = UNSET
+    release_track: Union[Unset, ReleaseTrackEnum] = ReleaseTrackEnum.STABLE
     enable_tailscale: Union[Unset, bool] = False
     tailscale_auth_key: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -37,6 +51,10 @@ class PatchedDeploymentUpdateRequest:
             materialized_extra_args = self.materialized_extra_args
 
         mz_version = self.mz_version
+        release_track: Union[Unset, str] = UNSET
+        if not isinstance(self.release_track, Unset):
+            release_track = self.release_track.value
+
         enable_tailscale = self.enable_tailscale
         tailscale_auth_key = self.tailscale_auth_key
 
@@ -57,6 +75,8 @@ class PatchedDeploymentUpdateRequest:
             field_dict["materializedExtraArgs"] = materialized_extra_args
         if mz_version is not UNSET:
             field_dict["mzVersion"] = mz_version
+        if release_track is not UNSET:
+            field_dict["releaseTrack"] = release_track
         if enable_tailscale is not UNSET:
             field_dict["enableTailscale"] = enable_tailscale
         if tailscale_auth_key is not UNSET:
@@ -86,6 +106,13 @@ class PatchedDeploymentUpdateRequest:
 
         mz_version = d.pop("mzVersion", UNSET)
 
+        _release_track = d.pop("releaseTrack", UNSET)
+        release_track: Union[Unset, ReleaseTrackEnum]
+        if isinstance(_release_track, Unset):
+            release_track = UNSET
+        else:
+            release_track = ReleaseTrackEnum(_release_track)
+
         enable_tailscale = d.pop("enableTailscale", UNSET)
 
         tailscale_auth_key = d.pop("tailscaleAuthKey", UNSET)
@@ -98,6 +125,7 @@ class PatchedDeploymentUpdateRequest:
             disable_user_indexes=disable_user_indexes,
             materialized_extra_args=materialized_extra_args,
             mz_version=mz_version,
+            release_track=release_track,
             enable_tailscale=enable_tailscale,
             tailscale_auth_key=tailscale_auth_key,
         )

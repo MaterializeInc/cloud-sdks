@@ -9,7 +9,11 @@ T = TypeVar("T", bound="ModifiedStringList")
 
 @attr.s(auto_attribs=True)
 class ModifiedStringList:
-    """ """
+    """
+    Attributes:
+        old (List[Optional[str]]):
+        new (List[Optional[str]]):
+    """
 
     old: List[Optional[str]]
     new: List[Optional[str]]

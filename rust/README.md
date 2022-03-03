@@ -29,12 +29,16 @@ Class | Method | HTTP request | Description
 *DeploymentsApi* | [**deployments_changes_list**](docs/DeploymentsApi.md#deployments_changes_list) | **GET** /api/deployments/{id}/changes | 
 *DeploymentsApi* | [**deployments_create**](docs/DeploymentsApi.md#deployments_create) | **POST** /api/deployments | 
 *DeploymentsApi* | [**deployments_destroy**](docs/DeploymentsApi.md#deployments_destroy) | **DELETE** /api/deployments/{id} | 
+*DeploymentsApi* | [**deployments_ip_retrieve**](docs/DeploymentsApi.md#deployments_ip_retrieve) | **GET** /api/deployments/{id}/ip | 
 *DeploymentsApi* | [**deployments_list**](docs/DeploymentsApi.md#deployments_list) | **GET** /api/deployments | 
 *DeploymentsApi* | [**deployments_logs_retrieve**](docs/DeploymentsApi.md#deployments_logs_retrieve) | **GET** /api/deployments/{id}/logs | 
 *DeploymentsApi* | [**deployments_metrics_cpu_retrieve**](docs/DeploymentsApi.md#deployments_metrics_cpu_retrieve) | **GET** /api/deployments/{id}/metrics/cpu/{period} | 
 *DeploymentsApi* | [**deployments_metrics_memory_retrieve**](docs/DeploymentsApi.md#deployments_metrics_memory_retrieve) | **GET** /api/deployments/{id}/metrics/memory/{period} | 
 *DeploymentsApi* | [**deployments_partial_update**](docs/DeploymentsApi.md#deployments_partial_update) | **PATCH** /api/deployments/{id} | 
 *DeploymentsApi* | [**deployments_retrieve**](docs/DeploymentsApi.md#deployments_retrieve) | **GET** /api/deployments/{id} | 
+*DeploymentsApi* | [**deployments_secrets_create**](docs/DeploymentsApi.md#deployments_secrets_create) | **POST** /api/deployments/{id}/secrets/{secret} | 
+*DeploymentsApi* | [**deployments_secrets_destroy**](docs/DeploymentsApi.md#deployments_secrets_destroy) | **DELETE** /api/deployments/{id}/secrets/{secret} | 
+*DeploymentsApi* | [**deployments_secrets_list**](docs/DeploymentsApi.md#deployments_secrets_list) | **GET** /api/deployments/{id}/secrets | 
 *DeploymentsApi* | [**deployments_tailscale_logs_retrieve**](docs/DeploymentsApi.md#deployments_tailscale_logs_retrieve) | **GET** /api/deployments/{id}/tailscale_logs | 
 *HealthApi* | [**health_retrieve**](docs/HealthApi.md#health_retrieve) | **GET** /api/health | 
 *MzVersionsApi* | [**mz_versions_latest_retrieve**](docs/MzVersionsApi.md#mz_versions_latest_retrieve) | **GET** /api/mz-versions/latest | 
@@ -62,6 +66,7 @@ Class | Method | HTTP request | Description
  - [PrometheusMetric](docs/PrometheusMetric.md)
  - [PrometheusMetrics](docs/PrometheusMetrics.md)
  - [ProviderEnum](docs/ProviderEnum.md)
+ - [ReleaseTrackEnum](docs/ReleaseTrackEnum.md)
  - [SupportedCloudRegion](docs/SupportedCloudRegion.md)
  - [SupportedCloudRegionRequest](docs/SupportedCloudRegionRequest.md)
 

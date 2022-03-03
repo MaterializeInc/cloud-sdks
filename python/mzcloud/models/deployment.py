@@ -3,6 +3,7 @@ from typing import Any, BinaryIO, Dict, List, Optional, TextIO, Tuple, Type, Typ
 import attr
 
 from ..models.deployment_size_enum import DeploymentSizeEnum
+from ..models.release_track_enum import ReleaseTrackEnum
 from ..models.supported_cloud_region import SupportedCloudRegion
 from ..types import UNSET, Unset
 
@@ -11,11 +12,30 @@ T = TypeVar("T", bound="Deployment")
 
 @attr.s(auto_attribs=True)
 class Deployment:
-    """ """
+    """
+    Attributes:
+        id (str):
+        organization (str):
+        name (str):
+        flagged_for_deletion (bool):
+        flagged_for_update (bool):
+        catalog_restore_mode (bool):
+        size (DeploymentSizeEnum):  Default: DeploymentSizeEnum.XS.
+        storage_mb (int):  Default: 100.
+        disable_user_indexes (bool):
+        materialized_extra_args (List[str]):
+        mz_version (str):
+        release_track (ReleaseTrackEnum):  Default: ReleaseTrackEnum.STABLE.
+        status (str):
+        enable_tailscale (bool):
+        cloud_provider_region (SupportedCloudRegion):
+        tls_authority (Optional[str]):
+        hostname (Optional[str]):
+        cluster_id (Optional[str]):
+    """
 
     id: str
     organization: str
-    tls_authority: str
     name: str
     flagged_for_deletion: bool
     flagged_for_update: bool
@@ -23,19 +43,20 @@ class Deployment:
     mz_version: str
     status: str
     cloud_provider_region: SupportedCloudRegion
+    tls_authority: Optional[str]
     hostname: Optional[str]
     cluster_id: Optional[str]
     catalog_restore_mode: bool = False
     size: DeploymentSizeEnum = DeploymentSizeEnum.XS
     storage_mb: int = 100
     disable_user_indexes: bool = False
+    release_track: ReleaseTrackEnum = ReleaseTrackEnum.STABLE
     enable_tailscale: bool = False
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         id = self.id
         organization = self.organization
-        tls_authority = self.tls_authority
         name = self.name
         flagged_for_deletion = self.flagged_for_deletion
         flagged_for_update = self.flagged_for_update
@@ -47,10 +68,13 @@ class Deployment:
         materialized_extra_args = self.materialized_extra_args
 
         mz_version = self.mz_version
+        release_track = self.release_track.value
+
         status = self.status
         enable_tailscale = self.enable_tailscale
         cloud_provider_region = self.cloud_provider_region.to_dict()
 
+        tls_authority = self.tls_authority
         hostname = self.hostname
         cluster_id = self.cluster_id
 
@@ -60,7 +84,6 @@ class Deployment:
             {
                 "id": id,
                 "organization": organization,
-                "tlsAuthority": tls_authority,
                 "name": name,
                 "flaggedForDeletion": flagged_for_deletion,
                 "flaggedForUpdate": flagged_for_update,
@@ -70,9 +93,11 @@ class Deployment:
                 "disableUserIndexes": disable_user_indexes,
                 "materializedExtraArgs": materialized_extra_args,
                 "mzVersion": mz_version,
+                "releaseTrack": release_track,
                 "status": status,
                 "enableTailscale": enable_tailscale,
                 "cloudProviderRegion": cloud_provider_region,
+                "tlsAuthority": tls_authority,
                 "hostname": hostname,
                 "clusterId": cluster_id,
             }
@@ -86,8 +111,6 @@ class Deployment:
         id = d.pop("id")
 
         organization = d.pop("organization")
-
-        tls_authority = d.pop("tlsAuthority")
 
         name = d.pop("name")
 
@@ -107,11 +130,15 @@ class Deployment:
 
         mz_version = d.pop("mzVersion")
 
+        release_track = ReleaseTrackEnum(d.pop("releaseTrack"))
+
         status = d.pop("status")
 
         enable_tailscale = d.pop("enableTailscale")
 
         cloud_provider_region = SupportedCloudRegion.from_dict(d.pop("cloudProviderRegion"))
+
+        tls_authority = d.pop("tlsAuthority")
 
         hostname = d.pop("hostname")
 
@@ -120,7 +147,6 @@ class Deployment:
         deployment = cls(
             id=id,
             organization=organization,
-            tls_authority=tls_authority,
             name=name,
             flagged_for_deletion=flagged_for_deletion,
             flagged_for_update=flagged_for_update,
@@ -130,9 +156,11 @@ class Deployment:
             disable_user_indexes=disable_user_indexes,
             materialized_extra_args=materialized_extra_args,
             mz_version=mz_version,
+            release_track=release_track,
             status=status,
             enable_tailscale=enable_tailscale,
             cloud_provider_region=cloud_provider_region,
+            tls_authority=tls_authority,
             hostname=hostname,
             cluster_id=cluster_id,
         )

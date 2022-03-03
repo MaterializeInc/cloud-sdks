@@ -9,7 +9,11 @@ T = TypeVar("T", bound="ModifiedBoolean")
 
 @attr.s(auto_attribs=True)
 class ModifiedBoolean:
-    """ """
+    """
+    Attributes:
+        old (Optional[bool]):
+        new (Optional[bool]):
+    """
 
     old: Optional[bool]
     new: Optional[bool]

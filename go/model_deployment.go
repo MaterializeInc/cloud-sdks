@@ -18,7 +18,7 @@ import (
 type Deployment struct {
 	Id string `json:"id"`
 	Organization string `json:"organization"`
-	TlsAuthority string `json:"tlsAuthority"`
+	TlsAuthority NullableString `json:"tlsAuthority"`
 	Name string `json:"name"`
 	Hostname NullableString `json:"hostname"`
 	FlaggedForDeletion bool `json:"flaggedForDeletion"`
@@ -30,6 +30,7 @@ type Deployment struct {
 	MaterializedExtraArgs []string `json:"materializedExtraArgs"`
 	ClusterId NullableString `json:"clusterId"`
 	MzVersion string `json:"mzVersion"`
+	ReleaseTrack ReleaseTrackEnum `json:"releaseTrack"`
 	Status string `json:"status"`
 	EnableTailscale bool `json:"enableTailscale"`
 	CloudProviderRegion SupportedCloudRegion `json:"cloudProviderRegion"`
@@ -39,7 +40,7 @@ type Deployment struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDeployment(id string, organization string, tlsAuthority string, name string, hostname NullableString, flaggedForDeletion bool, flaggedForUpdate bool, catalogRestoreMode bool, size DeploymentSizeEnum, storageMb int32, disableUserIndexes bool, materializedExtraArgs []string, clusterId NullableString, mzVersion string, status string, enableTailscale bool, cloudProviderRegion SupportedCloudRegion) *Deployment {
+func NewDeployment(id string, organization string, tlsAuthority NullableString, name string, hostname NullableString, flaggedForDeletion bool, flaggedForUpdate bool, catalogRestoreMode bool, size DeploymentSizeEnum, storageMb int32, disableUserIndexes bool, materializedExtraArgs []string, clusterId NullableString, mzVersion string, releaseTrack ReleaseTrackEnum, status string, enableTailscale bool, cloudProviderRegion SupportedCloudRegion) *Deployment {
 	this := Deployment{}
 	this.Id = id
 	this.Organization = organization
@@ -55,6 +56,7 @@ func NewDeployment(id string, organization string, tlsAuthority string, name str
 	this.MaterializedExtraArgs = materializedExtraArgs
 	this.ClusterId = clusterId
 	this.MzVersion = mzVersion
+	this.ReleaseTrack = releaseTrack
 	this.Status = status
 	this.EnableTailscale = enableTailscale
 	this.CloudProviderRegion = cloudProviderRegion
@@ -126,27 +128,29 @@ func (o *Deployment) SetOrganization(v string) {
 }
 
 // GetTlsAuthority returns the TlsAuthority field value
+// If the value is explicit nil, the zero value for string will be returned
 func (o *Deployment) GetTlsAuthority() string {
-	if o == nil {
+	if o == nil || o.TlsAuthority.Get() == nil {
 		var ret string
 		return ret
 	}
 
-	return o.TlsAuthority
+	return *o.TlsAuthority.Get()
 }
 
 // GetTlsAuthorityOk returns a tuple with the TlsAuthority field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Deployment) GetTlsAuthorityOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
-	return &o.TlsAuthority, true
+	return o.TlsAuthority.Get(), o.TlsAuthority.IsSet()
 }
 
 // SetTlsAuthority sets field value
 func (o *Deployment) SetTlsAuthority(v string) {
-	o.TlsAuthority = v
+	o.TlsAuthority.Set(&v)
 }
 
 // GetName returns the Name field value
@@ -417,6 +421,30 @@ func (o *Deployment) SetMzVersion(v string) {
 	o.MzVersion = v
 }
 
+// GetReleaseTrack returns the ReleaseTrack field value
+func (o *Deployment) GetReleaseTrack() ReleaseTrackEnum {
+	if o == nil {
+		var ret ReleaseTrackEnum
+		return ret
+	}
+
+	return o.ReleaseTrack
+}
+
+// GetReleaseTrackOk returns a tuple with the ReleaseTrack field value
+// and a boolean to check if the value has been set.
+func (o *Deployment) GetReleaseTrackOk() (*ReleaseTrackEnum, bool) {
+	if o == nil  {
+		return nil, false
+	}
+	return &o.ReleaseTrack, true
+}
+
+// SetReleaseTrack sets field value
+func (o *Deployment) SetReleaseTrack(v ReleaseTrackEnum) {
+	o.ReleaseTrack = v
+}
+
 // GetStatus returns the Status field value
 func (o *Deployment) GetStatus() string {
 	if o == nil {
@@ -498,7 +526,7 @@ func (o Deployment) MarshalJSON() ([]byte, error) {
 		toSerialize["organization"] = o.Organization
 	}
 	if true {
-		toSerialize["tlsAuthority"] = o.TlsAuthority
+		toSerialize["tlsAuthority"] = o.TlsAuthority.Get()
 	}
 	if true {
 		toSerialize["name"] = o.Name
@@ -532,6 +560,9 @@ func (o Deployment) MarshalJSON() ([]byte, error) {
 	}
 	if true {
 		toSerialize["mzVersion"] = o.MzVersion
+	}
+	if true {
+		toSerialize["releaseTrack"] = o.ReleaseTrack
 	}
 	if true {
 		toSerialize["status"] = o.Status

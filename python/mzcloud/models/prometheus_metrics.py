@@ -10,7 +10,11 @@ T = TypeVar("T", bound="PrometheusMetrics")
 
 @attr.s(auto_attribs=True)
 class PrometheusMetrics:
-    """Serializer for the prometheus metrics."""
+    """Serializer for the prometheus metrics.
+
+    Attributes:
+        metrics (List[PrometheusMetric]):
+    """
 
     metrics: List[PrometheusMetric]
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
