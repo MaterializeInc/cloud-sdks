@@ -27,6 +27,8 @@ pub struct DeploymentRequest {
     pub materialized_extra_args: Option<Vec<String>>,
     #[serde(rename = "mzVersion", skip_serializing_if = "Option::is_none")]
     pub mz_version: Option<String>,
+    #[serde(rename = "releaseTrack", skip_serializing_if = "Option::is_none")]
+    pub release_track: Option<Box<crate::models::ReleaseTrackEnum>>,
     #[serde(rename = "enableTailscale", skip_serializing_if = "Option::is_none")]
     pub enable_tailscale: Option<bool>,
     #[serde(rename = "tailscaleAuthKey", skip_serializing_if = "Option::is_none")]
@@ -47,6 +49,7 @@ impl DeploymentRequest {
             disable_user_indexes: None,
             materialized_extra_args: None,
             mz_version: None,
+            release_track: None,
             enable_tailscale: None,
             tailscale_auth_key: None,
             cloud_provider_region: Box::new(cloud_provider_region),

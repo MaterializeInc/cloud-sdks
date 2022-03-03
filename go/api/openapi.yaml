@@ -174,6 +174,28 @@ paths:
       - tokenAuth: []
       tags:
       - deployments
+  /api/deployments/{id}/ip:
+    get:
+      operationId: deploymentsIpRetrieve
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                format: ipv4
+                type: string
+      security:
+      - tokenAuth: []
+      tags:
+      - deployments
   /api/deployments/{id}/logs:
     get:
       description: Retrieve the logs for a deployment.
@@ -260,6 +282,88 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PrometheusMetrics'
+      security:
+      - tokenAuth: []
+      tags:
+      - deployments
+  /api/deployments/{id}/secrets:
+    get:
+      description: List all customer defined secrets for the deployment
+      operationId: deploymentsSecretsList
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: string
+                type: array
+      security:
+      - tokenAuth: []
+      tags:
+      - deployments
+  /api/deployments/{id}/secrets/{secret}:
+    delete:
+      description: Delete a customer defined secret from the deployment
+      operationId: deploymentsSecretsDestroy
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: secret
+        required: true
+        schema:
+          pattern: ^[^/]+$
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: No response body
+      security:
+      - tokenAuth: []
+      tags:
+      - deployments
+    post:
+      description: Insert/update a customer defined secret in the deployment
+      operationId: deploymentsSecretsCreate
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: secret
+        required: true
+        schema:
+          pattern: ^[^/]+$
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        "204":
+          description: No response body
       security:
       - tokenAuth: []
       tags:
@@ -467,6 +571,7 @@ components:
         organization: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         name: name
         storageMb: 80174
+        releaseTrack: ""
         id: id
         disableUserIndexes: false
         status: status
@@ -480,6 +585,7 @@ components:
           type: string
         tlsAuthority:
           format: uuid
+          nullable: true
           readOnly: true
           type: string
         name:
@@ -510,7 +616,7 @@ components:
           type: boolean
         materializedExtraArgs:
           items:
-            maxLength: 255
+            maxLength: 4096
             type: string
           title: Extra materialized arguments
           type: array
@@ -521,6 +627,9 @@ components:
           type: string
         mzVersion:
           type: string
+        releaseTrack:
+          allOf:
+          - $ref: '#/components/schemas/ReleaseTrackEnum'
         status:
           readOnly: true
           type: string
@@ -543,6 +652,7 @@ components:
       - mzVersion
       - name
       - organization
+      - releaseTrack
       - size
       - status
       - storageMb
@@ -557,6 +667,7 @@ components:
         catalogRestoreMode: false
         name: name
         storageMb: 80174
+        releaseTrack: ""
         disableUserIndexes: false
         mzVersion: mzVersion
         enableTailscale: false
@@ -583,7 +694,7 @@ components:
           type: boolean
         materializedExtraArgs:
           items:
-            maxLength: 255
+            maxLength: 4096
             minLength: 1
             type: string
           title: Extra materialized arguments
@@ -591,6 +702,9 @@ components:
         mzVersion:
           minLength: 1
           type: string
+        releaseTrack:
+          allOf:
+          - $ref: '#/components/schemas/ReleaseTrackEnum'
         enableTailscale:
           default: false
           type: boolean
@@ -809,6 +923,7 @@ components:
         catalogRestoreMode: false
         name: name
         storageMb: 80174
+        releaseTrack: ""
         disableUserIndexes: false
         mzVersion: mzVersion
         enableTailscale: false
@@ -833,7 +948,7 @@ components:
           type: boolean
         materializedExtraArgs:
           items:
-            maxLength: 255
+            maxLength: 4096
             minLength: 1
             type: string
           title: Extra materialized arguments
@@ -841,6 +956,9 @@ components:
         mzVersion:
           minLength: 1
           type: string
+        releaseTrack:
+          allOf:
+          - $ref: '#/components/schemas/ReleaseTrackEnum'
         enableTailscale:
           default: false
           type: boolean
@@ -897,6 +1015,12 @@ components:
     ProviderEnum:
       enum:
       - AWS
+      - local
+      type: string
+    ReleaseTrackEnum:
+      enum:
+      - canary
+      - stable
       type: string
     SupportedCloudRegion:
       example:

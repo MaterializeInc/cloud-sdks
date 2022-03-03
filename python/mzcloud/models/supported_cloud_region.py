@@ -10,7 +10,11 @@ T = TypeVar("T", bound="SupportedCloudRegion")
 
 @attr.s(auto_attribs=True)
 class SupportedCloudRegion:
-    """ """
+    """
+    Attributes:
+        provider (ProviderEnum):
+        region (str):
+    """
 
     provider: ProviderEnum
     region: str

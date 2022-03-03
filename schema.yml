@@ -169,6 +169,27 @@ paths:
                 items:
                   $ref: '#/components/schemas/HistoricalDeploymentDelta'
           description: ''
+  /api/deployments/{id}/ip:
+    get:
+      operationId: deploymentsIpRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - deployments
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+                format: ipv4
+          description: ''
   /api/deployments/{id}/logs:
     get:
       operationId: deploymentsLogsRetrieve
@@ -249,6 +270,79 @@ paths:
               schema:
                 $ref: '#/components/schemas/PrometheusMetrics'
           description: ''
+  /api/deployments/{id}/secrets:
+    get:
+      operationId: deploymentsSecretsList
+      description: List all customer defined secrets for the deployment
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - deployments
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+          description: ''
+  /api/deployments/{id}/secrets/{secret}:
+    post:
+      operationId: deploymentsSecretsCreate
+      description: Insert/update a customer defined secret in the deployment
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: secret
+        schema:
+          type: string
+          pattern: ^[^/]+$
+        required: true
+      tags:
+      - deployments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+    delete:
+      operationId: deploymentsSecretsDestroy
+      description: Delete a customer defined secret from the deployment
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: secret
+        schema:
+          type: string
+          pattern: ^[^/]+$
+        required: true
+      tags:
+      - deployments
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/deployments/{id}/tailscale_logs:
     get:
       operationId: deploymentsTailscaleLogsRetrieve
@@ -438,6 +532,7 @@ components:
           type: string
           format: uuid
           readOnly: true
+          nullable: true
         name:
           type: string
         hostname:
@@ -469,7 +564,7 @@ components:
           type: array
           items:
             type: string
-            maxLength: 255
+            maxLength: 4096
           title: Extra materialized arguments
         clusterId:
           type: string
@@ -478,6 +573,10 @@ components:
           nullable: true
         mzVersion:
           type: string
+        releaseTrack:
+          allOf:
+          - $ref: '#/components/schemas/ReleaseTrackEnum'
+          default: stable
         status:
           type: string
           readOnly: true
@@ -500,6 +599,7 @@ components:
       - mzVersion
       - name
       - organization
+      - releaseTrack
       - size
       - status
       - storageMb
@@ -530,11 +630,15 @@ components:
           items:
             type: string
             minLength: 1
-            maxLength: 255
+            maxLength: 4096
           title: Extra materialized arguments
         mzVersion:
           type: string
           minLength: 1
+        releaseTrack:
+          allOf:
+          - $ref: '#/components/schemas/ReleaseTrackEnum'
+          default: stable
         enableTailscale:
           type: boolean
           default: false
@@ -732,11 +836,15 @@ components:
           items:
             type: string
             minLength: 1
-            maxLength: 255
+            maxLength: 4096
           title: Extra materialized arguments
         mzVersion:
           type: string
           minLength: 1
+        releaseTrack:
+          allOf:
+          - $ref: '#/components/schemas/ReleaseTrackEnum'
+          default: stable
         enableTailscale:
           type: boolean
           default: false
@@ -771,6 +879,12 @@ components:
     ProviderEnum:
       enum:
       - AWS
+      - local
+      type: string
+    ReleaseTrackEnum:
+      enum:
+      - canary
+      - stable
       type: string
     SupportedCloudRegion:
       type: object

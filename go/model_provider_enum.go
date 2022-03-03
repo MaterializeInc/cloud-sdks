@@ -21,10 +21,12 @@ type ProviderEnum string
 // List of ProviderEnum
 const (
 	AWS ProviderEnum = "AWS"
+	LOCAL ProviderEnum = "local"
 )
 
 var allowedProviderEnumEnumValues = []ProviderEnum{
 	"AWS",
+	"local",
 }
 
 func (v *ProviderEnum) UnmarshalJSON(src []byte) error {

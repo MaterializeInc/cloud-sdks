@@ -16,6 +16,7 @@ from .patched_deployment_update_request import PatchedDeploymentUpdateRequest
 from .prometheus_metric import PrometheusMetric
 from .prometheus_metrics import PrometheusMetrics
 from .provider_enum import ProviderEnum
+from .release_track_enum import ReleaseTrackEnum
 from .schema_retrieve_format import SchemaRetrieveFormat
 from .schema_retrieve_response_200 import SchemaRetrieveResponse200
 from .supported_cloud_region import SupportedCloudRegion

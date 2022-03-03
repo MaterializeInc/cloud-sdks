@@ -30,6 +30,8 @@ pub mod prometheus_metrics;
 pub use self::prometheus_metrics::PrometheusMetrics;
 pub mod provider_enum;
 pub use self::provider_enum::ProviderEnum;
+pub mod release_track_enum;
+pub use self::release_track_enum::ReleaseTrackEnum;
 pub mod supported_cloud_region;
 pub use self::supported_cloud_region::SupportedCloudRegion;
 pub mod supported_cloud_region_request;

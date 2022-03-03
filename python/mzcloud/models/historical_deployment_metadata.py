@@ -12,7 +12,12 @@ T = TypeVar("T", bound="HistoricalDeploymentMetadata")
 
 @attr.s(auto_attribs=True)
 class HistoricalDeploymentMetadata:
-    """ """
+    """
+    Attributes:
+        date (datetime.datetime):
+        user (str):
+        operation (OperationEnum):
+    """
 
     date: datetime.datetime
     user: str

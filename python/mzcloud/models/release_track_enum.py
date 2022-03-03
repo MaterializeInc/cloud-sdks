@@ -1,9 +1,9 @@
 from enum import Enum
 
 
-class ProviderEnum(str, Enum):
-    AWS = "AWS"
-    LOCAL = "local"
+class ReleaseTrackEnum(str, Enum):
+    CANARY = "canary"
+    STABLE = "stable"
 
     def __str__(self) -> str:
         return str(self.value)

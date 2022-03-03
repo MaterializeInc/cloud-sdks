@@ -7,16 +7,17 @@ from ...types import UNSET, Response
 
 
 def _get_kwargs(
+    id: str,
     *,
     client: AuthenticatedClient,
-    id: str,
 ) -> Dict[str, Any]:
     url = "{}/api/deployments/{id}".format(client.base_url, id=id)
 
-    headers: Dict[str, Any] = client.get_headers()
+    headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
     return {
+        "method": "delete",
         "url": url,
         "headers": headers,
         "cookies": cookies,
@@ -34,16 +35,26 @@ def _build_response(*, response: httpx.Response) -> Response[Any]:
 
 
 def sync_detailed(
+    id: str,
     *,
     client: AuthenticatedClient,
-    id: str,
 ) -> Response[Any]:
+    """Destroy a deployment.
+
+    Args:
+        id (str):
+
+    Returns:
+        Response[Any]
+    """
+
     kwargs = _get_kwargs(
-        client=client,
         id=id,
+        client=client,
     )
 
-    response = httpx.delete(
+    response = httpx.request(
+        verify=client.verify_ssl,
         **kwargs,
     )
 
@@ -51,16 +62,25 @@ def sync_detailed(
 
 
 async def asyncio_detailed(
+    id: str,
     *,
     client: AuthenticatedClient,
-    id: str,
 ) -> Response[Any]:
+    """Destroy a deployment.
+
+    Args:
+        id (str):
+
+    Returns:
+        Response[Any]
+    """
+
     kwargs = _get_kwargs(
-        client=client,
         id=id,
+        client=client,
     )
 
-    async with httpx.AsyncClient() as _client:
-        response = await _client.delete(**kwargs)
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.request(**kwargs)
 
     return _build_response(response=response)

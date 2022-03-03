@@ -3,7 +3,6 @@ from typing import Any, Dict, List, Optional, Union, cast
 import httpx
 
 from ...client import AuthenticatedClient, Client
-from ...models.historical_deployment_delta import HistoricalDeploymentDelta
 from ...types import UNSET, Response
 
 
@@ -12,7 +11,7 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
 ) -> Dict[str, Any]:
-    url = "{}/api/deployments/{id}/changes".format(client.base_url, id=id)
+    url = "{}/api/deployments/{id}/ip".format(client.base_url, id=id)
 
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -26,20 +25,14 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[List[HistoricalDeploymentDelta]]:
+def _parse_response(*, response: httpx.Response) -> Optional[str]:
     if response.status_code == 200:
-        response_200 = []
-        _response_200 = response.json()
-        for response_200_item_data in _response_200:
-            response_200_item = HistoricalDeploymentDelta.from_dict(response_200_item_data)
-
-            response_200.append(response_200_item)
-
+        response_200 = cast(str, response.json())
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[List[HistoricalDeploymentDelta]]:
+def _build_response(*, response: httpx.Response) -> Response[str]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -52,13 +45,13 @@ def sync_detailed(
     id: str,
     *,
     client: AuthenticatedClient,
-) -> Response[List[HistoricalDeploymentDelta]]:
+) -> Response[str]:
     """
     Args:
         id (str):
 
     Returns:
-        Response[List[HistoricalDeploymentDelta]]
+        Response[str]
     """
 
     kwargs = _get_kwargs(
@@ -78,13 +71,13 @@ def sync(
     id: str,
     *,
     client: AuthenticatedClient,
-) -> Optional[List[HistoricalDeploymentDelta]]:
+) -> Optional[str]:
     """
     Args:
         id (str):
 
     Returns:
-        Response[List[HistoricalDeploymentDelta]]
+        Response[str]
     """
 
     return sync_detailed(
@@ -97,13 +90,13 @@ async def asyncio_detailed(
     id: str,
     *,
     client: AuthenticatedClient,
-) -> Response[List[HistoricalDeploymentDelta]]:
+) -> Response[str]:
     """
     Args:
         id (str):
 
     Returns:
-        Response[List[HistoricalDeploymentDelta]]
+        Response[str]
     """
 
     kwargs = _get_kwargs(
@@ -121,13 +114,13 @@ async def asyncio(
     id: str,
     *,
     client: AuthenticatedClient,
-) -> Optional[List[HistoricalDeploymentDelta]]:
+) -> Optional[str]:
     """
     Args:
         id (str):
 
     Returns:
-        Response[List[HistoricalDeploymentDelta]]
+        Response[str]
     """
 
     return (

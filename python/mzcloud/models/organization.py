@@ -11,7 +11,13 @@ T = TypeVar("T", bound="Organization")
 
 @attr.s(auto_attribs=True)
 class Organization:
-    """ """
+    """
+    Attributes:
+        id (str):
+        deployment_limit (int):
+        trial_expires_at (Optional[datetime.datetime]): When this organization's trial period expires. If empty, the
+            organization is on an enterprise plan.
+    """
 
     id: str
     deployment_limit: int

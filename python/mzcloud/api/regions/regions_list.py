@@ -8,16 +8,17 @@ from ...types import UNSET, Response
 
 
 def _get_kwargs(
+    provider_name: str,
     *,
     client: AuthenticatedClient,
-    provider_name: str,
 ) -> Dict[str, Any]:
     url = "{}/api/regions/{providerName}".format(client.base_url, providerName=provider_name)
 
-    headers: Dict[str, Any] = client.get_headers()
+    headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
     return {
+        "method": "get",
         "url": url,
         "headers": headers,
         "cookies": cookies,
@@ -48,16 +49,25 @@ def _build_response(*, response: httpx.Response) -> Response[List[SupportedCloud
 
 
 def sync_detailed(
+    provider_name: str,
     *,
     client: AuthenticatedClient,
-    provider_name: str,
 ) -> Response[List[SupportedCloudRegion]]:
+    """
+    Args:
+        provider_name (str):
+
+    Returns:
+        Response[List[SupportedCloudRegion]]
+    """
+
     kwargs = _get_kwargs(
-        client=client,
         provider_name=provider_name,
+        client=client,
     )
 
-    response = httpx.get(
+    response = httpx.request(
+        verify=client.verify_ssl,
         **kwargs,
     )
 
@@ -65,44 +75,64 @@ def sync_detailed(
 
 
 def sync(
+    provider_name: str,
     *,
     client: AuthenticatedClient,
-    provider_name: str,
 ) -> Optional[List[SupportedCloudRegion]]:
-    """ """
+    """
+    Args:
+        provider_name (str):
+
+    Returns:
+        Response[List[SupportedCloudRegion]]
+    """
 
     return sync_detailed(
-        client=client,
         provider_name=provider_name,
+        client=client,
     ).parsed
 
 
 async def asyncio_detailed(
+    provider_name: str,
     *,
     client: AuthenticatedClient,
-    provider_name: str,
 ) -> Response[List[SupportedCloudRegion]]:
+    """
+    Args:
+        provider_name (str):
+
+    Returns:
+        Response[List[SupportedCloudRegion]]
+    """
+
     kwargs = _get_kwargs(
-        client=client,
         provider_name=provider_name,
+        client=client,
     )
 
-    async with httpx.AsyncClient() as _client:
-        response = await _client.get(**kwargs)
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.request(**kwargs)
 
     return _build_response(response=response)
 
 
 async def asyncio(
+    provider_name: str,
     *,
     client: AuthenticatedClient,
-    provider_name: str,
 ) -> Optional[List[SupportedCloudRegion]]:
-    """ """
+    """
+    Args:
+        provider_name (str):
+
+    Returns:
+        Response[List[SupportedCloudRegion]]
+    """
 
     return (
         await asyncio_detailed(
-            client=client,
             provider_name=provider_name,
+            client=client,
         )
     ).parsed

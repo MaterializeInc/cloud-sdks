@@ -23,6 +23,7 @@ type PatchedDeploymentUpdateRequest struct {
 	DisableUserIndexes *bool `json:"disableUserIndexes,omitempty"`
 	MaterializedExtraArgs *[]string `json:"materializedExtraArgs,omitempty"`
 	MzVersion *string `json:"mzVersion,omitempty"`
+	ReleaseTrack *ReleaseTrackEnum `json:"releaseTrack,omitempty"`
 	EnableTailscale *bool `json:"enableTailscale,omitempty"`
 	TailscaleAuthKey *string `json:"tailscaleAuthKey,omitempty"`
 }
@@ -284,6 +285,38 @@ func (o *PatchedDeploymentUpdateRequest) SetMzVersion(v string) {
 	o.MzVersion = &v
 }
 
+// GetReleaseTrack returns the ReleaseTrack field value if set, zero value otherwise.
+func (o *PatchedDeploymentUpdateRequest) GetReleaseTrack() ReleaseTrackEnum {
+	if o == nil || o.ReleaseTrack == nil {
+		var ret ReleaseTrackEnum
+		return ret
+	}
+	return *o.ReleaseTrack
+}
+
+// GetReleaseTrackOk returns a tuple with the ReleaseTrack field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PatchedDeploymentUpdateRequest) GetReleaseTrackOk() (*ReleaseTrackEnum, bool) {
+	if o == nil || o.ReleaseTrack == nil {
+		return nil, false
+	}
+	return o.ReleaseTrack, true
+}
+
+// HasReleaseTrack returns a boolean if a field has been set.
+func (o *PatchedDeploymentUpdateRequest) HasReleaseTrack() bool {
+	if o != nil && o.ReleaseTrack != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetReleaseTrack gets a reference to the given ReleaseTrackEnum and assigns it to the ReleaseTrack field.
+func (o *PatchedDeploymentUpdateRequest) SetReleaseTrack(v ReleaseTrackEnum) {
+	o.ReleaseTrack = &v
+}
+
 // GetEnableTailscale returns the EnableTailscale field value if set, zero value otherwise.
 func (o *PatchedDeploymentUpdateRequest) GetEnableTailscale() bool {
 	if o == nil || o.EnableTailscale == nil {
@@ -370,6 +403,9 @@ func (o PatchedDeploymentUpdateRequest) MarshalJSON() ([]byte, error) {
 	}
 	if o.MzVersion != nil {
 		toSerialize["mzVersion"] = o.MzVersion
+	}
+	if o.ReleaseTrack != nil {
+		toSerialize["releaseTrack"] = o.ReleaseTrack
 	}
 	if o.EnableTailscale != nil {
 		toSerialize["enableTailscale"] = o.EnableTailscale

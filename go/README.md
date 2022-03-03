@@ -83,12 +83,16 @@ Class | Method | HTTP request | Description
 *DeploymentsApi* | [**DeploymentsChangesList**](docs/DeploymentsApi.md#deploymentschangeslist) | **Get** /api/deployments/{id}/changes | 
 *DeploymentsApi* | [**DeploymentsCreate**](docs/DeploymentsApi.md#deploymentscreate) | **Post** /api/deployments | 
 *DeploymentsApi* | [**DeploymentsDestroy**](docs/DeploymentsApi.md#deploymentsdestroy) | **Delete** /api/deployments/{id} | 
+*DeploymentsApi* | [**DeploymentsIpRetrieve**](docs/DeploymentsApi.md#deploymentsipretrieve) | **Get** /api/deployments/{id}/ip | 
 *DeploymentsApi* | [**DeploymentsList**](docs/DeploymentsApi.md#deploymentslist) | **Get** /api/deployments | 
 *DeploymentsApi* | [**DeploymentsLogsRetrieve**](docs/DeploymentsApi.md#deploymentslogsretrieve) | **Get** /api/deployments/{id}/logs | 
 *DeploymentsApi* | [**DeploymentsMetricsCpuRetrieve**](docs/DeploymentsApi.md#deploymentsmetricscpuretrieve) | **Get** /api/deployments/{id}/metrics/cpu/{period} | 
 *DeploymentsApi* | [**DeploymentsMetricsMemoryRetrieve**](docs/DeploymentsApi.md#deploymentsmetricsmemoryretrieve) | **Get** /api/deployments/{id}/metrics/memory/{period} | 
 *DeploymentsApi* | [**DeploymentsPartialUpdate**](docs/DeploymentsApi.md#deploymentspartialupdate) | **Patch** /api/deployments/{id} | 
 *DeploymentsApi* | [**DeploymentsRetrieve**](docs/DeploymentsApi.md#deploymentsretrieve) | **Get** /api/deployments/{id} | 
+*DeploymentsApi* | [**DeploymentsSecretsCreate**](docs/DeploymentsApi.md#deploymentssecretscreate) | **Post** /api/deployments/{id}/secrets/{secret} | 
+*DeploymentsApi* | [**DeploymentsSecretsDestroy**](docs/DeploymentsApi.md#deploymentssecretsdestroy) | **Delete** /api/deployments/{id}/secrets/{secret} | 
+*DeploymentsApi* | [**DeploymentsSecretsList**](docs/DeploymentsApi.md#deploymentssecretslist) | **Get** /api/deployments/{id}/secrets | 
 *DeploymentsApi* | [**DeploymentsTailscaleLogsRetrieve**](docs/DeploymentsApi.md#deploymentstailscalelogsretrieve) | **Get** /api/deployments/{id}/tailscale_logs | 
 *HealthApi* | [**HealthRetrieve**](docs/HealthApi.md#healthretrieve) | **Get** /api/health | 
 *MzVersionsApi* | [**MzVersionsLatestRetrieve**](docs/MzVersionsApi.md#mzversionslatestretrieve) | **Get** /api/mz-versions/latest | 
@@ -116,6 +120,7 @@ Class | Method | HTTP request | Description
  - [PrometheusMetric](docs/PrometheusMetric.md)
  - [PrometheusMetrics](docs/PrometheusMetrics.md)
  - [ProviderEnum](docs/ProviderEnum.md)
+ - [ReleaseTrackEnum](docs/ReleaseTrackEnum.md)
  - [SupportedCloudRegion](docs/SupportedCloudRegion.md)
  - [SupportedCloudRegionRequest](docs/SupportedCloudRegionRequest.md)
 

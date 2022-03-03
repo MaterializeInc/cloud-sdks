@@ -3,32 +3,30 @@ from typing import Any, Dict, List, Optional, Union, cast
 import httpx
 
 from ...client import AuthenticatedClient, Client
-from ...types import UNSET, Response, Unset
+from ...types import UNSET, Response
 
 
 def _get_kwargs(
     id: str,
+    secret: str,
     *,
     client: AuthenticatedClient,
-    previous: Union[Unset, None, bool] = False,
+    json_body: str,
 ) -> Dict[str, Any]:
-    url = "{}/api/deployments/{id}/tailscale_logs".format(client.base_url, id=id)
+    url = "{}/api/deployments/{id}/secrets/{secret}".format(client.base_url, id=id, secret=secret)
 
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
-    params: Dict[str, Any] = {}
-    params["previous"] = previous
-
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+    json_json_body = json_body
 
     return {
-        "method": "get",
+        "method": "post",
         "url": url,
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "params": params,
+        "json": json_json_body,
     }
 
 
@@ -43,15 +41,17 @@ def _build_response(*, response: httpx.Response) -> Response[Any]:
 
 def sync_detailed(
     id: str,
+    secret: str,
     *,
     client: AuthenticatedClient,
-    previous: Union[Unset, None, bool] = False,
+    json_body: str,
 ) -> Response[Any]:
-    """Retrieve the logs for a Tailscale container.
+    """Insert/update a customer defined secret in the deployment
 
     Args:
         id (str):
-        previous (Union[Unset, None, bool]):
+        secret (str):
+        json_body (str):
 
     Returns:
         Response[Any]
@@ -59,8 +59,9 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         id=id,
+        secret=secret,
         client=client,
-        previous=previous,
+        json_body=json_body,
     )
 
     response = httpx.request(
@@ -73,15 +74,17 @@ def sync_detailed(
 
 async def asyncio_detailed(
     id: str,
+    secret: str,
     *,
     client: AuthenticatedClient,
-    previous: Union[Unset, None, bool] = False,
+    json_body: str,
 ) -> Response[Any]:
-    """Retrieve the logs for a Tailscale container.
+    """Insert/update a customer defined secret in the deployment
 
     Args:
         id (str):
-        previous (Union[Unset, None, bool]):
+        secret (str):
+        json_body (str):
 
     Returns:
         Response[Any]
@@ -89,8 +92,9 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         id=id,
+        secret=secret,
         client=client,
-        previous=previous,
+        json_body=json_body,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:

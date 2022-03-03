@@ -13,7 +13,20 @@ T = TypeVar("T", bound="HistoricalDeploymentChange")
 
 @attr.s(auto_attribs=True)
 class HistoricalDeploymentChange:
-    """ """
+    """
+    Attributes:
+        name (Union[Unset, ModifiedString]):
+        hostname (Union[Unset, ModifiedString]):
+        flagged_for_deletion (Union[Unset, ModifiedBoolean]):
+        flagged_for_update (Union[Unset, ModifiedBoolean]):
+        catalog_restore_mode (Union[Unset, ModifiedBoolean]):
+        size (Union[Unset, ModifiedSize]):
+        disable_user_indexes (Union[Unset, ModifiedBoolean]):
+        materialized_extra_args (Union[Unset, ModifiedStringList]):
+        cluster_id (Union[Unset, ModifiedString]):
+        mz_version (Union[Unset, ModifiedString]):
+        enable_tailscale (Union[Unset, ModifiedBoolean]):
+    """
 
     name: Union[Unset, ModifiedString] = UNSET
     hostname: Union[Unset, ModifiedString] = UNSET

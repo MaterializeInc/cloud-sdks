@@ -10,7 +10,11 @@ T = TypeVar("T", bound="ModifiedSize")
 
 @attr.s(auto_attribs=True)
 class ModifiedSize:
-    """ """
+    """
+    Attributes:
+        old (DeploymentSizeEnum):
+        new (DeploymentSizeEnum):
+    """
 
     old: DeploymentSizeEnum
     new: DeploymentSizeEnum
