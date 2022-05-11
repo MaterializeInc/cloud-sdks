@@ -30,8 +30,6 @@ pub struct Deployment {
     pub size: Box<crate::models::DeploymentSizeEnum>,
     #[serde(rename = "storageMb")]
     pub storage_mb: i32,
-    #[serde(rename = "disableUserIndexes")]
-    pub disable_user_indexes: bool,
     #[serde(rename = "materializedExtraArgs")]
     pub materialized_extra_args: Vec<String>,
     #[serde(rename = "clusterId")]
@@ -60,7 +58,6 @@ impl Deployment {
         catalog_restore_mode: bool,
         size: crate::models::DeploymentSizeEnum,
         storage_mb: i32,
-        disable_user_indexes: bool,
         materialized_extra_args: Vec<String>,
         cluster_id: Option<String>,
         mz_version: String,
@@ -80,7 +77,6 @@ impl Deployment {
             catalog_restore_mode,
             size: Box::new(size),
             storage_mb,
-            disable_user_indexes,
             materialized_extra_args,
             cluster_id,
             mz_version,

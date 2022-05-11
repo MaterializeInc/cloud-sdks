@@ -21,7 +21,6 @@ class HistoricalDeploymentChange:
         flagged_for_update (Union[Unset, ModifiedBoolean]):
         catalog_restore_mode (Union[Unset, ModifiedBoolean]):
         size (Union[Unset, ModifiedSize]):
-        disable_user_indexes (Union[Unset, ModifiedBoolean]):
         materialized_extra_args (Union[Unset, ModifiedStringList]):
         cluster_id (Union[Unset, ModifiedString]):
         mz_version (Union[Unset, ModifiedString]):
@@ -34,7 +33,6 @@ class HistoricalDeploymentChange:
     flagged_for_update: Union[Unset, ModifiedBoolean] = UNSET
     catalog_restore_mode: Union[Unset, ModifiedBoolean] = UNSET
     size: Union[Unset, ModifiedSize] = UNSET
-    disable_user_indexes: Union[Unset, ModifiedBoolean] = UNSET
     materialized_extra_args: Union[Unset, ModifiedStringList] = UNSET
     cluster_id: Union[Unset, ModifiedString] = UNSET
     mz_version: Union[Unset, ModifiedString] = UNSET
@@ -65,10 +63,6 @@ class HistoricalDeploymentChange:
         size: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.size, Unset):
             size = self.size.to_dict()
-
-        disable_user_indexes: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.disable_user_indexes, Unset):
-            disable_user_indexes = self.disable_user_indexes.to_dict()
 
         materialized_extra_args: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.materialized_extra_args, Unset):
@@ -101,8 +95,6 @@ class HistoricalDeploymentChange:
             field_dict["catalogRestoreMode"] = catalog_restore_mode
         if size is not UNSET:
             field_dict["size"] = size
-        if disable_user_indexes is not UNSET:
-            field_dict["disableUserIndexes"] = disable_user_indexes
         if materialized_extra_args is not UNSET:
             field_dict["materializedExtraArgs"] = materialized_extra_args
         if cluster_id is not UNSET:
@@ -159,13 +151,6 @@ class HistoricalDeploymentChange:
         else:
             size = ModifiedSize.from_dict(_size)
 
-        _disable_user_indexes = d.pop("disableUserIndexes", UNSET)
-        disable_user_indexes: Union[Unset, ModifiedBoolean]
-        if isinstance(_disable_user_indexes, Unset):
-            disable_user_indexes = UNSET
-        else:
-            disable_user_indexes = ModifiedBoolean.from_dict(_disable_user_indexes)
-
         _materialized_extra_args = d.pop("materializedExtraArgs", UNSET)
         materialized_extra_args: Union[Unset, ModifiedStringList]
         if isinstance(_materialized_extra_args, Unset):
@@ -201,7 +186,6 @@ class HistoricalDeploymentChange:
             flagged_for_update=flagged_for_update,
             catalog_restore_mode=catalog_restore_mode,
             size=size,
-            disable_user_indexes=disable_user_indexes,
             materialized_extra_args=materialized_extra_args,
             cluster_id=cluster_id,
             mz_version=mz_version,

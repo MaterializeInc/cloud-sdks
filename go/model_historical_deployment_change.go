@@ -22,7 +22,6 @@ type HistoricalDeploymentChange struct {
 	FlaggedForUpdate *ModifiedBoolean `json:"flaggedForUpdate,omitempty"`
 	CatalogRestoreMode *ModifiedBoolean `json:"catalogRestoreMode,omitempty"`
 	Size *ModifiedSize `json:"size,omitempty"`
-	DisableUserIndexes *ModifiedBoolean `json:"disableUserIndexes,omitempty"`
 	MaterializedExtraArgs *ModifiedStringList `json:"materializedExtraArgs,omitempty"`
 	ClusterId *ModifiedString `json:"clusterId,omitempty"`
 	MzVersion *ModifiedString `json:"mzVersion,omitempty"`
@@ -238,38 +237,6 @@ func (o *HistoricalDeploymentChange) SetSize(v ModifiedSize) {
 	o.Size = &v
 }
 
-// GetDisableUserIndexes returns the DisableUserIndexes field value if set, zero value otherwise.
-func (o *HistoricalDeploymentChange) GetDisableUserIndexes() ModifiedBoolean {
-	if o == nil || o.DisableUserIndexes == nil {
-		var ret ModifiedBoolean
-		return ret
-	}
-	return *o.DisableUserIndexes
-}
-
-// GetDisableUserIndexesOk returns a tuple with the DisableUserIndexes field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *HistoricalDeploymentChange) GetDisableUserIndexesOk() (*ModifiedBoolean, bool) {
-	if o == nil || o.DisableUserIndexes == nil {
-		return nil, false
-	}
-	return o.DisableUserIndexes, true
-}
-
-// HasDisableUserIndexes returns a boolean if a field has been set.
-func (o *HistoricalDeploymentChange) HasDisableUserIndexes() bool {
-	if o != nil && o.DisableUserIndexes != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetDisableUserIndexes gets a reference to the given ModifiedBoolean and assigns it to the DisableUserIndexes field.
-func (o *HistoricalDeploymentChange) SetDisableUserIndexes(v ModifiedBoolean) {
-	o.DisableUserIndexes = &v
-}
-
 // GetMaterializedExtraArgs returns the MaterializedExtraArgs field value if set, zero value otherwise.
 func (o *HistoricalDeploymentChange) GetMaterializedExtraArgs() ModifiedStringList {
 	if o == nil || o.MaterializedExtraArgs == nil {
@@ -417,9 +384,6 @@ func (o HistoricalDeploymentChange) MarshalJSON() ([]byte, error) {
 	}
 	if o.Size != nil {
 		toSerialize["size"] = o.Size
-	}
-	if o.DisableUserIndexes != nil {
-		toSerialize["disableUserIndexes"] = o.DisableUserIndexes
 	}
 	if o.MaterializedExtraArgs != nil {
 		toSerialize["materializedExtraArgs"] = o.MaterializedExtraArgs

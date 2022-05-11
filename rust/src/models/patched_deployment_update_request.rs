@@ -18,8 +18,6 @@ pub struct PatchedDeploymentUpdateRequest {
     pub size: Option<Box<crate::models::DeploymentSizeEnum>>,
     #[serde(rename = "storageMb", skip_serializing_if = "Option::is_none")]
     pub storage_mb: Option<i32>,
-    #[serde(rename = "disableUserIndexes", skip_serializing_if = "Option::is_none")]
-    pub disable_user_indexes: Option<bool>,
     #[serde(
         rename = "materializedExtraArgs",
         skip_serializing_if = "Option::is_none"
@@ -42,7 +40,6 @@ impl PatchedDeploymentUpdateRequest {
             catalog_restore_mode: None,
             size: None,
             storage_mb: None,
-            disable_user_indexes: None,
             materialized_extra_args: None,
             mz_version: None,
             release_track: None,

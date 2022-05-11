@@ -22,7 +22,6 @@ class Deployment:
         catalog_restore_mode (bool):
         size (DeploymentSizeEnum):  Default: DeploymentSizeEnum.XS.
         storage_mb (int):  Default: 100.
-        disable_user_indexes (bool):
         materialized_extra_args (List[str]):
         mz_version (str):
         release_track (ReleaseTrackEnum):  Default: ReleaseTrackEnum.STABLE.
@@ -49,7 +48,6 @@ class Deployment:
     catalog_restore_mode: bool = False
     size: DeploymentSizeEnum = DeploymentSizeEnum.XS
     storage_mb: int = 100
-    disable_user_indexes: bool = False
     release_track: ReleaseTrackEnum = ReleaseTrackEnum.STABLE
     enable_tailscale: bool = False
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -64,7 +62,6 @@ class Deployment:
         size = self.size.value
 
         storage_mb = self.storage_mb
-        disable_user_indexes = self.disable_user_indexes
         materialized_extra_args = self.materialized_extra_args
 
         mz_version = self.mz_version
@@ -90,7 +87,6 @@ class Deployment:
                 "catalogRestoreMode": catalog_restore_mode,
                 "size": size,
                 "storageMb": storage_mb,
-                "disableUserIndexes": disable_user_indexes,
                 "materializedExtraArgs": materialized_extra_args,
                 "mzVersion": mz_version,
                 "releaseTrack": release_track,
@@ -124,8 +120,6 @@ class Deployment:
 
         storage_mb = d.pop("storageMb")
 
-        disable_user_indexes = d.pop("disableUserIndexes")
-
         materialized_extra_args = cast(List[str], d.pop("materializedExtraArgs"))
 
         mz_version = d.pop("mzVersion")
@@ -153,7 +147,6 @@ class Deployment:
             catalog_restore_mode=catalog_restore_mode,
             size=size,
             storage_mb=storage_mb,
-            disable_user_indexes=disable_user_indexes,
             materialized_extra_args=materialized_extra_args,
             mz_version=mz_version,
             release_track=release_track,

@@ -26,7 +26,6 @@ type Deployment struct {
 	CatalogRestoreMode bool `json:"catalogRestoreMode"`
 	Size DeploymentSizeEnum `json:"size"`
 	StorageMb int32 `json:"storageMb"`
-	DisableUserIndexes bool `json:"disableUserIndexes"`
 	MaterializedExtraArgs []string `json:"materializedExtraArgs"`
 	ClusterId NullableString `json:"clusterId"`
 	MzVersion string `json:"mzVersion"`
@@ -40,7 +39,7 @@ type Deployment struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDeployment(id string, organization string, tlsAuthority NullableString, name string, hostname NullableString, flaggedForDeletion bool, flaggedForUpdate bool, catalogRestoreMode bool, size DeploymentSizeEnum, storageMb int32, disableUserIndexes bool, materializedExtraArgs []string, clusterId NullableString, mzVersion string, releaseTrack ReleaseTrackEnum, status string, enableTailscale bool, cloudProviderRegion SupportedCloudRegion) *Deployment {
+func NewDeployment(id string, organization string, tlsAuthority NullableString, name string, hostname NullableString, flaggedForDeletion bool, flaggedForUpdate bool, catalogRestoreMode bool, size DeploymentSizeEnum, storageMb int32, materializedExtraArgs []string, clusterId NullableString, mzVersion string, releaseTrack ReleaseTrackEnum, status string, enableTailscale bool, cloudProviderRegion SupportedCloudRegion) *Deployment {
 	this := Deployment{}
 	this.Id = id
 	this.Organization = organization
@@ -52,7 +51,6 @@ func NewDeployment(id string, organization string, tlsAuthority NullableString, 
 	this.CatalogRestoreMode = catalogRestoreMode
 	this.Size = size
 	this.StorageMb = storageMb
-	this.DisableUserIndexes = disableUserIndexes
 	this.MaterializedExtraArgs = materializedExtraArgs
 	this.ClusterId = clusterId
 	this.MzVersion = mzVersion
@@ -72,8 +70,6 @@ func NewDeploymentWithDefaults() *Deployment {
 	this.CatalogRestoreMode = catalogRestoreMode
 	var storageMb int32 = 100
 	this.StorageMb = storageMb
-	var disableUserIndexes bool = false
-	this.DisableUserIndexes = disableUserIndexes
 	var enableTailscale bool = false
 	this.EnableTailscale = enableTailscale
 	return &this
@@ -323,30 +319,6 @@ func (o *Deployment) SetStorageMb(v int32) {
 	o.StorageMb = v
 }
 
-// GetDisableUserIndexes returns the DisableUserIndexes field value
-func (o *Deployment) GetDisableUserIndexes() bool {
-	if o == nil {
-		var ret bool
-		return ret
-	}
-
-	return o.DisableUserIndexes
-}
-
-// GetDisableUserIndexesOk returns a tuple with the DisableUserIndexes field value
-// and a boolean to check if the value has been set.
-func (o *Deployment) GetDisableUserIndexesOk() (*bool, bool) {
-	if o == nil  {
-		return nil, false
-	}
-	return &o.DisableUserIndexes, true
-}
-
-// SetDisableUserIndexes sets field value
-func (o *Deployment) SetDisableUserIndexes(v bool) {
-	o.DisableUserIndexes = v
-}
-
 // GetMaterializedExtraArgs returns the MaterializedExtraArgs field value
 func (o *Deployment) GetMaterializedExtraArgs() []string {
 	if o == nil {
@@ -548,9 +520,6 @@ func (o Deployment) MarshalJSON() ([]byte, error) {
 	}
 	if true {
 		toSerialize["storageMb"] = o.StorageMb
-	}
-	if true {
-		toSerialize["disableUserIndexes"] = o.DisableUserIndexes
 	}
 	if true {
 		toSerialize["materializedExtraArgs"] = o.MaterializedExtraArgs

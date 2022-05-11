@@ -20,7 +20,6 @@ type DeploymentRequest struct {
 	CatalogRestoreMode *bool `json:"catalogRestoreMode,omitempty"`
 	Size *DeploymentSizeEnum `json:"size,omitempty"`
 	StorageMb *int32 `json:"storageMb,omitempty"`
-	DisableUserIndexes *bool `json:"disableUserIndexes,omitempty"`
 	MaterializedExtraArgs *[]string `json:"materializedExtraArgs,omitempty"`
 	MzVersion *string `json:"mzVersion,omitempty"`
 	ReleaseTrack *ReleaseTrackEnum `json:"releaseTrack,omitempty"`
@@ -39,8 +38,6 @@ func NewDeploymentRequest(cloudProviderRegion SupportedCloudRegionRequest) *Depl
 	this.CatalogRestoreMode = &catalogRestoreMode
 	var storageMb int32 = 100
 	this.StorageMb = &storageMb
-	var disableUserIndexes bool = false
-	this.DisableUserIndexes = &disableUserIndexes
 	var enableTailscale bool = false
 	this.EnableTailscale = &enableTailscale
 	this.CloudProviderRegion = cloudProviderRegion
@@ -56,8 +53,6 @@ func NewDeploymentRequestWithDefaults() *DeploymentRequest {
 	this.CatalogRestoreMode = &catalogRestoreMode
 	var storageMb int32 = 100
 	this.StorageMb = &storageMb
-	var disableUserIndexes bool = false
-	this.DisableUserIndexes = &disableUserIndexes
 	var enableTailscale bool = false
 	this.EnableTailscale = &enableTailscale
 	return &this
@@ -189,38 +184,6 @@ func (o *DeploymentRequest) HasStorageMb() bool {
 // SetStorageMb gets a reference to the given int32 and assigns it to the StorageMb field.
 func (o *DeploymentRequest) SetStorageMb(v int32) {
 	o.StorageMb = &v
-}
-
-// GetDisableUserIndexes returns the DisableUserIndexes field value if set, zero value otherwise.
-func (o *DeploymentRequest) GetDisableUserIndexes() bool {
-	if o == nil || o.DisableUserIndexes == nil {
-		var ret bool
-		return ret
-	}
-	return *o.DisableUserIndexes
-}
-
-// GetDisableUserIndexesOk returns a tuple with the DisableUserIndexes field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *DeploymentRequest) GetDisableUserIndexesOk() (*bool, bool) {
-	if o == nil || o.DisableUserIndexes == nil {
-		return nil, false
-	}
-	return o.DisableUserIndexes, true
-}
-
-// HasDisableUserIndexes returns a boolean if a field has been set.
-func (o *DeploymentRequest) HasDisableUserIndexes() bool {
-	if o != nil && o.DisableUserIndexes != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetDisableUserIndexes gets a reference to the given bool and assigns it to the DisableUserIndexes field.
-func (o *DeploymentRequest) SetDisableUserIndexes(v bool) {
-	o.DisableUserIndexes = &v
 }
 
 // GetMaterializedExtraArgs returns the MaterializedExtraArgs field value if set, zero value otherwise.
@@ -420,9 +383,6 @@ func (o DeploymentRequest) MarshalJSON() ([]byte, error) {
 	}
 	if o.StorageMb != nil {
 		toSerialize["storageMb"] = o.StorageMb
-	}
-	if o.DisableUserIndexes != nil {
-		toSerialize["disableUserIndexes"] = o.DisableUserIndexes
 	}
 	if o.MaterializedExtraArgs != nil {
 		toSerialize["materializedExtraArgs"] = o.MaterializedExtraArgs

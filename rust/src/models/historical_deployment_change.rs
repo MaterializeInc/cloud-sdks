@@ -22,8 +22,6 @@ pub struct HistoricalDeploymentChange {
     pub catalog_restore_mode: Option<Box<crate::models::ModifiedBoolean>>,
     #[serde(rename = "size", skip_serializing_if = "Option::is_none")]
     pub size: Option<Box<crate::models::ModifiedSize>>,
-    #[serde(rename = "disableUserIndexes", skip_serializing_if = "Option::is_none")]
-    pub disable_user_indexes: Option<Box<crate::models::ModifiedBoolean>>,
     #[serde(
         rename = "materializedExtraArgs",
         skip_serializing_if = "Option::is_none"
@@ -46,7 +44,6 @@ impl HistoricalDeploymentChange {
             flagged_for_update: None,
             catalog_restore_mode: None,
             size: None,
-            disable_user_indexes: None,
             materialized_extra_args: None,
             cluster_id: None,
             mz_version: None,

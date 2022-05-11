@@ -573,7 +573,6 @@ components:
         storageMb: 80174
         releaseTrack: ""
         id: id
-        disableUserIndexes: false
         status: status
       properties:
         id:
@@ -611,9 +610,6 @@ components:
           maximum: 1000000
           minimum: 100
           type: integer
-        disableUserIndexes:
-          default: false
-          type: boolean
         materializedExtraArgs:
           items:
             maxLength: 4096
@@ -642,7 +638,6 @@ components:
       - catalogRestoreMode
       - cloudProviderRegion
       - clusterId
-      - disableUserIndexes
       - enableTailscale
       - flaggedForDeletion
       - flaggedForUpdate
@@ -668,7 +663,6 @@ components:
         name: name
         storageMb: 80174
         releaseTrack: ""
-        disableUserIndexes: false
         mzVersion: mzVersion
         enableTailscale: false
         tailscaleAuthKey: tailscaleAuthKey
@@ -689,9 +683,6 @@ components:
           maximum: 1000000
           minimum: 100
           type: integer
-        disableUserIndexes:
-          default: false
-          type: boolean
         materializedExtraArgs:
           items:
             maxLength: 4096
@@ -734,7 +725,6 @@ components:
         size: ""
         catalogRestoreMode: ""
         name: ""
-        disableUserIndexes: ""
         clusterId: ""
         mzVersion: ""
         enableTailscale: ""
@@ -762,10 +752,6 @@ components:
         size:
           allOf:
           - $ref: '#/components/schemas/ModifiedSize'
-          readOnly: true
-        disableUserIndexes:
-          allOf:
-          - $ref: '#/components/schemas/ModifiedBoolean'
           readOnly: true
         materializedExtraArgs:
           allOf:
@@ -798,7 +784,6 @@ components:
           size: ""
           catalogRestoreMode: ""
           name: ""
-          disableUserIndexes: ""
           clusterId: ""
           mzVersion: ""
           enableTailscale: ""
@@ -924,7 +909,6 @@ components:
         name: name
         storageMb: 80174
         releaseTrack: ""
-        disableUserIndexes: false
         mzVersion: mzVersion
         enableTailscale: false
         tailscaleAuthKey: tailscaleAuthKey
@@ -943,9 +927,6 @@ components:
           maximum: 1000000
           minimum: 100
           type: integer
-        disableUserIndexes:
-          default: false
-          type: boolean
         materializedExtraArgs:
           items:
             maxLength: 4096

@@ -19,7 +19,6 @@ class DeploymentRequest:
         catalog_restore_mode (Union[Unset, bool]):
         size (Union[Unset, DeploymentSizeEnum]):  Default: DeploymentSizeEnum.XS.
         storage_mb (Union[Unset, int]):  Default: 100.
-        disable_user_indexes (Union[Unset, bool]):
         materialized_extra_args (Union[Unset, List[str]]):
         mz_version (Union[Unset, str]):
         release_track (Union[Unset, ReleaseTrackEnum]):  Default: ReleaseTrackEnum.STABLE.
@@ -32,7 +31,6 @@ class DeploymentRequest:
     catalog_restore_mode: Union[Unset, bool] = False
     size: Union[Unset, DeploymentSizeEnum] = DeploymentSizeEnum.XS
     storage_mb: Union[Unset, int] = 100
-    disable_user_indexes: Union[Unset, bool] = False
     materialized_extra_args: Union[Unset, List[str]] = UNSET
     mz_version: Union[Unset, str] = UNSET
     release_track: Union[Unset, ReleaseTrackEnum] = ReleaseTrackEnum.STABLE
@@ -50,7 +48,6 @@ class DeploymentRequest:
             size = self.size.value
 
         storage_mb = self.storage_mb
-        disable_user_indexes = self.disable_user_indexes
         materialized_extra_args: Union[Unset, List[str]] = UNSET
         if not isinstance(self.materialized_extra_args, Unset):
             materialized_extra_args = self.materialized_extra_args
@@ -78,8 +75,6 @@ class DeploymentRequest:
             field_dict["size"] = size
         if storage_mb is not UNSET:
             field_dict["storageMb"] = storage_mb
-        if disable_user_indexes is not UNSET:
-            field_dict["disableUserIndexes"] = disable_user_indexes
         if materialized_extra_args is not UNSET:
             field_dict["materializedExtraArgs"] = materialized_extra_args
         if mz_version is not UNSET:
@@ -111,8 +106,6 @@ class DeploymentRequest:
 
         storage_mb = d.pop("storageMb", UNSET)
 
-        disable_user_indexes = d.pop("disableUserIndexes", UNSET)
-
         materialized_extra_args = cast(List[str], d.pop("materializedExtraArgs", UNSET))
 
         mz_version = d.pop("mzVersion", UNSET)
@@ -134,7 +127,6 @@ class DeploymentRequest:
             catalog_restore_mode=catalog_restore_mode,
             size=size,
             storage_mb=storage_mb,
-            disable_user_indexes=disable_user_indexes,
             materialized_extra_args=materialized_extra_args,
             mz_version=mz_version,
             release_track=release_track,

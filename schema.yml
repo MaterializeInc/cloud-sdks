@@ -557,9 +557,6 @@ components:
           maximum: 1000000
           minimum: 100
           default: 100
-        disableUserIndexes:
-          type: boolean
-          default: false
         materializedExtraArgs:
           type: array
           items:
@@ -589,7 +586,6 @@ components:
       - catalogRestoreMode
       - cloudProviderRegion
       - clusterId
-      - disableUserIndexes
       - enableTailscale
       - flaggedForDeletion
       - flaggedForUpdate
@@ -622,9 +618,6 @@ components:
           maximum: 1000000
           minimum: 100
           default: 100
-        disableUserIndexes:
-          type: boolean
-          default: false
         materializedExtraArgs:
           type: array
           items:
@@ -684,10 +677,6 @@ components:
         size:
           allOf:
           - $ref: '#/components/schemas/ModifiedSize'
-          readOnly: true
-        disableUserIndexes:
-          allOf:
-          - $ref: '#/components/schemas/ModifiedBoolean'
           readOnly: true
         materializedExtraArgs:
           allOf:
@@ -828,9 +817,6 @@ components:
           maximum: 1000000
           minimum: 100
           default: 100
-        disableUserIndexes:
-          type: boolean
-          default: false
         materializedExtraArgs:
           type: array
           items:
